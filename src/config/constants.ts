@@ -15,8 +15,18 @@ export const INSPECTION_TYPES = {
 } as const;
 
 export const QUERY_KEYS = {
-  ASSETS: ["assets"],
-  ASSET: (id: string) => ["assets", id],
-  LOCATIONS: ["locations"],
-  STATISTICS: ["statistics"],
+  // Assets
+  ASSETS: ["assets"] as const,
+  ASSET: (id: string) => ["assets", id] as const,
+
+  // Locations
+  LOCATIONS: ["locations"] as const,
+  LOCATION: (id: string) => ["locations", id] as const,
+
+  // Inspections
+  INSPECTIONS: ["inspections"] as const,
+  INSPECTION: (id: string) => ["inspections", id] as const,
+
+  // Statistics
+  STATISTICS: ["statistics"] as const,
 } as const;

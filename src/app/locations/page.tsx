@@ -1,84 +1,104 @@
 "use client";
 
-import { useLocations } from "@/features/locations/hooks/useLocations";
-import { LoadingSpinner } from "@/components/LoadingSpinner";
-import { ErrorMessage } from "@/components/ErrorMessage";
+import { useState } from "react";
+import { LocationsHeader } from "@/features/locations/components/LocationsHeader";
+import { LocationsGrid } from "@/features/locations/components/LocationsGrid";
+import LocationModal from "@/features/locations/components/LocationModal";
+import DeleteLocationDialog from "@/features/locations/components/DeleteLocationDialog";
+import LocationForm from "@/features/locations/components/LocationForm";
+import {
+  useLocations,
+  useCreateLocation,
+  useUpdateLocation,
+  useDeleteLocation,
+} from "@/features/locations/hooks/useLocations";
+import { Location } from "@/types/location.types";
+import { useStatistics } from "@/features/statistics/hooks/useStatistics";
 
 export default function LocationsPage() {
-  const { data: locations = [], isLoading, error, refetch } = useLocations();
+  const { data: locations = [], isLoading } = useLocations();
+  const createLocation = useCreateLocation();
+  const updateLocation = useUpdateLocation();
+  const deleteLocation = useDeleteLocation();
+  const { data: statistics, isLoading: isLoadingStats } = useStatistics(); // <-- statistics
 
-  if (isLoading) {
-    return <LoadingSpinner message="Loading locations..." />;
-  }
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [editingLocation, setEditingLocation] = useState<Location | null>(null);
+  const [deletingLocation, setDeletingLocation] = useState<Location | null>(
+    null,
+  );
+  const assetCounts = locations.reduce<Record<string, number>>((acc, loc) => {
+    acc[loc.id] = statistics?.byLocation[loc.name] || 0; // <-- get count from statistics
+    return acc;
+  }, {});
 
-  if (error) {
-    return (
-      <ErrorMessage
-        message="Failed to load locations."
-        onRetry={() => refetch()}
-      />
-    );
-  }
+  // Open modal for creating a new location
+  const handleAdd = () => {
+    setEditingLocation(null);
+    setModalOpen(true);
+  };
+
+  // Open modal for editing an existing location
+  const handleEdit = (location: Location) => {
+    setEditingLocation(location);
+    setModalOpen(true);
+  };
+
+  // Open delete confirmation dialog
+  const handleDelete = (location: Location) => {
+    setDeletingLocation(location);
+  };
+
+  /// Submit handler for add/edit form
+  const handleSubmit = (data: { name: string; description?: string }) => {
+    if (editingLocation) {
+      updateLocation.mutate({
+        id: editingLocation.id,
+        data,
+      });
+    } else {
+      createLocation.mutate(data);
+    }
+    setModalOpen(false);
+  };
+
+  // Confirm delete
+  const confirmDelete = () => {
+    if (deletingLocation) {
+      deleteLocation.mutate(deletingLocation.id);
+      setDeletingLocation(null);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-[#F6F7FA] dark:bg-[#0D1117] p-8 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div>
-          <h2 className="text-3xl font-bold text-[#111827] dark:text-[#E4E6EB] flex items-center gap-3">
-            <span className="text-4xl">📍</span>
-            Locations
-          </h2>
-          <p className="text-sm text-[#6B7280] dark:text-[#9CA3AF] mt-1">
-            Manage asset locations
-          </p>
-        </div>
+    <div className="space-y-6 p-6">
+      <LocationsHeader onAdd={handleAdd} />
 
-        {/* Empty State */}
-        {locations.length === 0 && (
-          <div className="bg-white dark:bg-[#1B1F28] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg shadow-lg dark:shadow-none p-16 text-center">
-            <div className="text-7xl mb-4">📍</div>
-            <h3 className="text-2xl font-bold text-[#111827] dark:text-[#E4E6EB] mb-2">
-              No locations yet
-            </h3>
-            <p className="text-[#6B7280] dark:text-[#9CA3AF]">
-              Locations will appear here once added.
-            </p>
-          </div>
-        )}
+      {isLoading ? (
+        <p className="text-gray-500 dark:text-gray-400">Loading locations...</p>
+      ) : (
+        <LocationsGrid
+          locations={locations}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          assetCounts={assetCounts}
+        />
+      )}
 
-        {/* Locations Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {locations.map((location) => (
-            <div
-              key={location.id}
-              className="
-                bg-white dark:bg-[#1B1F28]
-                border border-[#E5E7EB] dark:border-[#2D3340]
-                rounded-lg shadow-lg dark:shadow-none
-                p-6 transition-all duration-300
-                hover:shadow-xl hover:scale-[1.02]
-              "
-            >
-              <div className="flex items-start gap-4">
-                <div className="text-4xl">📍</div>
+      {/* Add/Edit Location Modal */}
+      <LocationModal open={isModalOpen} onClose={() => setModalOpen(false)}>
+        <LocationForm
+          initialName={editingLocation?.name}
+          onSubmit={handleSubmit}
+        />
+      </LocationModal>
 
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-[#111827] dark:text-[#E4E6EB]">
-                    {location.name}
-                  </h3>
-
-                  {location.description && (
-                    <p className="text-sm text-[#6B7280] dark:text-[#9CA3AF] mt-1">
-                      {location.description}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* Delete Confirmation Dialog */}
+      <DeleteLocationDialog
+        open={!!deletingLocation}
+        onConfirm={confirmDelete}
+        onCancel={() => setDeletingLocation(null)}
+      />
     </div>
   );
 }

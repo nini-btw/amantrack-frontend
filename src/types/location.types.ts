@@ -10,3 +10,8 @@ export interface CreateLocationData {
   name: string;
   description?: string;
 }
+
+export interface UpdateLocationData {
+  name?: string;
+  description?: string;
+}
