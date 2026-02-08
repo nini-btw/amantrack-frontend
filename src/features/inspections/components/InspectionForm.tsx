@@ -58,7 +58,7 @@ export function InspectionForm({ assetId, onSuccess }: InspectionFormProps) {
           }
           className="w-full px-4 py-2 border border-gray-300 dark:border-[#3B3F4B] rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-[#2D3340] dark:text-[#E4E6EB]"
         >
-          <option value="VISUAL">Visual Inspection (Monthly)</option>
+          <option value="VISUAL">Visual Inspection (VISUAL)</option>
           <option value="OFFICIAL">Official Inspection (Yearly)</option>
         </select>
       </div>

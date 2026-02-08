@@ -24,6 +24,9 @@ export interface LogInspectionResponse {
     status: string;
   };
   inspection: {
+    createdAt: string | number | Date;
+    assetId: string;
+    performedBy: string;
     id: string;
     type: InspectionType;
     inspectionDate: string;
