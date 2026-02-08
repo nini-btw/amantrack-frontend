@@ -32,6 +32,7 @@ export function useCreateLocation() {
     mutationFn: (data: CreateLocationData) => locationsService.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.LOCATIONS });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.STATISTICS });
     },
   });
 }
@@ -48,6 +49,7 @@ export function useUpdateLocation() {
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.LOCATION(variables.id),
       });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.STATISTICS });
     },
   });
 }
@@ -57,9 +59,19 @@ export function useDeleteLocation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: string) => locationsService.delete(id),
+    mutationFn: (id: string) => {
+      // Validate that id is not undefined
+      if (!id) {
+        throw new Error("Location ID is required for deletion");
+      }
+      return locationsService.delete(id);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.LOCATIONS });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.STATISTICS });
+    },
+    onError: (error) => {
+      console.error("Delete location error:", error);
     },
   });
 }

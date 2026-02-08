@@ -4,7 +4,6 @@ import { useState } from "react";
 import { LocationsHeader } from "@/features/locations/components/LocationsHeader";
 import { LocationsGrid } from "@/features/locations/components/LocationsGrid";
 import LocationModal from "@/features/locations/components/LocationModal";
-import DeleteLocationDialog from "@/features/locations/components/DeleteLocationDialog";
 import LocationForm from "@/features/locations/components/LocationForm";
 import {
   useLocations,
@@ -19,14 +18,13 @@ export default function LocationsPage() {
   const { data: locations = [], isLoading } = useLocations();
   const createLocation = useCreateLocation();
   const updateLocation = useUpdateLocation();
-  const deleteLocation = useDeleteLocation();
+  const deleteLocationMutation = useDeleteLocation();
   const { data: statistics, isLoading: isLoadingStats } = useStatistics();
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [editingLocation, setEditingLocation] = useState<Location | null>(null);
-  const [deletingLocation, setDeletingLocation] = useState<Location | null>(
-    null,
-  );
+
+  // Calculate asset counts
   const assetCounts = locations.reduce<Record<string, number>>((acc, loc) => {
     acc[loc.id] = statistics?.byLocation[loc.name] || 0;
     return acc;
@@ -44,12 +42,20 @@ export default function LocationsPage() {
     setModalOpen(true);
   };
 
-  // Open delete confirmation dialog
-  const handleDelete = (location: Location) => {
-    setDeletingLocation(location);
+  // Handle delete - now async and takes locationId string
+  const handleDelete = async (locationId: string): Promise<void> => {
+    try {
+      await deleteLocationMutation.mutateAsync(locationId);
+      // Optional: Show success toast
+      console.log("Location deleted successfully");
+    } catch (error) {
+      console.error("Failed to delete location:", error);
+      // Optional: Show error toast
+      throw error; // Re-throw so LocationCard can handle it
+    }
   };
 
-  /// Submit handler for add/edit form
+  // Submit handler for add/edit form
   const handleSubmit = (data: { name: string; description?: string }) => {
     if (editingLocation) {
       updateLocation.mutate({
@@ -60,14 +66,6 @@ export default function LocationsPage() {
       createLocation.mutate(data);
     }
     setModalOpen(false);
-  };
-
-  // Confirm delete
-  const confirmDelete = () => {
-    if (deletingLocation) {
-      deleteLocation.mutate(deletingLocation.id);
-      setDeletingLocation(null);
-    }
   };
 
   return (
@@ -95,13 +93,6 @@ export default function LocationsPage() {
           onSubmit={handleSubmit}
         />
       </LocationModal>
-
-      {/* Delete Confirmation Dialog */}
-      <DeleteLocationDialog
-        open={!!deletingLocation}
-        onConfirm={confirmDelete}
-        onCancel={() => setDeletingLocation(null)}
-      />
     </div>
   );
 }

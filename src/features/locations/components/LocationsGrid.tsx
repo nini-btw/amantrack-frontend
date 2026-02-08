@@ -1,10 +1,11 @@
+"use client";
 import { Location } from "@/types/location.types";
 import { LocationCard } from "./LocationCard";
 
 interface LocationsGridProps {
   locations: Location[];
   onEdit: (location: Location) => void;
-  onDelete: (location: Location) => void;
+  onDelete: (locationId: string) => Promise<void>;
   assetCounts: Record<string, number>;
 }
 
@@ -34,7 +35,7 @@ export function LocationsGrid({
         <LocationCard
           key={location.id}
           location={location}
-          assetCount={assetCounts[location.id]}
+          assetCount={assetCounts[location.id] || 0}
           onEdit={onEdit}
           onDelete={onDelete}
         />
