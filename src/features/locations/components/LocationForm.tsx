@@ -97,8 +97,8 @@ export default function LocationForm({
             flex items-center justify-center gap-2
             px-5 sm:px-6 py-2.5 sm:py-3
             rounded-lg
-            bg-indigo-600 hover:bg-indigo-700
-            dark:bg-indigo-600 dark:hover:bg-indigo-700
+            bg-green-600 hover:bg-green-700
+            dark:bg-green-600 dark:hover:bg-green-700
             text-white font-medium
             text-sm sm:text-base
             cursor-pointer

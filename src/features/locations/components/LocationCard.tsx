@@ -26,8 +26,8 @@ export function LocationCard({
       "
     >
       <div className="flex items-start gap-3 sm:gap-4">
-        <div className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-indigo-100 dark:bg-indigo-900/20 rounded-lg flex items-center justify-center">
-          <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600 dark:text-indigo-400" />
+        <div className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center">
+          <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 dark:text-green-400" />
         </div>
 
         <div className="flex-1 min-w-0">
