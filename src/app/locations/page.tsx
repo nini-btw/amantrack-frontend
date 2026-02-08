@@ -20,7 +20,7 @@ export default function LocationsPage() {
   const createLocation = useCreateLocation();
   const updateLocation = useUpdateLocation();
   const deleteLocation = useDeleteLocation();
-  const { data: statistics, isLoading: isLoadingStats } = useStatistics(); // <-- statistics
+  const { data: statistics, isLoading: isLoadingStats } = useStatistics();
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [editingLocation, setEditingLocation] = useState<Location | null>(null);
@@ -28,7 +28,7 @@ export default function LocationsPage() {
     null,
   );
   const assetCounts = locations.reduce<Record<string, number>>((acc, loc) => {
-    acc[loc.id] = statistics?.byLocation[loc.name] || 0; // <-- get count from statistics
+    acc[loc.id] = statistics?.byLocation[loc.name] || 0;
     return acc;
   }, {});
 
@@ -71,11 +71,13 @@ export default function LocationsPage() {
   };
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-4 sm:space-y-6">
       <LocationsHeader onAdd={handleAdd} />
 
       {isLoading ? (
-        <p className="text-gray-500 dark:text-gray-400">Loading locations...</p>
+        <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400">
+          Loading locations...
+        </p>
       ) : (
         <LocationsGrid
           locations={locations}
@@ -89,6 +91,7 @@ export default function LocationsPage() {
       <LocationModal open={isModalOpen} onClose={() => setModalOpen(false)}>
         <LocationForm
           initialName={editingLocation?.name}
+          initialDescription={editingLocation?.description}
           onSubmit={handleSubmit}
         />
       </LocationModal>
