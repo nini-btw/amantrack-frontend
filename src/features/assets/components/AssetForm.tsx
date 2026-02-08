@@ -23,7 +23,6 @@ export function AssetForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
       await createAsset.mutateAsync({
         ...formData,
@@ -35,7 +34,6 @@ export function AssetForm() {
           formData.officialInspectionDate,
         ).toISOString(),
       });
-
       router.push("/assets");
     } catch (error) {
       console.error("Failed to create asset:", error);
@@ -44,19 +42,23 @@ export function AssetForm() {
   };
 
   if (loadingLocations) {
-    return <div className="text-center py-8">Loading locations...</div>;
+    return (
+      <div className="text-center py-8 text-gray-700 dark:text-[#E4E6EB]">
+        Loading locations...
+      </div>
+    );
   }
 
   if (locations.length === 0) {
     return (
-      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-        <p className="text-yellow-800 mb-4">
+      <div className="bg-yellow-50 dark:bg-yellow-900 border border-yellow-200 dark:border-yellow-700 rounded-lg p-6">
+        <p className="text-yellow-800 dark:text-yellow-300 mb-4">
           ⚠️ No locations available. You need to create at least one location
           first.
         </p>
         <button
           onClick={() => router.push("/locations/new")}
-          className="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700"
+          className="px-4 py-2 bg-yellow-600 dark:bg-yellow-700 text-white rounded hover:bg-yellow-700 dark:hover:bg-yellow-600 transition-colors"
         >
           Create Location
         </button>
@@ -64,16 +66,20 @@ export function AssetForm() {
     );
   }
 
+  const inputClass =
+    "w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-[#3B3F50] bg-white dark:bg-[#1B1F28] text-gray-900 dark:text-[#E4E6EB] placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors";
+
+  const labelClass =
+    "block text-sm font-medium text-gray-700 dark:text-[#E4E6EB] mb-2";
+
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-6 bg-white p-8 rounded-lg shadow"
+      className="space-y-6 bg-white dark:bg-[#1B1F28] p-8 rounded-lg shadow dark:shadow-none transition-colors"
     >
       {/* Reference Number */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Reference Number *
-        </label>
+        <label className={labelClass}>Reference Number *</label>
         <input
           type="text"
           required
@@ -81,21 +87,19 @@ export function AssetForm() {
           onChange={(e) =>
             setFormData({ ...formData, referenceNumber: e.target.value })
           }
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className={inputClass}
           placeholder="e.g., M1C001"
         />
       </div>
 
       {/* Type */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Type *
-        </label>
+        <label className={labelClass}>Type *</label>
         <select
           required
           value={formData.type}
           onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className={inputClass}
         >
           {ASSET_TYPES.map((type) => (
             <option key={type} value={type}>
@@ -107,16 +111,14 @@ export function AssetForm() {
 
       {/* Location */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Location *
-        </label>
+        <label className={labelClass}>Location *</label>
         <select
           required
           value={formData.locationId}
           onChange={(e) =>
             setFormData({ ...formData, locationId: e.target.value })
           }
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className={inputClass}
         >
           <option value="">Select a location</option>
           {locations.map((location) => (
@@ -129,14 +131,12 @@ export function AssetForm() {
 
       {/* Class */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Class *
-        </label>
+        <label className={labelClass}>Class *</label>
         <select
           required
           value={formData.class}
           onChange={(e) => setFormData({ ...formData, class: e.target.value })}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className={inputClass}
         >
           {ASSET_CLASSES.map((cls) => (
             <option key={cls} value={cls}>
@@ -148,9 +148,7 @@ export function AssetForm() {
 
       {/* Weight */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Weight (kg) *
-        </label>
+        <label className={labelClass}>Weight (kg) *</label>
         <input
           type="number"
           required
@@ -160,15 +158,13 @@ export function AssetForm() {
           onChange={(e) =>
             setFormData({ ...formData, weightKg: Number(e.target.value) })
           }
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className={inputClass}
         />
       </div>
 
       {/* Visual Inspection Date */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Last Visual Inspection Date *
-        </label>
+        <label className={labelClass}>Last Visual Inspection Date *</label>
         <input
           type="date"
           required
@@ -176,15 +172,13 @@ export function AssetForm() {
           onChange={(e) =>
             setFormData({ ...formData, visualInspectionDate: e.target.value })
           }
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className={inputClass}
         />
       </div>
 
       {/* Official Inspection Date */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Last Official Inspection Date *
-        </label>
+        <label className={labelClass}>Last Official Inspection Date *</label>
         <input
           type="date"
           required
@@ -192,7 +186,7 @@ export function AssetForm() {
           onChange={(e) =>
             setFormData({ ...formData, officialInspectionDate: e.target.value })
           }
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className={inputClass}
         />
       </div>
 
@@ -208,7 +202,7 @@ export function AssetForm() {
         <button
           type="button"
           onClick={() => router.back()}
-          className="px-6 py-3 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition-colors"
+          className="px-6 py-3 bg-gray-200 dark:bg-[#2D3340] text-gray-700 dark:text-[#E4E6EB] font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-[#3B3F50] transition-colors"
         >
           Cancel
         </button>

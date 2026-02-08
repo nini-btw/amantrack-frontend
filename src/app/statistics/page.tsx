@@ -23,23 +23,30 @@ export default function StatisticsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-[#F6F7FA] dark:bg-[#0D1117] p-8 transition-colors duration-300">
+      <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-3">
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold text-[#111827] dark:text-[#E4E6EB] flex items-center gap-3">
             <span className="text-4xl">📊</span>
             Statistics & Reports
           </h1>
+
           <Link
             href="/"
-            className="px-6 py-3 bg-gray-800 text-white font-medium rounded-lg hover:bg-gray-900 transition-colors"
+            className="
+              px-6 py-3 bg-white dark:bg-[#1B1F28]
+              border-2 border-[#E5E7EB] dark:border-[#2D3340]
+              text-[#111827] dark:text-[#E4E6EB]
+              rounded-lg font-medium
+              hover:bg-gray-50 dark:hover:bg-[#2A2E37]
+              transition-all
+            "
           >
-            ← Back to Menu
+            ← Back
           </Link>
         </div>
 
-        {/* Charts */}
         <StatisticsCharts statistics={statistics} />
       </div>
     </div>

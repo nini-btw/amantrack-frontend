@@ -40,15 +40,15 @@ export function InspectionForm({ assetId, onSuccess }: InspectionFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-4 bg-white p-6 rounded-lg border border-gray-200"
+      className="space-y-4 bg-white dark:bg-[#1B1F28] p-6 rounded-lg border border-gray-200 dark:border-[#2D3340]"
     >
-      <h3 className="text-lg font-semibold text-gray-800 mb-4">
+      <h3 className="text-lg font-semibold text-gray-800 dark:text-[#E4E6EB] mb-4">
         Log Inspection
       </h3>
 
       {/* Type */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-gray-700 dark:text-[#9CA3AF] mb-2">
           Inspection Type *
         </label>
         <select
@@ -56,7 +56,7 @@ export function InspectionForm({ assetId, onSuccess }: InspectionFormProps) {
           onChange={(e) =>
             setFormData({ ...formData, type: e.target.value as InspectionType })
           }
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 dark:border-[#3B3F4B] rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-[#2D3340] dark:text-[#E4E6EB]"
         >
           <option value="VISUAL">Visual Inspection (Monthly)</option>
           <option value="OFFICIAL">Official Inspection (Yearly)</option>
@@ -65,7 +65,7 @@ export function InspectionForm({ assetId, onSuccess }: InspectionFormProps) {
 
       {/* Date */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-gray-700 dark:text-[#9CA3AF] mb-2">
           Inspection Date *
         </label>
         <input
@@ -75,20 +75,20 @@ export function InspectionForm({ assetId, onSuccess }: InspectionFormProps) {
           onChange={(e) =>
             setFormData({ ...formData, inspectionDate: e.target.value })
           }
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 dark:border-[#3B3F4B] rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-[#2D3340] dark:text-[#E4E6EB]"
         />
       </div>
 
       {/* Notes */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-gray-700 dark:text-[#9CA3AF] mb-2">
           Notes (Optional)
         </label>
         <textarea
           value={formData.notes}
           onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
           rows={3}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 dark:border-[#3B3F4B] rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-[#2D3340] dark:text-[#E4E6EB]"
           placeholder="Any additional notes..."
         />
       </div>

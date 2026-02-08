@@ -1,9 +1,15 @@
+"use client"; // ← ADD THIS LINE
+
 import { Sidebar } from "./Sidebar";
 import { Header } from "./Header";
 
-export function DashboardLayout({ children }: { children: React.ReactNode }) {
+interface DashboardLayoutProps {
+  children: React.ReactNode;
+}
+
+export function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50">
+    <div className="flex h-screen overflow-hidden bg-[#f6f7fa] dark:bg-[#0d1117] transition-colors">
       {/* Sidebar */}
       <Sidebar />
 
