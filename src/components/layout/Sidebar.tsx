@@ -121,7 +121,7 @@ export function Sidebar({
       {/* Sidebar */}
       <div
         className={cn(
-          "flex h-screen flex-col bg-[#111827] dark:bg-[#1b1f28] text-white transition-all duration-300 relative overflow-x-hidden border-r border-gray-800 dark:border-[#2d3340]",
+          "rounded-br-lg flex h-screen flex-col bg-[#111827] dark:bg-[#1b1f28] text-white transition-all duration-300 relative overflow-x-hidden border-r border-gray-800 dark:border-[#2d3340]",
           // Desktop behavior
           !isMobile && (isCollapsed ? "w-20" : "w-64"),
           // Mobile behavior
@@ -174,7 +174,7 @@ export function Sidebar({
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto px-1 py-4 space-y-2">
+        <nav className="rounded-lg flex-1 overflow-y-auto px-1 py-4 space-y-2">
           {isCollapsed && !isMobile
             ? groups.map((group, gi) => {
                 const groupItems = navigation.filter(

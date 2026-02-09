@@ -8,6 +8,7 @@ import { AssetTable } from "@/features/assets/components/AssetTable";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { ErrorMessage } from "@/components/ErrorMessage";
 import { ComplianceStatus } from "@/types/asset.types";
+import { Archive } from "lucide-react";
 
 export default function AssetsListPage() {
   const {
@@ -85,16 +86,16 @@ export default function AssetsListPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F6F7FA] dark:bg-[#0D1117] p-8 transition-colors duration-300">
+    <div className="min-h-screen bg-[#F6F7FA] dark:bg-[#0D1117] transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
             <h1 className="text-3xl font-bold text-[#111827] dark:text-[#E4E6EB] flex items-center gap-3">
-              <span className="text-4xl">🧯</span>
+              <Archive className="w-8 h-8 sm:w-10 sm:h-10 text-[#E7000B] dark:text-[#FF4D4F]" />
               Asset Management
             </h1>
-            <p className="text-sm text-[#6B7280] dark:text-[#9CA3AF] mt-1">
-              Currently managing: Fire Extinguishers
+            <p className="text-xs sm:text-sm text-[#6B7280] dark:text-[#9CA3AF] mt-1">
+              Asset statistics, compliance rates, and trends
             </p>
           </div>
 
@@ -179,59 +180,77 @@ export default function AssetsListPage() {
             </div>
 
             {/* Filter Buttons */}
-            <div className="flex gap-2 flex-wrap">
-              <button
-                onClick={() => setFilter("ALL")}
-                className={`cursor-pointer px-4 py-2 rounded-lg font-semibold transition-all duration-200 ${
-                  filter === "ALL"
-                    ? "bg-blue-600 dark:bg-blue-500 text-white shadow-md"
-                    : "bg-gray-100 dark:bg-[#2A2E37] text-[#6B7280] dark:text-[#9CA3AF] hover:bg-gray-200 dark:hover:bg-[#3D4350]"
-                }`}
-              >
-                All ({counts.total})
-              </button>
+            <div className="flex flex-wrap gap-2">
+              {[
+                {
+                  key: "ALL" as const,
+                  label: "All",
+                  count: counts.total,
+                  color: "blue",
+                },
+                {
+                  key: "GREEN" as const,
+                  label: "Valid",
+                  count: counts.green,
+                  color: "green",
+                  icon: "✓",
+                },
+                {
+                  key: "YELLOW" as const,
+                  label: "Warning",
+                  count: counts.yellow,
+                  color: "yellow",
+                  icon: "⚠",
+                },
+                {
+                  key: "RED" as const,
+                  label: "Expired",
+                  count: counts.red,
+                  color: "red",
+                  icon: "✕",
+                },
+              ].map((btn) => {
+                const isActive = filter === btn.key;
+                const colors: Record<
+                  string,
+                  { active: string; inactive: string }
+                > = {
+                  blue: {
+                    active: "bg-blue-600 dark:bg-blue-500 text-white",
+                    inactive:
+                      "bg-gray-100 dark:bg-[#2A2E37] text-[#6B7280] dark:text-[#9CA3AF] hover:bg-gray-200 dark:hover:bg-[#3D4350]",
+                  },
+                  green: {
+                    active: "bg-green-600 dark:bg-green-500 text-white",
+                    inactive:
+                      "bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/30 border border-green-200 dark:border-green-800",
+                  },
+                  yellow: {
+                    active: "bg-yellow-600 dark:bg-yellow-500 text-white",
+                    inactive:
+                      "bg-yellow-100 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-400 hover:bg-yellow-200 dark:hover:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-800",
+                  },
+                  red: {
+                    active: "bg-red-600 dark:bg-red-500 text-white",
+                    inactive:
+                      "bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/30 border border-red-200 dark:border-red-800",
+                  },
+                };
 
-              <button
-                onClick={() => setFilter("GREEN")}
-                className={`px-4 cursor-pointer py-2 rounded-lg font-semibold transition-all duration-200 ${
-                  filter === "GREEN"
-                    ? "bg-green-600 dark:bg-green-500 text-white shadow-md"
-                    : "bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/30 border border-green-200 dark:border-green-800"
-                }`}
-              >
-                <span className="flex items-center gap-1.5">
-                  <span className="text-sm">✓</span>
-                  Valid ({counts.green})
-                </span>
-              </button>
-
-              <button
-                onClick={() => setFilter("YELLOW")}
-                className={`px-4 cursor-pointer py-2 rounded-lg font-semibold transition-all duration-200 ${
-                  filter === "YELLOW"
-                    ? "bg-yellow-600 dark:bg-yellow-500 text-white shadow-md"
-                    : "bg-yellow-100 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-400 hover:bg-yellow-200 dark:hover:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-800"
-                }`}
-              >
-                <span className="flex items-center gap-1.5">
-                  <span className="text-sm">⚠</span>
-                  Warning ({counts.yellow})
-                </span>
-              </button>
-
-              <button
-                onClick={() => setFilter("RED")}
-                className={`px-4 cursor-pointer py-2 rounded-lg font-semibold transition-all duration-200 ${
-                  filter === "RED"
-                    ? "bg-red-600 dark:bg-red-500 text-white shadow-md"
-                    : "bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/30 border border-red-200 dark:border-red-800"
-                }`}
-              >
-                <span className="flex items-center gap-1.5">
-                  <span className="text-sm">✕</span>
-                  Expired ({counts.red})
-                </span>
-              </button>
+                return (
+                  <button
+                    key={btn.key}
+                    onClick={() => setFilter(btn.key)}
+                    className={`
+          flex-1 min-w-30 flex items-center justify-center gap-1.5 py-2 rounded-lg font-semibold transition-all duration-200 cursor-pointer
+          ${isActive ? colors[btn.color].active + " shadow-md" : colors[btn.color].inactive}
+        `}
+                  >
+                    {btn.icon && <span className="text-sm">{btn.icon}</span>}
+                    {btn.label} ({btn.count})
+                  </button>
+                );
+              })}
             </div>
           </div>
 

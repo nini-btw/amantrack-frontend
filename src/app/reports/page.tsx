@@ -60,19 +60,19 @@ export default function ReportsPage() {
     );
 
   return (
-    <div className="min-h-screen bg-[#F6F7FA] dark:bg-[#0D1117] p-4 transition-colors duration-300">
+    <div className="min-h-screen bg-[#F6F7FA] dark:bg-[#0D1117] transition-colors duration-300">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold text-[#111827] dark:text-[#E4E6EB] flex items-center gap-2">
-              <div className="bg-blue-50 dark:bg-blue-900/10 p-2 rounded-lg">
-                <FileText className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+              <div className="text-[#111827] dark:text-[#E4E6EB] rounded-lg">
+                <FileText className="w-8 h-8 sm:w-10 sm:h-10 text-blue-600 dark:text-blue-400" />
               </div>
               Reports & Inspections
             </h1>
             <p className="text-sm text-[#6B7280] dark:text-[#9CA3AF] mt-2">
-              Manage inspection records and generate compliance reports
+              Manage assets, track status, and maintain compliance
             </p>
           </div>
           <button
@@ -88,6 +88,7 @@ export default function ReportsPage() {
 
         {/* Filters and Search */}
         <div className="bg-white dark:bg-[#1B1F28] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg shadow-lg p-4 flex flex-col sm:flex-row gap-3">
+          {/* Search Bar */}
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6B7280] dark:text-[#9CA3AF]" />
             <input
@@ -95,25 +96,32 @@ export default function ReportsPage() {
               placeholder="Search inspections..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-[#F6F7FA] dark:bg-[#0D1117] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg text-[#111827] dark:text-[#E4E6EB] placeholder:text-[#6B7280] dark:placeholder:text-[#9CA3AF]"
+              className="w-full h-full pl-10 pr-4 py-2.5 bg-[#F6F7FA] dark:bg-[#0D1117] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg text-[#111827] dark:text-[#E4E6EB] placeholder:text-[#6B7280] dark:placeholder:text-[#9CA3AF]"
             />
           </div>
+
+          {/* Filter Toggle */}
           <div className="relative sm:w-64">
-            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6B7280] dark:text-[#9CA3AF]" />
-            <select
-              value={selectedType}
-              onChange={(e) =>
-                setSelectedType(e.target.value as Inspection["type"] | "ALL")
-              }
-              className="w-full pl-10 pr-10 py-2.5 bg-[#F6F7FA] dark:bg-[#0D1117] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg text-[#111827] dark:text-[#E4E6EB] cursor-pointer"
-            >
+            <div className="flex w-full h-full bg-[#F6F7FA] dark:bg-[#0D1117] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg overflow-hidden">
               {inspectionTypes.map((type) => (
-                <option key={type.value} value={type.value}>
+                <button
+                  key={type.value}
+                  onClick={() => setSelectedType(type.value)}
+                  className={`
+            flex-1 text-sm font-medium transition-colors duration-200
+            py-2.5
+            cursor-pointer
+            ${
+              selectedType === type.value
+                ? "bg-blue-600 text-white hover:bg-blue-600"
+                : "text-[#111827] dark:text-[#E4E6EB] hover:bg-blue-100 dark:hover:bg-blue-900/20"
+            }
+          `}
+                >
                   {type.label}
-                </option>
+                </button>
               ))}
-            </select>
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6B7280] dark:text-[#9CA3AF]" />
+            </div>
           </div>
         </div>
 

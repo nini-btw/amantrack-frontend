@@ -31,12 +31,12 @@ export function StatusBadge({ status, daysRemaining }: StatusBadgeProps) {
   return (
     <div className="flex items-center gap-2">
       <span
-        className={`px-3 py-1 rounded-full text-sm font-medium border 
+        className={`px-1 lg:px-3 py-0.5 lg:py-1 rounded-full text-xs lg:text-sm font-medium border 
           ${getLightColor()} ${getDarkColor()}`}
       >
         {getStatusLabel(status)}
       </span>
-      <span className="text-sm text-gray-600 dark:text-gray-300">
+      <span className="text-xs lg:text-sm text-gray-600 dark:text-gray-300">
         {daysRemaining > 0
           ? `${daysRemaining} days left`
           : `${Math.abs(daysRemaining)} days overdue`}

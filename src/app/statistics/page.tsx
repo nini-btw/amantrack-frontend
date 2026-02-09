@@ -24,14 +24,19 @@ export default function StatisticsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F6F7FA] dark:bg-[#0D1117] p-3 sm:p-4 md:p-6 lg:p-8 transition-colors duration-300">
+    <div className="min-h-screen bg-[#F6F7FA] dark:bg-[#0D1117]  transition-colors duration-300">
       <div className="max-w-7xl mx-auto space-y-4 sm:space-y-5 lg:space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#111827] dark:text-[#E4E6EB] flex items-center gap-2 sm:gap-3">
-            <BarChart2 className="dark:text-purple-500 text-purple-700 w-8 h-8 sm:w-10 sm:h-10" />
-            <span className="leading-tight">Statistics & Charts</span>
-          </h1>
+          <div>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#111827] dark:text-[#E4E6EB] flex items-center gap-2 sm:gap-3">
+              <BarChart2 className="dark:text-purple-500 text-purple-700 w-8 h-8 sm:w-10 sm:h-10" />
+              <span className="leading-tight">Statistics & Charts</span>
+            </h1>
+            <p className="text-xs sm:text-sm text-[#6B7280] dark:text-[#9CA3AF] mt-1">
+              Asset statistics, compliance rates, and trends
+            </p>
+          </div>
 
           <Link
             href="/"
@@ -54,18 +59,6 @@ export default function StatisticsPage() {
             <span className="text-lg">←</span>
             <span>Back to Dashboard</span>
           </Link>
-        </div>
-
-        {/* Optional: Add a subtitle/description for better UX */}
-        <div className="bg-blue-50 dark:bg-blue-900/10 border border-blue-200 dark:border-blue-800/30 rounded-lg p-3 sm:p-4">
-          <p className="text-xs sm:text-sm text-blue-800 dark:text-blue-300 flex items-start gap-2">
-            <span className="text-base sm:text-lg shrink-0">ℹ️</span>
-            <span>
-              View comprehensive analytics and insights about your asset
-              management system. All charts are interactive - hover or tap for
-              detailed information.
-            </span>
-          </p>
         </div>
 
         <StatisticsCharts statistics={statistics} />

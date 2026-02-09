@@ -1,32 +1,51 @@
-export const ASSET_TYPES = ["CO2", "Poudre", "Eau", "Mousse"] as const;
+// Asset Types Configuration
+export const ASSET_TYPES = [
+  "CO2",
+  "Powder",
+  "Foam",
+  "Water",
+  "Wet Chemical",
+  "Clean Agent",
+] as const;
 
+// Asset Classes Configuration
 export const ASSET_CLASSES = [
   "A",
   "B",
   "C",
+  "D",
+  "K",
   "A, B",
   "A, B, C",
   "B, C",
 ] as const;
 
+// React Query Keys
+export const QUERY_KEYS = {
+  ASSETS: ["assets"] as const,
+  ASSET: (id: string) => ["assets", id] as const,
+  LOCATIONS: ["locations"] as const,
+  LOCATION: (id: string) => ["locations", id] as const,
+  INSPECTIONS: ["inspections"] as const,
+  INSPECTION: (id: string) => ["inspections", id] as const,
+  STATISTICS: ["statistics"] as const,
+} as const;
+
+// Inspection Types
 export const INSPECTION_TYPES = {
   VISUAL: "VISUAL",
   OFFICIAL: "OFFICIAL",
 } as const;
 
-export const QUERY_KEYS = {
-  // Assets
-  ASSETS: ["assets"] as const,
-  ASSET: (id: string) => ["assets", id] as const,
+// Compliance Status
+export const COMPLIANCE_STATUS = {
+  GREEN: "GREEN",
+  YELLOW: "YELLOW",
+  RED: "RED",
+} as const;
 
-  // Locations
-  LOCATIONS: ["locations"] as const,
-  LOCATION: (id: string) => ["locations", id] as const,
-
-  // Inspections
-  INSPECTIONS: ["inspections"] as const,
-  INSPECTION: (id: string) => ["inspections", id] as const,
-
-  // Statistics
-  STATISTICS: ["statistics"] as const,
+// Inspection Intervals (in days)
+export const INSPECTION_INTERVALS = {
+  VISUAL: 30, // 1 month
+  OFFICIAL: 365, // 1 year
 } as const;

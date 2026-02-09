@@ -70,29 +70,31 @@ export default function LocationsPage() {
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      <LocationsHeader onAdd={handleAdd} />
+      <div className="max-w-7xl mx-auto space-y-6">
+        <LocationsHeader onAdd={handleAdd} />
 
-      {isLoading ? (
-        <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400">
-          Loading locations...
-        </p>
-      ) : (
-        <LocationsGrid
-          locations={locations}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          assetCounts={assetCounts}
-        />
-      )}
+        {isLoading ? (
+          <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400">
+            Loading locations...
+          </p>
+        ) : (
+          <LocationsGrid
+            locations={locations}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            assetCounts={assetCounts}
+          />
+        )}
 
-      {/* Add/Edit Location Modal */}
-      <LocationModal open={isModalOpen} onClose={() => setModalOpen(false)}>
-        <LocationForm
-          initialName={editingLocation?.name}
-          initialDescription={editingLocation?.description}
-          onSubmit={handleSubmit}
-        />
-      </LocationModal>
+        {/* Add/Edit Location Modal */}
+        <LocationModal open={isModalOpen} onClose={() => setModalOpen(false)}>
+          <LocationForm
+            initialName={editingLocation?.name}
+            initialDescription={editingLocation?.description}
+            onSubmit={handleSubmit}
+          />
+        </LocationModal>
+      </div>
     </div>
   );
 }

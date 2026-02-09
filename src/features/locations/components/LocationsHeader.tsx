@@ -9,7 +9,7 @@ export function LocationsHeader({ onAdd }: LocationsHeaderProps) {
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
         <h2 className="text-2xl sm:text-3xl font-bold text-[#111827] dark:text-[#E4E6EB] flex items-center gap-2">
-          <MapPin className="w-6 h-6 sm:w-7 sm:h-7 text-green-600 dark:text-green-400 shrink-0" />
+          <MapPin className="w-8 h-8 sm:w-10 sm:h-10 text-green-600 dark:text-green-400 shrink-0" />
           <span>Locations</span>
         </h2>
 
