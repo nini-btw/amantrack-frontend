@@ -8,7 +8,13 @@ import { AssetTable } from "@/features/assets/components/AssetTable";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { ErrorMessage } from "@/components/ErrorMessage";
 import { ComplianceStatus } from "@/types/asset.types";
-import { Archive } from "lucide-react";
+import {
+  Archive,
+  Search,
+  CheckCircle,
+  AlertTriangle,
+  XCircle,
+} from "lucide-react";
 
 export default function AssetsListPage() {
   const {
@@ -25,30 +31,7 @@ export default function AssetsListPage() {
 
   // ENHANCED LOADING STATE
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-[#F6F7FA] dark:bg-[#0D1117] p-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col items-center justify-center min-h-150 gap-4">
-            {/* Branded Spinner */}
-            <div className="relative">
-              <div className="w-16 h-16 border-4 border-gray-200 dark:border-gray-700 border-t-blue-600 dark:border-t-blue-500 rounded-full animate-spin"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-2xl">🧯</span>
-              </div>
-            </div>
-
-            <div className="text-center">
-              <p className="text-sm font-medium text-[#111827] dark:text-[#E4E6EB] mb-1">
-                Loading Assets
-              </p>
-              <p className="text-xs text-[#6B7280] dark:text-[#9CA3AF] animate-pulse">
-                Fetching asset data...
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner message="Loading Assets..." />;
   }
 
   if (assetsError) {
@@ -193,21 +176,21 @@ export default function AssetsListPage() {
                   label: "Valid",
                   count: counts.green,
                   color: "green",
-                  icon: "✓",
+                  icon: CheckCircle,
                 },
                 {
                   key: "YELLOW" as const,
                   label: "Warning",
                   count: counts.yellow,
                   color: "yellow",
-                  icon: "⚠",
+                  icon: AlertTriangle,
                 },
                 {
                   key: "RED" as const,
                   label: "Expired",
                   count: counts.red,
                   color: "red",
-                  icon: "✕",
+                  icon: XCircle,
                 },
               ].map((btn) => {
                 const isActive = filter === btn.key;
@@ -246,7 +229,7 @@ export default function AssetsListPage() {
           ${isActive ? colors[btn.color].active + " shadow-md" : colors[btn.color].inactive}
         `}
                   >
-                    {btn.icon && <span className="text-sm">{btn.icon}</span>}
+                    {btn.icon && <btn.icon className="w-4 h-4 shrink-0" />}
                     {btn.label} ({btn.count})
                   </button>
                 );
@@ -313,10 +296,13 @@ export default function AssetsListPage() {
         {/* EMPTY STATE - No Results */}
         {filteredAssets.length === 0 && assets.length > 0 && (
           <div className="bg-white dark:bg-[#1B1F28] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg shadow-lg dark:shadow-none p-12 text-center">
-            <div className="text-6xl mb-4">🔍</div>
+            <div className="flex items-center justify-center mb-4">
+              <Search className="w-14 h-14 text-[#9CA3AF] dark:text-[#6B7280]" />
+            </div>
             <h3 className="text-xl font-semibold text-[#111827] dark:text-[#E4E6EB] mb-2">
               No assets found
             </h3>
+
             <p className="text-[#6B7280] dark:text-[#9CA3AF] mb-6">
               Try adjusting your search or filter criteria
             </p>

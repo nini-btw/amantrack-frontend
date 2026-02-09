@@ -6,7 +6,7 @@ import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { StatsGrid } from "@/components/dashboard//StatesGrid";
 import { QuickActions } from "@/components/dashboard/QuickActions";
 import { AssetList } from "@/components/dashboard/AssetList";
-import { AlertTriangle, Clock, Plus } from "lucide-react";
+import { AlertTriangle, Clock, Plus, Sparkles, Package } from "lucide-react";
 
 export default function DashboardPage() {
   const { data: assets = [], isLoading: loadingAssets } = useAssets();
@@ -49,7 +49,7 @@ export default function DashboardPage() {
           assets={needsAttention}
           variant="attention"
           emptyState={{
-            icon: "✨",
+            icon: "✓",
             title: "All Clear!",
             description: "All assets are in good standing",
           }}
@@ -63,7 +63,7 @@ export default function DashboardPage() {
           variant="recent"
           showViewAll
           emptyState={{
-            icon: "📦",
+            icon: Package,
             title: "No Assets Yet",
             description: "Get started by adding your first fire extinguisher",
             action: {

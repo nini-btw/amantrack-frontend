@@ -235,6 +235,15 @@ export default function AssetDetailPage() {
                   <div>
                     <p className={labelClass}>
                       <Tag className="w-4 h-4" />
+                      Asset ID
+                    </p>
+                    <p className="text-sm sm:text-base font-mono text-[#111827] dark:text-[#E4E6EB] break-all">
+                      {asset.id}
+                    </p>
+                  </div>
+                  <div>
+                    <p className={labelClass}>
+                      <Tag className="w-4 h-4" />
                       Reference Number
                     </p>
                     <p className="text-base sm:text-lg font-medium text-[#111827] dark:text-[#E4E6EB]">

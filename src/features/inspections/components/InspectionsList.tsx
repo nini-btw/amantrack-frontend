@@ -251,18 +251,8 @@ export function InspectionsList({
                   <td className="px-4 py-4 whitespace-nowrap text-right">
                     <div className="flex items-center justify-end gap-2">
                       <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onSelectInspection(inspection.inspection.id);
-                        }}
-                        className="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/10 rounded-lg transition-colors"
-                        title="View Details"
-                      >
-                        <Eye className="w-4 h-4" />
-                      </button>
-                      <button
                         onClick={(e) => handleDeleteClick(inspection, e)}
-                        className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-lg transition-colors"
+                        className="cursor-pointer p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-lg transition-colors"
                         title="Delete"
                       >
                         <Trash2 className="w-4 h-4" />

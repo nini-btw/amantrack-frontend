@@ -36,7 +36,6 @@ export function useInspection(id: string) {
   });
 }
 
-// Delete an inspection
 export function useDeleteInspection() {
   const queryClient = useQueryClient();
 
@@ -45,7 +44,9 @@ export function useDeleteInspection() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ASSETS });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.STATISTICS });
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.INSPECTIONS });
+
+      // ✅ FIX: invalidate ALL inspections queries (any type filter)
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.INSPECTIONS] });
     },
   });
 }

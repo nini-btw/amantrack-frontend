@@ -56,3 +56,21 @@ export function getRowBackgroundColor(status: "GREEN" | "YELLOW" | "RED") {
       return "";
   }
 }
+
+export function resolveAssetIdentifier(value: string): {
+  assetId?: string;
+  assetRef?: string;
+} {
+  const v = value.trim();
+
+  // UUID v4 pattern
+  const uuidRegex =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+  if (uuidRegex.test(v)) {
+    return { assetId: v };
+  }
+
+  // Default to reference
+  return { assetRef: v };
+}

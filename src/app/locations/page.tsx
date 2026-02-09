@@ -13,6 +13,7 @@ import {
 } from "@/features/locations/hooks/useLocations";
 import { Location } from "@/types/location.types";
 import { useStatistics } from "@/features/statistics/hooks/useStatistics";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 export default function LocationsPage() {
   const { data: locations = [], isLoading } = useLocations();
@@ -74,9 +75,7 @@ export default function LocationsPage() {
         <LocationsHeader onAdd={handleAdd} />
 
         {isLoading ? (
-          <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400">
-            Loading locations...
-          </p>
+          <LoadingSpinner message="Loading Locations..." />
         ) : (
           <LocationsGrid
             locations={locations}

@@ -1,3 +1,4 @@
+"use client";
 import { MapPin, Plus } from "lucide-react";
 
 interface LocationsHeaderProps {

@@ -1,7 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { LucideIcon, AlertTriangle, Clock, Plus } from "lucide-react";
+import {
+  LucideIcon,
+  AlertTriangle,
+  Clock,
+  Plus,
+  CheckCircle,
+  XCircle,
+} from "lucide-react";
 
 interface Asset {
   id: string;
@@ -32,25 +39,28 @@ interface AssetListProps {
 
 const statusConfig = {
   GREEN: {
-    label: "✓ Valid",
+    label: "Valid",
+    icon: CheckCircle,
     bg: "bg-green-50 dark:bg-green-900/20",
     text: "text-green-700 dark:text-green-400",
     border: "border-green-200 dark:border-green-800",
     dot: "bg-green-500",
   },
   YELLOW: {
-    label: "⚠ Warning",
+    label: "Warning",
+    icon: AlertTriangle,
     bg: "bg-yellow-50 dark:bg-yellow-900/20",
     text: "text-yellow-700 dark:text-yellow-400",
     border: "border-yellow-200 dark:border-yellow-800",
     dot: "bg-yellow-500",
   },
   RED: {
-    label: "✕ Expired",
+    label: "Expired",
+    icon: XCircle,
     bg: "bg-red-50 dark:bg-red-900/20",
     text: "text-red-700 dark:text-red-400",
     border: "border-red-200 dark:border-red-800",
-    dot: "bg-red-500 animate-pulse",
+    dot: "bg-red-500",
   },
 };
 

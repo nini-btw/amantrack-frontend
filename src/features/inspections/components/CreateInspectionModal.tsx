@@ -5,6 +5,8 @@ import { X, Calendar, User, FileText, Tag, Save } from "lucide-react";
 import { useLogInspection } from "@/features/inspections/hooks/useInspections";
 import { InspectionType } from "@/types/asset.types";
 
+import { resolveAssetIdentifier } from "@/lib/utils";
+
 interface CreateInspectionModalProps {
   onClose: () => void;
   onSuccess: () => void;
@@ -123,8 +125,8 @@ export function CreateInspectionModal({
                 Inspection Type
                 <span className="text-red-500">*</span>
               </label>
-              <div className="grid grid-cols-3 gap-3">
-                {(["OFFICIAL", "VISUAL", "QUARTERLY"] as InspectionType[]).map(
+              <div className="grid grid-cols-2 gap-3">
+                {(["OFFICIAL", "VISUAL"] as InspectionType[]).map(
                   (inspectionType) => (
                     <button
                       key={inspectionType}
