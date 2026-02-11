@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Presentation page styles */
+@import "../styles/presentation/landing.css";
+@import "../styles/presentation/sections.css";
+@import "../styles/presentation/animations.css";
+
 @variant dark (&:where(.dark, .dark *));
 
 :root {
