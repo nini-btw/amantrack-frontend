@@ -1,11 +1,22 @@
-/* ============================================
-   ANIMATIONS
-   CSS animations and keyframes for presentations
-   ============================================ */
+/* =========================
+   Animations & Transitions
+========================= */
 
-/* ============================================
-   KEYFRAME ANIMATIONS
-   ============================================ */
+.fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+.slide-up {
+  animation: slideUp 0.6s ease forwards;
+}
+
+.slide-down {
+  animation: slideDown 0.6s ease forwards;
+}
+
+.scale-in {
+  animation: scaleIn 0.4s ease forwards;
+}
 
 @keyframes fadeIn {
   from {
@@ -16,337 +27,45 @@
   }
 }
 
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
 @keyframes slideUp {
   from {
+    transform: translateY(30px);
     opacity: 0;
-    transform: translateY(20px);
   }
   to {
-    opacity: 1;
     transform: translateY(0);
+    opacity: 1;
   }
 }
 
 @keyframes slideDown {
   from {
+    transform: translateY(-30px);
     opacity: 0;
-    transform: translateY(-20px);
   }
   to {
-    opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes slideLeft {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
     opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideRight {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
   }
 }
 
 @keyframes scaleIn {
   from {
-    opacity: 0;
     transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes scaleOut {
-  from {
-    opacity: 1;
-    transform: scale(1);
-  }
-  to {
     opacity: 0;
-    transform: scale(0.95);
-  }
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
   }
   to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes pulse {
-  0%,
-  100% {
+    transform: scale(1);
     opacity: 1;
   }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-@keyframes glow {
-  0%,
-  100% {
-    box-shadow: 0 0 20px rgba(255, 107, 26, 0.2);
-  }
-  50% {
-    box-shadow: 0 0 40px rgba(255, 107, 26, 0.4);
-  }
-}
-
-/* ============================================
-   ANIMATION UTILITY CLASSES
-   ============================================ */
-
-.fade-in {
-  animation: fadeIn 0.6s ease-out;
-}
-
-.slide-up {
-  animation: slideUp 0.6s ease-out;
-}
-
-.slide-down {
-  animation: slideDown 0.6s ease-out;
-}
-
-.slide-left {
-  animation: slideLeft 0.6s ease-out;
-}
-
-.slide-right {
-  animation: slideRight 0.6s ease-out;
-}
-
-.scale-in {
-  animation: scaleIn 0.5s ease-out;
-}
-
-.pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.spin {
-  animation: spin 1s linear infinite;
-}
-
-/* ============================================
-   TRANSITION UTILITIES
-   ============================================ */
-
-.transition-all {
-  transition: all 0.3s ease;
 }
 
 .transition-fast {
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
 }
-
+.transition {
+  transition: all 0.35s ease;
+}
 .transition-slow {
-  transition: all 0.5s ease;
-}
-
-/* ============================================
-   HOVER EFFECTS
-   ============================================ */
-
-.hover-lift {
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.hover-lift:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(255, 107, 26, 0.1);
-}
-
-.hover-glow {
-  transition: box-shadow 0.3s ease;
-}
-
-.hover-glow:hover {
-  box-shadow: 0 0 30px rgba(255, 107, 26, 0.3);
-}
-
-.hover-scale {
-  transition: transform 0.3s ease;
-}
-
-.hover-scale:hover {
-  transform: scale(1.05);
-}
-
-/* ============================================
-   LOADING STATES
-   ============================================ */
-
-.loading {
-  position: relative;
-  pointer-events: none;
-  opacity: 0.6;
-}
-
-.loading::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 20px;
-  height: 20px;
-  margin: -10px 0 0 -10px;
-  border: 2px solid var(--color-primary);
-  border-top-color: transparent;
-  border-radius: 50%;
-  animation: spin 0.6s linear infinite;
-}
-
-/* ============================================
-   SCROLL REVEAL
-   ============================================ */
-
-.scroll-reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 0.6s ease,
-    transform 0.6s ease;
-}
-
-.scroll-reveal.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Delay variations */
-.scroll-reveal.delay-100 {
-  transition-delay: 0.1s;
-}
-
-.scroll-reveal.delay-200 {
-  transition-delay: 0.2s;
-}
-
-.scroll-reveal.delay-300 {
-  transition-delay: 0.3s;
-}
-
-.scroll-reveal.delay-400 {
-  transition-delay: 0.4s;
-}
-
-/* ============================================
-   GRADIENT ANIMATIONS
-   ============================================ */
-
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.animated-gradient {
-  background-size: 200% 200%;
-  animation: gradientShift 3s ease infinite;
-}
-
-/* ============================================
-   STAGGER ANIMATIONS
-   ============================================ */
-
-.stagger-children > * {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: slideUp 0.6s ease-out forwards;
-}
-
-.stagger-children > *:nth-child(1) {
-  animation-delay: 0s;
-}
-.stagger-children > *:nth-child(2) {
-  animation-delay: 0.1s;
-}
-.stagger-children > *:nth-child(3) {
-  animation-delay: 0.2s;
-}
-.stagger-children > *:nth-child(4) {
-  animation-delay: 0.3s;
-}
-.stagger-children > *:nth-child(5) {
-  animation-delay: 0.4s;
-}
-.stagger-children > *:nth-child(6) {
-  animation-delay: 0.5s;
-}
-
-/* ============================================
-   PERFORMANCE OPTIMIZATIONS
-   ============================================ */
-
-/* Indicate to browser which properties will animate */
-.will-animate {
-  will-change: transform, opacity;
-}
-
-/* Remove will-change after animation */
-.animate-complete {
-  will-change: auto;
-}
-
-/* Hardware acceleration */
-.gpu-accelerate {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  perspective: 1000px;
-}
-
-/* ============================================
-   REDUCED MOTION
-   ============================================ */
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-
-  .scroll-reveal {
-    opacity: 1;
-    transform: none;
-  }
+  transition: all 0.6s ease;
 }

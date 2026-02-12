@@ -27,7 +27,7 @@ interface NavItem {
 const navigation: NavItem[] = [
   {
     name: "Dashboard",
-    href: "/",
+    href: "/dashboard",
     icon: <Home size={20} />,
     group: "Dashboard",
   },

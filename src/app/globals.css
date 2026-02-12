@@ -1,10 +1,5 @@
 @import "tailwindcss";
 
-/* Presentation page styles */
-@import "../styles/presentation/landing.css";
-@import "../styles/presentation/sections.css";
-@import "../styles/presentation/animations.css";
-
 @variant dark (&:where(.dark, .dark *));
 
 :root {
@@ -32,4 +27,45 @@ body {
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
+}
+/* Add this to your globals.css file */
+
+/* Pulse Glow Animation for Background Effects */
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translate(-50%, 0) scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translate(-50%, 0) scale(1.05);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 8s ease-in-out infinite;
+}
+
+/* Smooth Scroll Behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Reduced Motion for Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Optional: Better font rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

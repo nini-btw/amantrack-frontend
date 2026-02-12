@@ -7,10 +7,13 @@ export default function PresentationLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="presentation-wrapper">
-      <PresentationNav />
-      <main className="presentation-main">{children}</main>
-      <PresentationFooter />
-    </div>
+    <>
+      {/* Presentation Shell */}
+      <div className="presentation-wrapper">
+        <PresentationNav />
+        <main className="presentation-main">{children}</main>
+        <PresentationFooter />
+      </div>
+    </>
   );
 }
