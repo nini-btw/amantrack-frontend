@@ -25,9 +25,10 @@ export default function LocationsPage() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [editingLocation, setEditingLocation] = useState<Location | null>(null);
 
-  // Calculate asset counts
+  // Calculate asset counts with null safety
   const assetCounts = locations.reduce<Record<string, number>>((acc, loc) => {
-    acc[loc.id] = statistics?.byLocation[loc.name] || 0;
+    // Use optional chaining and provide fallback value
+    acc[loc.id] = statistics?.byLocation?.[loc.name] ?? 0;
     return acc;
   }, {});
 
@@ -69,21 +70,28 @@ export default function LocationsPage() {
     setModalOpen(false);
   };
 
+  // Show loading state
+  if (isLoading || isLoadingStats) {
+    return (
+      <div className="space-y-4 sm:space-y-6">
+        <div className="max-w-7xl mx-auto space-y-6">
+          <LoadingSpinner message="Loading Locations..." />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-4 sm:space-y-6">
       <div className="max-w-7xl mx-auto space-y-6">
         <LocationsHeader onAdd={handleAdd} />
 
-        {isLoading ? (
-          <LoadingSpinner message="Loading Locations..." />
-        ) : (
-          <LocationsGrid
-            locations={locations}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-            assetCounts={assetCounts}
-          />
-        )}
+        <LocationsGrid
+          locations={locations}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          assetCounts={assetCounts}
+        />
 
         {/* Add/Edit Location Modal */}
         <LocationModal open={isModalOpen} onClose={() => setModalOpen(false)}>
