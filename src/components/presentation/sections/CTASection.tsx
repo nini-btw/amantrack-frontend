@@ -46,7 +46,7 @@ export default function CTASection() {
           <div className="relative z-10">
             <h2
               className={`
-                font-['Syne'] text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 
+                 text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 
                 font-extrabold text-white mb-5 sm:mb-6 tracking-tight
                 px-4
                 transition-all duration-700 delay-200
@@ -106,7 +106,7 @@ export default function CTASection() {
                   hover:border-[#404040]
                 "
               >
-                Schedule Demo
+                Contact Sales
               </a>
             </div>
           </div>

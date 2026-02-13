@@ -2,36 +2,20 @@
 
 import { useState } from "react";
 import { FileDown, FileSpreadsheet, FileText, Download } from "lucide-react";
-import { Inspection } from "@/types/inspection.types";
-import { Statistics } from "@/types/statistics.types";
+import { exportService } from "@/services/export.service";
 
 interface ExportSectionProps {
-  inspections?: Inspection[];
-  statistics?: Statistics;
+  // Props are now optional since we're using the service
+  disabled?: boolean;
 }
 
-export function ExportSection({ inspections, statistics }: ExportSectionProps) {
+export function ExportSection({ disabled = false }: ExportSectionProps) {
   const [isExporting, setIsExporting] = useState<string | null>(null);
 
   const handleExportPDF = async () => {
     setIsExporting("pdf");
     try {
-      // TODO: Implement PDF export
-      const response = await fetch("/api/reports/export/pdf", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ inspections, statistics }),
-      });
-
-      if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `inspection-report-${new Date().toISOString().split("T")[0]}.pdf`;
-        a.click();
-        window.URL.revokeObjectURL(url);
-      }
+      await exportService.downloadInspectionsPdf();
     } catch (error) {
       console.error("PDF export failed:", error);
       alert("Failed to export PDF. Please try again.");
@@ -43,22 +27,7 @@ export function ExportSection({ inspections, statistics }: ExportSectionProps) {
   const handleExportExcel = async () => {
     setIsExporting("excel");
     try {
-      // TODO: Implement Excel export
-      const response = await fetch("/api/reports/export/excel", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ inspections, statistics }),
-      });
-
-      if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `inspection-report-${new Date().toISOString().split("T")[0]}.xlsx`;
-        a.click();
-        window.URL.revokeObjectURL(url);
-      }
+      await exportService.downloadInspectionsExcel();
     } catch (error) {
       console.error("Excel export failed:", error);
       alert("Failed to export Excel. Please try again.");
@@ -70,22 +39,7 @@ export function ExportSection({ inspections, statistics }: ExportSectionProps) {
   const handleExportStatistics = async () => {
     setIsExporting("statistics");
     try {
-      // TODO: Implement statistics PDF export
-      const response = await fetch("/api/reports/export/statistics-pdf", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ statistics }),
-      });
-
-      if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `statistics-report-${new Date().toISOString().split("T")[0]}.pdf`;
-        a.click();
-        window.URL.revokeObjectURL(url);
-      }
+      await exportService.downloadStatisticsPdf();
     } catch (error) {
       console.error("Statistics export failed:", error);
       alert("Failed to export statistics. Please try again.");
@@ -114,9 +68,7 @@ export function ExportSection({ inspections, statistics }: ExportSectionProps) {
         {/* Inspections PDF */}
         <button
           onClick={handleExportPDF}
-          disabled={
-            !inspections || inspections.length === 0 || isExporting === "pdf"
-          }
+          disabled={disabled || isExporting === "pdf"}
           className="
             flex items-center gap-3 p-4
             bg-[#F6F7FA] dark:bg-[#0D1117]
@@ -146,9 +98,7 @@ export function ExportSection({ inspections, statistics }: ExportSectionProps) {
         {/* Inspections Excel */}
         <button
           onClick={handleExportExcel}
-          disabled={
-            !inspections || inspections.length === 0 || isExporting === "excel"
-          }
+          disabled={disabled || isExporting === "excel"}
           className="
             flex items-center gap-3 p-4
             bg-[#F6F7FA] dark:bg-[#0D1117]
@@ -178,7 +128,7 @@ export function ExportSection({ inspections, statistics }: ExportSectionProps) {
         {/* Statistics PDF */}
         <button
           onClick={handleExportStatistics}
-          disabled={!statistics || isExporting === "statistics"}
+          disabled={disabled || isExporting === "statistics"}
           className="
             flex items-center gap-3 p-4
             bg-[#F6F7FA] dark:bg-[#0D1117]

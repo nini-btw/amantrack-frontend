@@ -48,7 +48,7 @@ export default function StatsSection() {
             Impact
           </span>
 
-          <h2 className="font-['Syne'] text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-white mb-4 sm:mb-6 tracking-tight px-4">
+          <h2 className=" text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-white mb-4 sm:mb-6 tracking-tight px-4">
             Trusted by safety teams
           </h2>
 
@@ -80,7 +80,7 @@ export default function StatsSection() {
               {/* Value with scale animation */}
               <div
                 className={`
-                  font-['Syne'] text-4xl sm:text-5xl font-extrabold
+                   text-4xl sm:text-5xl font-extrabold
                   text-[#EF4444] mb-2 sm:mb-3 tracking-tight
                   transition-transform duration-700
                   ${isVisible ? "scale-100" : "scale-75"}

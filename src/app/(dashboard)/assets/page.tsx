@@ -15,6 +15,7 @@ import {
   AlertTriangle,
   XCircle,
 } from "lucide-react";
+import { AssetsHeader } from "@/components/dashboard/pagesHeaders/AssetsHeader";
 
 export default function AssetsListPage() {
   const {
@@ -71,46 +72,7 @@ export default function AssetsListPage() {
   return (
     <div className="min-h-screen bg-[#F6F7FA] dark:bg-[#0D1117] transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-[#111827] dark:text-[#E4E6EB] flex items-center gap-3">
-              <Archive className="w-8 h-8 sm:w-10 sm:h-10 text-[#E7000B] dark:text-[#FF4D4F]" />
-              Asset Management
-            </h1>
-            <p className="text-xs sm:text-sm text-[#6B7280] dark:text-[#9CA3AF] mt-1">
-              Asset statistics, compliance rates, and trends
-            </p>
-          </div>
-
-          <div className="flex gap-3">
-            <Link
-              href="/assets/new"
-              className="px-6 py-3 bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 active:scale-[0.98] flex items-center gap-2"
-            >
-              <span className="text-lg">+</span>
-              New Asset
-            </Link>
-            <Link
-              href="/"
-              className="px-6 py-3 bg-white dark:bg-[#1B1F28] border-2 border-[#E5E7EB] dark:border-[#2D3340] hover:bg-gray-50 dark:hover:bg-[#2A2E37] text-[#111827] dark:text-[#E4E6EB] font-medium rounded-lg transition-all duration-200 flex items-center gap-2"
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-              Back
-            </Link>
-          </div>
-        </div>
+        <AssetsHeader />
 
         <div className="bg-white dark:bg-[#1B1F28] border border-[#E5E7EB] dark:border-[#2D3340] p-6 rounded-lg shadow-lg dark:shadow-none mb-6 transition-colors duration-300">
           <div className="flex flex-col lg:flex-row gap-4">

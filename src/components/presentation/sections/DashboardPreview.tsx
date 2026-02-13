@@ -42,7 +42,7 @@ export default function DashboardPreview() {
             Dashboard
           </span>
 
-          <h2 className="font-['Syne'] text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-white mb-4 sm:mb-6 tracking-tight px-4">
+          <h2 className=" text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-white mb-4 sm:mb-6 tracking-tight px-4">
             Built for clarity and control
           </h2>
 

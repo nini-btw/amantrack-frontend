@@ -142,66 +142,74 @@ export default function AssetDetailPage() {
     <div className="min-h-screen bg-[#F6F7FA] dark:bg-[#0D1117] p-4 sm:p-6 lg:p-8 transition-colors">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
-          <div className="flex items-center gap-3">
-            <div className="text-4xl sm:text-5xl">🧯</div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-[#111827] dark:text-[#E4E6EB]">
-                {asset.referenceNumber}
-              </h1>
-              <p className="text-sm text-[#6B7280] dark:text-[#9CA3AF] mt-1">
-                Asset Details
-              </p>
-            </div>
-          </div>
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+            {/* Title Section */}
+            <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-red-100 dark:bg-red-900/40">
+                <Package className="w-6 h-6 text-red-600 dark:text-red-400" />
+              </div>
 
-          <div className="flex gap-2 sm:gap-3">
-            {!isEditing ? (
-              <>
-                <button
-                  onClick={handleEditToggle}
-                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors font-medium"
-                >
-                  <Edit3 className="w-4 h-4" />
-                  <span className="hidden sm:inline">Edit</span>
-                </button>
-                <button
-                  onClick={handleDeleteClick}
-                  className="flex items-center gap-2 px-4 py-2 bg-red-600 dark:bg-red-500 text-white rounded-lg hover:bg-red-700 dark:hover:bg-red-600 transition-colors font-medium"
-                >
-                  <Trash2 className="w-4 h-4" />
-                  <span className="hidden sm:inline">Delete</span>
-                </button>
-              </>
-            ) : (
-              <>
-                <button
-                  onClick={handleSaveEdit}
-                  disabled={updateAsset.isPending}
-                  className="flex items-center gap-2 px-4 py-2 bg-green-600 dark:bg-green-500 text-white rounded-lg hover:bg-green-700 dark:hover:bg-green-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <Save className="w-4 h-4" />
-                  <span className="hidden sm:inline">
+              <div>
+                <h1 className="text-xl sm:text-3xl font-bold text-[#111827] dark:text-[#E4E6EB] break-all">
+                  {asset.referenceNumber}
+                </h1>
+                <p className="text-sm text-[#6B7280] dark:text-[#9CA3AF] mt-1">
+                  Asset Details
+                </p>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full sm:w-auto">
+              {!isEditing ? (
+                <>
+                  <button
+                    onClick={handleEditToggle}
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors font-medium"
+                  >
+                    <Edit3 className="w-4 h-4" />
+                    Edit
+                  </button>
+
+                  <button
+                    onClick={handleDeleteClick}
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-red-600 dark:bg-red-500 text-white rounded-lg hover:bg-red-700 dark:hover:bg-red-600 transition-colors font-medium"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    Delete
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={handleSaveEdit}
+                    disabled={updateAsset.isPending}
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-green-600 dark:bg-green-500 text-white rounded-lg hover:bg-green-700 dark:hover:bg-green-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Save className="w-4 h-4" />
                     {updateAsset.isPending ? "Saving..." : "Save"}
-                  </span>
-                </button>
-                <button
-                  onClick={handleCancelEdit}
-                  disabled={updateAsset.isPending}
-                  className="flex items-center gap-2 px-4 py-2 bg-gray-600 dark:bg-gray-500 text-white rounded-lg hover:bg-gray-700 dark:hover:bg-gray-600 transition-colors font-medium"
-                >
-                  <X className="w-4 h-4" />
-                  <span className="hidden sm:inline">Cancel</span>
-                </button>
-              </>
-            )}
-            <Link
-              href="/assets"
-              className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-[#1B1F28] border-2 border-[#E5E7EB] dark:border-[#2D3340] text-[#111827] dark:text-[#E4E6EB] rounded-lg hover:bg-gray-50 dark:hover:bg-[#2A2E37] transition-colors font-medium"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span className="hidden sm:inline">Back</span>
-            </Link>
+                  </button>
+
+                  <button
+                    onClick={handleCancelEdit}
+                    disabled={updateAsset.isPending}
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-gray-600 dark:bg-gray-500 text-white rounded-lg hover:bg-gray-700 dark:hover:bg-gray-600 transition-colors font-medium"
+                  >
+                    <X className="w-4 h-4" />
+                    Cancel
+                  </button>
+                </>
+              )}
+
+              <Link
+                href="/assets"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-white dark:bg-[#1B1F28] border-2 border-[#E5E7EB] dark:border-[#2D3340] text-[#111827] dark:text-[#E4E6EB] rounded-lg hover:bg-gray-50 dark:hover:bg-[#2A2E37] transition-colors font-medium"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back
+              </Link>
+            </div>
           </div>
         </div>
 
@@ -459,7 +467,7 @@ export default function AssetDetailPage() {
               <button
                 onClick={() => setShowInspectionForm(true)}
                 disabled={isEditing}
-                className="w-full px-6 py-4 bg-green-600 dark:bg-green-500 text-white font-semibold rounded-lg hover:bg-green-700 dark:hover:bg-green-600 transition-colors shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="cursor-pointer w-full px-6 py-4 bg-green-600 dark:bg-green-500 text-white font-semibold rounded-lg hover:bg-green-700 dark:hover:bg-green-600 transition-colors shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 + Log New Inspection
               </button>
@@ -471,7 +479,7 @@ export default function AssetDetailPage() {
                   </h2>
                   <button
                     onClick={() => setShowInspectionForm(false)}
-                    className="p-2 text-[#6B7280] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-[#E4E6EB] hover:bg-gray-100 dark:hover:bg-[#2D3340] rounded-lg transition-colors"
+                    className="p-2 text-[#6B7280] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-[#E4E6EB] hover:bg-gray-100 dark:hover:bg-[#2D3340] rounded-lg transition-colors cursor-pointer"
                   >
                     <X className="w-5 h-5" />
                   </button>

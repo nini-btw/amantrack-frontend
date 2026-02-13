@@ -39,7 +39,7 @@ export function PresentationNav() {
           >
             <div className="flex items-center gap-2">
               <Logo color="#fff" width={32} height={32} />
-              <h1 className="text-xl sm:text-2xl font-bold font-['Syne']">
+              <h1 className="text-xl sm:text-2xl font-bold ">
                 <span className="text-red-500">Aman</span>
                 <span className="text-white">Track</span>
               </h1>
@@ -55,12 +55,6 @@ export function PresentationNav() {
               Features
             </Link>
             <Link
-              href="#dashboard"
-              className="text-[#A3A3A3] hover:text-white transition-colors font-medium text-[0.95rem]"
-            >
-              Dashboard
-            </Link>
-            <Link
               href="#pricing"
               className="text-[#A3A3A3] hover:text-white transition-colors font-medium text-[0.95rem]"
             >
@@ -73,7 +67,7 @@ export function PresentationNav() {
               Contact
             </Link>
             <Link
-              href="#demo"
+              href="/dashboard"
               className="bg-[#EF4444] hover:bg-[#DC2626] text-white font-semibold px-6 py-3 rounded-lg transition-all transform hover:-translate-y-0.5 shadow-lg hover:shadow-[0_8px_20px_rgba(239,68,68,0.2)]"
             >
               Start Free Trial
@@ -130,14 +124,6 @@ export function PresentationNav() {
           </Link>
 
           <Link
-            href="#dashboard"
-            onClick={() => setMobileMenuOpen(false)}
-            className="text-white hover:text-[#EF4444] transition-colors text-2xl font-medium"
-          >
-            Dashboard
-          </Link>
-
-          <Link
             href="#pricing"
             onClick={() => setMobileMenuOpen(false)}
             className="text-white hover:text-[#EF4444] transition-colors text-2xl font-medium"
@@ -154,7 +140,7 @@ export function PresentationNav() {
           </Link>
 
           <Link
-            href="#demo"
+            href="/dashboard"
             onClick={() => setMobileMenuOpen(false)}
             className="mt-8 bg-[#EF4444] hover:bg-[#DC2626] text-white font-semibold px-10 py-5 rounded-xl transition-all shadow-xl hover:shadow-[0_12px_30px_rgba(239,68,68,0.4)] text-lg"
           >

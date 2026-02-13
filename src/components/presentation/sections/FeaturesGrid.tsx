@@ -89,7 +89,7 @@ export default function FeaturesGrid() {
             Features
           </span>
 
-          <h2 className="font-['Syne'] text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-white mb-4 sm:mb-6 tracking-tight px-4">
+          <h2 className=" text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-white mb-4 sm:mb-6 tracking-tight px-4">
             Everything you need to manage safety
           </h2>
 
@@ -131,7 +131,7 @@ export default function FeaturesGrid() {
                 </div>
 
                 {/* Title */}
-                <h3 className="font-['Syne'] text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">
+                <h3 className=" text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">
                   {f.title}
                 </h3>
 

@@ -20,6 +20,7 @@ import { InspectionDetails } from "@/features/inspections/components/InspectionD
 import { ExportSection } from "@/features/inspections/components/ExportSection";
 import { CreateInspectionModal } from "@/features/inspections/components/CreateInspectionModal";
 import { Inspection } from "@/types/inspection.types";
+import { ReportsHeader } from "@/components/dashboard/pagesHeaders/ReportsHeader";
 export default function ReportsPage() {
   const [selectedType, setSelectedType] = useState<Inspection["type"] | "ALL">(
     "ALL",
@@ -63,25 +64,8 @@ export default function ReportsPage() {
     <div className="min-h-screen bg-[#F6F7FA] dark:bg-[#0D1117] transition-colors duration-300">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div>
-            <h1 className="text-3xl font-bold text-[#111827] dark:text-[#E4E6EB] flex items-center gap-2">
-              <div className="text-[#111827] dark:text-[#E4E6EB] rounded-lg">
-                <FileText className="w-8 h-8 sm:w-10 sm:h-10 text-blue-600 dark:text-blue-400" />
-              </div>
-              Reports & Inspections
-            </h1>
-            <p className="text-sm text-[#6B7280] dark:text-[#9CA3AF] mt-2">
-              Manage assets, track status, and maintain compliance
-            </p>
-          </div>
-          <button
-            onClick={() => setShowCreateModal(true)}
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700 text-white rounded-lg font-medium flex items-center gap-2"
-          >
-            <FilePlus className="w-4 h-4" /> New Inspection
-          </button>
-        </div>
+
+        <ReportsHeader onNewInspection={() => setShowCreateModal(true)} />
 
         {/* Export Section */}
         <ExportSection inspections={inspections} statistics={statistics} />

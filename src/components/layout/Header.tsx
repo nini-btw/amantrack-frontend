@@ -14,7 +14,7 @@ export function Header({ onMenuClick, isMobile }: HeaderProps) {
   const isDashboard = pathname === "/";
 
   return (
-    <header className="rounded-bl-lg h-16 border-b border-[#e5e7eb] dark:border-[#2d3340] bg-white dark:bg-[#1b1f28] px-4 md:px-8 flex items-center justify-between transition-colors">
+    <header className=" h-16 border-b border-[#e5e7eb] dark:border-[#2d3340] bg-white dark:bg-[#1b1f28] px-4 md:px-8 flex items-center justify-between transition-colors">
       <div className="flex items-center gap-4">
         {/* Hamburger menu for mobile */}
         {isMobile && (

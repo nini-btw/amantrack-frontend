@@ -308,7 +308,7 @@ export function AssetTable({ assets, locations }: AssetTableProps) {
                       </Link>
                       <button
                         onClick={() => handleDeleteClick(asset)}
-                        className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                        className="cursor-pointer p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
                         title="Delete asset"
                       >
                         <Trash2 className="w-4 h-4" />

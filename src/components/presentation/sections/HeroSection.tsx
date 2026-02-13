@@ -49,7 +49,7 @@ export default function HeroSection() {
               className={`
                 mb-6 sm:mb-7 font-extrabold leading-[1.1] sm:leading-[1.05] 
                 tracking-[-0.03em] text-[2.5rem] sm:text-[3.5rem] lg:text-[4.8rem]
-                font-['Syne']
+                
                 transition-all duration-700 delay-200
                 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
               `}
@@ -81,7 +81,7 @@ export default function HeroSection() {
               `}
             >
               <a
-                href="#demo"
+                href="/dashboard"
                 className="
                   text-center rounded-[10px] bg-[#EF4444] 
                   px-7 sm:px-9 py-4 sm:py-5 
@@ -93,7 +93,7 @@ export default function HeroSection() {
                 Start Free Trial
               </a>
 
-              <a
+              {/*  <a
                 href="#showcase"
                 className="
                   text-center rounded-[10px] border border-[#2A2A2A] 
@@ -103,7 +103,7 @@ export default function HeroSection() {
                 "
               >
                 Watch Demo
-              </a>
+              </a> */}
             </div>
           </div>
 
@@ -134,7 +134,7 @@ export default function HeroSection() {
               <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-5">
                 {/* Total Assets */}
                 <div className="group cursor-pointer rounded-xl border-l-[3px] border-[#3B82F6] bg-white/5 p-4 sm:p-5 lg:p-7 transition-all hover:translate-x-1 hover:bg-white/10">
-                  <div className="mb-1 sm:mb-2 text-2xl sm:text-3xl lg:text-[2.8rem] font-bold tracking-tight text-white font-['Syne']">
+                  <div className="mb-1 sm:mb-2 text-2xl sm:text-3xl lg:text-[2.8rem] font-bold tracking-tight text-white ">
                     5,000+
                   </div>
                   <div className="text-[0.65rem] sm:text-xs font-medium uppercase tracking-[0.05em] text-[#737373]">
@@ -144,7 +144,7 @@ export default function HeroSection() {
 
                 {/* Valid Assets */}
                 <div className="group cursor-pointer rounded-xl border-l-[3px] border-[#22C55E] bg-white/5 p-4 sm:p-5 lg:p-7 transition-all hover:translate-x-1 hover:bg-white/10">
-                  <div className="mb-1 sm:mb-2 text-2xl sm:text-3xl lg:text-[2.8rem] font-bold tracking-tight text-white font-['Syne']">
+                  <div className="mb-1 sm:mb-2 text-2xl sm:text-3xl lg:text-[2.8rem] font-bold tracking-tight text-white ">
                     4,850
                   </div>
                   <div className="text-[0.65rem] sm:text-xs font-medium uppercase tracking-[0.05em] text-[#737373]">
@@ -154,7 +154,7 @@ export default function HeroSection() {
 
                 {/* Needs Attention */}
                 <div className="group cursor-pointer rounded-xl border-l-[3px] border-[#EAB308] bg-white/5 p-4 sm:p-5 lg:p-7 transition-all hover:translate-x-1 hover:bg-white/10">
-                  <div className="mb-1 sm:mb-2 text-2xl sm:text-3xl lg:text-[2.8rem] font-bold tracking-tight text-white font-['Syne']">
+                  <div className="mb-1 sm:mb-2 text-2xl sm:text-3xl lg:text-[2.8rem] font-bold tracking-tight text-white ">
                     150
                   </div>
                   <div className="text-[0.65rem] sm:text-xs font-medium uppercase tracking-[0.05em] text-[#737373]">
@@ -164,7 +164,7 @@ export default function HeroSection() {
 
                 {/* Compliance */}
                 <div className="group cursor-pointer rounded-xl border-l-[3px] border-[#A855F7] bg-white/5 p-4 sm:p-5 lg:p-7 transition-all hover:translate-x-1 hover:bg-white/10">
-                  <div className="mb-1 sm:mb-2 text-2xl sm:text-3xl lg:text-[2.8rem] font-bold tracking-tight text-white font-['Syne']">
+                  <div className="mb-1 sm:mb-2 text-2xl sm:text-3xl lg:text-[2.8rem] font-bold tracking-tight text-white ">
                     99.2%
                   </div>
                   <div className="text-[0.65rem] sm:text-xs font-medium uppercase tracking-[0.05em] text-[#737373]">
