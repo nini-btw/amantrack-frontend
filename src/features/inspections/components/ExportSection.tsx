@@ -1,181 +1,235 @@
 "use client";
 
-import { useState } from "react";
-import { FileDown, FileSpreadsheet, FileText, Download } from "lucide-react";
-import { exportService } from "@/services/export.service";
+import { FileSpreadsheet, Download } from "lucide-react";
+import { LogInspectionResponse } from "@/types/inspection.types";
+import { Statistics } from "@/types/statistics.types";
 
 interface ExportSectionProps {
-  // Props are now optional since we're using the service
-  disabled?: boolean;
+  inspections?: LogInspectionResponse[];
+  statistics?: Statistics;
 }
 
-export function ExportSection({ disabled = false }: ExportSectionProps) {
-  const [isExporting, setIsExporting] = useState<string | null>(null);
-
-  const handleExportPDF = async () => {
-    setIsExporting("pdf");
-    try {
-      await exportService.downloadInspectionsPdf();
-    } catch (error) {
-      console.error("PDF export failed:", error);
-      alert("Failed to export PDF. Please try again.");
-    } finally {
-      setIsExporting(null);
+export function ExportSection({
+  inspections = [],
+  statistics,
+}: ExportSectionProps) {
+  const handleExportCSV = () => {
+    if (!inspections || inspections.length === 0) {
+      alert("No inspections to export");
+      return;
     }
+
+    // Create CSV headers
+    const headers = [
+      "Asset ID",
+      "Type",
+      "Date",
+      "Performed By",
+      "Notes",
+      "Status",
+    ];
+
+    // Create CSV rows
+    const rows = inspections.map((item) => [
+      item.inspection.assetId,
+      item.inspection.type,
+      new Date(item.inspection.inspectionDate).toLocaleDateString(),
+      item.inspection.performedBy,
+      item.inspection.notes || "",
+      item.asset.status,
+    ]);
+
+    // Combine headers and rows
+    const csvContent = [
+      headers.join(","),
+      ...rows.map((row) =>
+        row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(","),
+      ),
+    ].join("\n");
+
+    // Create blob and download
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+
+    link.setAttribute("href", url);
+    link.setAttribute(
+      "download",
+      `inspections_${new Date().toISOString().split("T")[0]}.csv`,
+    );
+    link.style.visibility = "hidden";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
-  const handleExportExcel = async () => {
-    setIsExporting("excel");
-    try {
-      await exportService.downloadInspectionsExcel();
-    } catch (error) {
-      console.error("Excel export failed:", error);
-      alert("Failed to export Excel. Please try again.");
-    } finally {
-      setIsExporting(null);
+  const handleExportReport = () => {
+    if (!inspections || inspections.length === 0) {
+      alert("No inspections to generate report");
+      return;
     }
-  };
 
-  const handleExportStatistics = async () => {
-    setIsExporting("statistics");
-    try {
-      await exportService.downloadStatisticsPdf();
-    } catch (error) {
-      console.error("Statistics export failed:", error);
-      alert("Failed to export statistics. Please try again.");
-    } finally {
-      setIsExporting(null);
-    }
+    // Create a simple HTML report
+    const reportContent = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Inspection Report</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    h1 { color: #111827; border-bottom: 2px solid #E5E7EB; padding-bottom: 10px; }
+    .summary { background: #F6F7FA; padding: 20px; border-radius: 8px; margin: 20px 0; }
+    .summary-item { display: flex; justify-content: space-between; margin: 10px 0; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid #E5E7EB; }
+    th { background: #F6F7FA; font-weight: 600; color: #6B7280; }
+    .status-green { color: #10B981; }
+    .status-yellow { color: #F59E0B; }
+    .status-red { color: #EF4444; }
+    .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #E5E7EB; color: #6B7280; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>AmanTrack Inspection Report</h1>
+  <p>Generated on: ${new Date().toLocaleString()}</p>
+  
+  ${
+    statistics
+      ? `
+  <div class="summary">
+    <h2>Summary Statistics</h2>
+    <div class="summary-item">
+      <span>Total Assets:</span>
+      <strong>${statistics.total}</strong>
+    </div>
+    <div class="summary-item">
+      <span>Valid Assets:</span>
+      <strong class="status-green">${statistics.valid}</strong>
+    </div>
+    <div class="summary-item">
+      <span>Expired Assets:</span>
+      <strong class="status-red">${statistics.expired}</strong>
+    </div>
+    <div class="summary-item">
+      <span>Compliance Rate:</span>
+      <strong>${statistics.compliancePercentage.toFixed(1)}%</strong>
+    </div>
+  </div>
+  `
+      : ""
+  }
+  
+  <h2>Inspections (${inspections.length})</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Asset ID</th>
+        <th>Type</th>
+        <th>Date</th>
+        <th>Performed By</th>
+        <th>Status</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${inspections
+        .map(
+          (item) => `
+        <tr>
+          <td>${item.inspection.assetId}</td>
+          <td><strong>${item.inspection.type}</strong></td>
+          <td>${new Date(item.inspection.inspectionDate).toLocaleDateString()}</td>
+          <td>${item.inspection.performedBy}</td>
+          <td class="status-${item.asset.status.toLowerCase()}">${item.asset.status}</td>
+          <td>${item.inspection.notes || "-"}</td>
+        </tr>
+      `,
+        )
+        .join("")}
+    </tbody>
+  </table>
+  
+  <div class="footer">
+    <p>This report was generated by AmanTrack - Asset Management System</p>
+  </div>
+</body>
+</html>
+    `;
+
+    // Create blob and download
+    const blob = new Blob([reportContent], {
+      type: "text/html;charset=utf-8;",
+    });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+
+    link.setAttribute("href", url);
+    link.setAttribute(
+      "download",
+      `inspection_report_${new Date().toISOString().split("T")[0]}.html`,
+    );
+    link.style.visibility = "hidden";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
-    <div className="bg-white dark:bg-[#1B1F28] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg shadow-lg dark:shadow-none p-4 sm:p-5 lg:p-6">
-      <div className="flex items-center gap-2 mb-4">
-        <div className="bg-green-50 dark:bg-green-900/10 p-2 rounded-lg">
-          <Download className="w-5 h-5 text-green-600 dark:text-green-400" />
+    <div className="bg-white dark:bg-[#1B1F28] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg shadow-lg dark:shadow-none p-4 sm:p-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <h2 className="text-lg sm:text-xl font-semibold text-[#111827] dark:text-[#E4E6EB] flex items-center gap-2">
+            <Download className="w-5 h-5 sm:w-6 sm:h-6" />
+            Export & Reports
+          </h2>
+          <p className="text-xs sm:text-sm text-[#6B7280] dark:text-[#9CA3AF] mt-1">
+            Download inspection data and generate reports
+          </p>
         </div>
-        <h2 className="text-lg font-semibold text-[#111827] dark:text-[#E4E6EB]">
-          Export Reports
-        </h2>
-      </div>
 
-      <p className="text-sm text-[#6B7280] dark:text-[#9CA3AF] mb-6">
-        Download inspection records and compliance reports in your preferred
-        format
-      </p>
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full sm:w-auto">
+          <button
+            onClick={handleExportCSV}
+            disabled={!inspections || inspections.length === 0}
+            className="
+              cursor-pointer
+              inline-flex items-center justify-center gap-2
+              px-4 py-2.5
+              bg-green-600 hover:bg-green-700
+              dark:bg-green-600 dark:hover:bg-green-700
+              text-white font-medium text-sm
+              rounded-lg
+              transition-colors
+              disabled:opacity-50 disabled:cursor-not-allowed
+              w-full sm:w-auto
+            "
+          >
+            <FileSpreadsheet className="w-4 h-4" />
+            Export CSV
+          </button>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-        {/* Inspections PDF */}
-        <button
-          onClick={handleExportPDF}
-          disabled={disabled || isExporting === "pdf"}
-          className="
-            flex items-center gap-3 p-4
-            bg-[#F6F7FA] dark:bg-[#0D1117]
-            border-2 border-[#E5E7EB] dark:border-[#2D3340]
-            rounded-lg
-            hover:border-red-300 dark:hover:border-red-700
-            hover:bg-red-50 dark:hover:bg-red-900/10
-            transition-all duration-200
-            disabled:opacity-50 disabled:cursor-not-allowed
-            group
-          "
-        >
-          <div className="bg-red-50 dark:bg-red-900/10 p-3 rounded-lg group-hover:bg-red-100 dark:group-hover:bg-red-900/20 transition-colors">
-            <FileText className="w-6 h-6 text-red-600 dark:text-red-400" />
-          </div>
-          <div className="flex-1 text-left">
-            <h3 className="text-sm font-semibold text-[#111827] dark:text-[#E4E6EB]">
-              {isExporting === "pdf" ? "Exporting..." : "Inspections Report"}
-            </h3>
-            <p className="text-xs text-[#6B7280] dark:text-[#9CA3AF]">
-              PDF Format
-            </p>
-          </div>
-          <FileDown className="w-5 h-5 text-[#6B7280] dark:text-[#9CA3AF] group-hover:text-red-600 dark:group-hover:text-red-400" />
-        </button>
-
-        {/* Inspections Excel */}
-        <button
-          onClick={handleExportExcel}
-          disabled={disabled || isExporting === "excel"}
-          className="
-            flex items-center gap-3 p-4
-            bg-[#F6F7FA] dark:bg-[#0D1117]
-            border-2 border-[#E5E7EB] dark:border-[#2D3340]
-            rounded-lg
-            hover:border-green-300 dark:hover:border-green-700
-            hover:bg-green-50 dark:hover:bg-green-900/10
-            transition-all duration-200
-            disabled:opacity-50 disabled:cursor-not-allowed
-            group
-          "
-        >
-          <div className="bg-green-50 dark:bg-green-900/10 p-3 rounded-lg group-hover:bg-green-100 dark:group-hover:bg-green-900/20 transition-colors">
-            <FileSpreadsheet className="w-6 h-6 text-green-600 dark:text-green-400" />
-          </div>
-          <div className="flex-1 text-left">
-            <h3 className="text-sm font-semibold text-[#111827] dark:text-[#E4E6EB]">
-              {isExporting === "excel" ? "Exporting..." : "Inspections Data"}
-            </h3>
-            <p className="text-xs text-[#6B7280] dark:text-[#9CA3AF]">
-              Excel Format
-            </p>
-          </div>
-          <FileDown className="w-5 h-5 text-[#6B7280] dark:text-[#9CA3AF] group-hover:text-green-600 dark:group-hover:text-green-400" />
-        </button>
-
-        {/* Statistics PDF */}
-        <button
-          onClick={handleExportStatistics}
-          disabled={disabled || isExporting === "statistics"}
-          className="
-            flex items-center gap-3 p-4
-            bg-[#F6F7FA] dark:bg-[#0D1117]
-            border-2 border-[#E5E7EB] dark:border-[#2D3340]
-            rounded-lg
-            hover:border-blue-300 dark:hover:border-blue-700
-            hover:bg-blue-50 dark:hover:bg-blue-900/10
-            transition-all duration-200
-            disabled:opacity-50 disabled:cursor-not-allowed
-            group
-          "
-        >
-          <div className="bg-blue-50 dark:bg-blue-900/10 p-3 rounded-lg group-hover:bg-blue-100 dark:group-hover:bg-blue-900/20 transition-colors">
-            <FileText className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-          </div>
-          <div className="flex-1 text-left">
-            <h3 className="text-sm font-semibold text-[#111827] dark:text-[#E4E6EB]">
-              {isExporting === "statistics"
-                ? "Exporting..."
-                : "Statistics Report"}
-            </h3>
-            <p className="text-xs text-[#6B7280] dark:text-[#9CA3AF]">
-              PDF with Charts
-            </p>
-          </div>
-          <FileDown className="w-5 h-5 text-[#6B7280] dark:text-[#9CA3AF] group-hover:text-blue-600 dark:group-hover:text-blue-400" />
-        </button>
-      </div>
-
-      <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/10 border border-blue-200 dark:border-blue-800/30 rounded-lg">
-        <div className="flex items-start gap-3">
-          <FileDown className="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
-          <div>
-            <h4 className="text-sm font-medium text-blue-800 dark:text-blue-300 mb-1">
-              Export Information
-            </h4>
-            <ul className="text-xs text-blue-700 dark:text-blue-400 space-y-1">
-              <li>
-                • PDF reports include all inspection records with detailed
-                information
-              </li>
-              <li>• Excel files contain raw data for further analysis</li>
-              <li>
-                • Statistics reports include charts and compliance metrics
-              </li>
-            </ul>
-          </div>
+          <button
+            onClick={handleExportReport}
+            disabled={!inspections || inspections.length === 0}
+            className="
+              cursor-pointer
+              inline-flex items-center justify-center gap-2
+              px-4 py-2.5
+              bg-blue-600 hover:bg-blue-700
+              dark:bg-blue-600 dark:hover:bg-blue-700
+              text-white font-medium text-sm
+              rounded-lg
+              transition-colors
+              disabled:opacity-50 disabled:cursor-not-allowed
+              w-full sm:w-auto
+            "
+          >
+            <Download className="w-4 h-4" />
+            Generate Report
+          </button>
         </div>
       </div>
     </div>
