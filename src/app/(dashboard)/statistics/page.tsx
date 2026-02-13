@@ -34,7 +34,7 @@ export default function StatisticsPage() {
         <StatisticsCharts statistics={statistics} />
 
         {/* Optional: Add footer info for mobile users */}
-        <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-[#E5E7EB] dark:border-[#2D3340]">
+        <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t  border-[#E5E7EB] dark:border-[#2D3340]">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-[#6B7280] dark:text-[#9CA3AF]">
             <p>
               Last updated:{" "}
