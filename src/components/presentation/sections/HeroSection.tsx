@@ -1,13 +1,16 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+import { Link } from "@/routing";
 import { useEffect, useRef, useState } from "react";
 
 export default function HeroSection() {
+  const t = useTranslations("presentation.hero");
+
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    // Trigger animations on mount
     const timer = setTimeout(() => setIsVisible(true), 100);
     return () => clearTimeout(timer);
   }, []);
@@ -21,7 +24,7 @@ export default function HeroSection() {
       <div className="pointer-events-none absolute left-1/2 -top-50 sm:-top-75 h-150 w-150 sm:h-300 sm:w-300 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(239,68,68,0.3)_0%,transparent_60%)] animate-pulse-glow" />
 
       <div className="relative z-10 mx-auto max-w-350 px-6 sm:px-8 pt-32 sm:pt-40 pb-20 sm:pb-25">
-        {/* Badge - Animated */}
+        {/* Badge */}
         <div
           className={`
             mb-6 sm:mb-8 inline-flex items-center gap-2 rounded-full 
@@ -35,10 +38,9 @@ export default function HeroSection() {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75"></span>
             <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500"></span>
           </span>
-          <span className="hidden sm:inline">
-            Trusted by HSE Professionals Worldwide
-          </span>
-          <span className="sm:hidden">Trusted by HSE Professionals</span>
+
+          <span className="hidden sm:inline">{t("badge.desktop")}</span>
+          <span className="sm:hidden">{t("badge.mobile")}</span>
         </div>
 
         {/* Grid */}
@@ -49,14 +51,13 @@ export default function HeroSection() {
               className={`
                 mb-6 sm:mb-7 font-extrabold leading-[1.1] sm:leading-[1.05] 
                 tracking-[-0.03em] text-[2.5rem] sm:text-[3.5rem] lg:text-[4.8rem]
-                
                 transition-all duration-700 delay-200
                 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
               `}
             >
-              Safety Asset Management.
+              {t("title.line1")}
               <br />
-              <span className="text-[#EF4444]">Simplified.</span>
+              <span className="text-[#EF4444]">{t("title.highlight")}</span>
             </h1>
 
             <p
@@ -68,9 +69,7 @@ export default function HeroSection() {
                 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
               `}
             >
-              Track every inspection, maintain compliance, and keep your
-              workplace safe with real-time visibility into your safety
-              equipment.
+              {t("description")}
             </p>
 
             <div
@@ -80,7 +79,7 @@ export default function HeroSection() {
                 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
               `}
             >
-              <a
+              <Link
                 href="/dashboard"
                 className="
                   text-center rounded-[10px] bg-[#EF4444] 
@@ -90,24 +89,12 @@ export default function HeroSection() {
                   hover:shadow-[0_12px_30px_rgba(239,68,68,0.35)]
                 "
               >
-                Start Free Trial
-              </a>
-
-              {/*  <a
-                href="#showcase"
-                className="
-                  text-center rounded-[10px] border border-[#2A2A2A] 
-                  bg-[#1A1A1A] px-7 sm:px-9 py-4 sm:py-5 
-                  text-sm sm:text-base font-semibold text-white 
-                  transition-all hover:bg-[#252525] hover:border-[#404040]
-                "
-              >
-                Watch Demo
-              </a> */}
+                {t("cta.primary")}
+              </Link>
             </div>
           </div>
 
-          {/* Visual - Dashboard Preview */}
+          {/* Dashboard Preview */}
           <div
             className={`
               relative transition-all duration-1000 delay-800
@@ -115,14 +102,15 @@ export default function HeroSection() {
             `}
           >
             <div className="rounded-2xl border border-[#2A2A2A] bg-[#1A1A1A] p-6 sm:p-8 lg:p-10 shadow-[0_20px_60px_rgba(0,0,0,0.4)] relative overflow-hidden">
-              {/* Top gradient bar */}
+              {/* Top bar */}
               <div className="absolute left-0 top-0 h-0.75 w-full bg-linear-to-r from-[#3B82F6] via-[#22C55E] to-[#A855F7]" />
 
               {/* Header */}
               <div className="mb-6 sm:mb-8 flex items-center justify-between">
                 <span className="text-[0.65rem] sm:text-xs font-semibold uppercase tracking-[0.08em] text-[#737373]">
-                  Live Dashboard
+                  {t("dashboardPreview.label")}
                 </span>
+
                 <div className="flex gap-1.5 sm:gap-2">
                   <span className="h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full bg-[#737373]" />
                   <span className="h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full bg-[#22C55E] shadow-[0_0_10px_#22C55E]" />
@@ -132,50 +120,58 @@ export default function HeroSection() {
 
               {/* Stats */}
               <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-5">
-                {/* Total Assets */}
-                <div className="group cursor-pointer rounded-xl border-l-[3px] border-[#3B82F6] bg-white/5 p-4 sm:p-5 lg:p-7 transition-all hover:translate-x-1 hover:bg-white/10">
-                  <div className="mb-1 sm:mb-2 text-2xl sm:text-3xl lg:text-[2.8rem] font-bold tracking-tight text-white ">
-                    5,000+
-                  </div>
-                  <div className="text-[0.65rem] sm:text-xs font-medium uppercase tracking-[0.05em] text-[#737373]">
-                    Total Assets
-                  </div>
-                </div>
+                <StatCard
+                  value="5,000+"
+                  label={t("dashboardPreview.stats.totalAssets")}
+                  borderColor="border-[#3B82F6]"
+                />
 
-                {/* Valid Assets */}
-                <div className="group cursor-pointer rounded-xl border-l-[3px] border-[#22C55E] bg-white/5 p-4 sm:p-5 lg:p-7 transition-all hover:translate-x-1 hover:bg-white/10">
-                  <div className="mb-1 sm:mb-2 text-2xl sm:text-3xl lg:text-[2.8rem] font-bold tracking-tight text-white ">
-                    4,850
-                  </div>
-                  <div className="text-[0.65rem] sm:text-xs font-medium uppercase tracking-[0.05em] text-[#737373]">
-                    Valid Assets
-                  </div>
-                </div>
+                <StatCard
+                  value="4,850"
+                  label={t("dashboardPreview.stats.validAssets")}
+                  borderColor="border-[#22C55E]"
+                />
 
-                {/* Needs Attention */}
-                <div className="group cursor-pointer rounded-xl border-l-[3px] border-[#EAB308] bg-white/5 p-4 sm:p-5 lg:p-7 transition-all hover:translate-x-1 hover:bg-white/10">
-                  <div className="mb-1 sm:mb-2 text-2xl sm:text-3xl lg:text-[2.8rem] font-bold tracking-tight text-white ">
-                    150
-                  </div>
-                  <div className="text-[0.65rem] sm:text-xs font-medium uppercase tracking-[0.05em] text-[#737373]">
-                    Needs Attention
-                  </div>
-                </div>
+                <StatCard
+                  value="150"
+                  label={t("dashboardPreview.stats.needsAttention")}
+                  borderColor="border-[#EAB308]"
+                />
 
-                {/* Compliance */}
-                <div className="group cursor-pointer rounded-xl border-l-[3px] border-[#A855F7] bg-white/5 p-4 sm:p-5 lg:p-7 transition-all hover:translate-x-1 hover:bg-white/10">
-                  <div className="mb-1 sm:mb-2 text-2xl sm:text-3xl lg:text-[2.8rem] font-bold tracking-tight text-white ">
-                    99.2%
-                  </div>
-                  <div className="text-[0.65rem] sm:text-xs font-medium uppercase tracking-[0.05em] text-[#737373]">
-                    Compliance
-                  </div>
-                </div>
+                <StatCard
+                  value="99.2%"
+                  label={t("dashboardPreview.stats.compliance")}
+                  borderColor="border-[#A855F7]"
+                />
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+/* Small reusable component */
+function StatCard({
+  value,
+  label,
+  borderColor,
+}: {
+  value: string;
+  label: string;
+  borderColor: string;
+}) {
+  return (
+    <div
+      className={`group cursor-pointer rounded-xl border-l-[3px] ${borderColor} bg-white/5 p-4 sm:p-5 lg:p-7 transition-all hover:translate-x-1 hover:bg-white/10`}
+    >
+      <div className="mb-1 sm:mb-2 text-2xl sm:text-3xl lg:text-[2.8rem] font-bold tracking-tight text-white">
+        {value}
+      </div>
+      <div className="text-[0.65rem] sm:text-xs font-medium uppercase tracking-[0.05em] text-[#737373]">
+        {label}
+      </div>
+    </div>
   );
 }

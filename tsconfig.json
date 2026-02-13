@@ -31,7 +31,7 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts",
-    "src/app/(dashboard)/profile"
+    "src/app/[locale]/(dashboard)/profile"
   ],
   "exclude": ["node_modules"]
 }

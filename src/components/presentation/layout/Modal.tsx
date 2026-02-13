@@ -37,7 +37,7 @@ export default function Modal({
           <h2 className="text-2xl font-semibold text-white">{title}</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white transition-colors"
+            className="cursor-pointer text-gray-400 hover:text-white transition-colors"
           >
             <X size={22} />
           </button>

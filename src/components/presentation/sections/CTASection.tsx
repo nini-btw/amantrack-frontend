@@ -1,8 +1,12 @@
 "use client";
 
+import { Link } from "@/routing";
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function CTASection() {
+  const t = useTranslations("presentation.cta");
+
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -39,21 +43,20 @@ export default function CTASection() {
             ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}
           `}
         >
-          {/* Animated Glow background */}
+          {/* Animated Glow */}
           <div className="absolute -top-1/2 left-1/2 -translate-x-1/2 w-100 h-100 sm:w-150 sm:h-150 bg-[radial-gradient(circle,rgba(239,68,68,0.25)_0%,transparent_70%)] pointer-events-none animate-pulse-glow" />
 
-          {/* Content */}
           <div className="relative z-10">
             <h2
               className={`
-                 text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 
+                text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 
                 font-extrabold text-white mb-5 sm:mb-6 tracking-tight
                 px-4
                 transition-all duration-700 delay-200
                 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}
               `}
             >
-              Ready to transform your safety management?
+              {t("title")}
             </h2>
 
             <p
@@ -65,8 +68,7 @@ export default function CTASection() {
                 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}
               `}
             >
-              Join forward-thinking organizations using AmanTrack to maintain
-              compliance and protect their teams.
+              {t("description")}
             </p>
 
             <div
@@ -77,8 +79,8 @@ export default function CTASection() {
               `}
             >
               {/* Primary */}
-              <a
-                href="#demo"
+              <Link
+                href="/dashboard"
                 className="
                   inline-flex items-center justify-center
                   px-8 sm:px-10 py-4 sm:py-5 rounded-xl
@@ -90,8 +92,8 @@ export default function CTASection() {
                   hover:shadow-[0_15px_35px_rgba(239,68,68,0.35)]
                 "
               >
-                Start Free Trial
-              </a>
+                {t("primaryButton")}
+              </Link>
 
               {/* Secondary */}
               <a
@@ -106,7 +108,7 @@ export default function CTASection() {
                   hover:border-[#404040]
                 "
               >
-                Contact Sales
+                {t("secondaryButton")}
               </a>
             </div>
           </div>

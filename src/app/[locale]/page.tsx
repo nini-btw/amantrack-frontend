@@ -2,48 +2,66 @@
 
 import { useState } from "react";
 import localFont from "next/font/local";
-import { Inter } from "next/font/google";
+import { Noto_Kufi_Arabic } from "next/font/google"; // 1. Import Noto
+import { useLocale } from "next-intl"; // 2. Import hook to check current language
 import { PresentationNav } from "@/components/presentation/navigation/PresentationNav";
 import { PresentationFooter } from "@/components/presentation/navigation/PresentationFooter";
+import {
+  HeroSection,
+  FeaturesGrid,
+  DashboardPreview,
+  StatsSection,
+  CTASection,
+  PricingSection,
+  ContactSection,
+} from "@/components/presentation/sections";
 import PrivacyPolicyModal from "@/components/presentation/sections/PrivacyPolicyModal";
 import TermsModal from "@/components/presentation/sections/TermsModal";
+import ProblemSolution from "@/components/presentation/sections/ProblemSolution";
 
+// Load Satoshi font
 const satoshi = localFont({
   src: "../../../public/Satoshi-Variable.woff2",
   variable: "--font-satoshi",
   display: "swap",
 });
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
+// 3. Load Noto Kufi Arabic
+const noto = Noto_Kufi_Arabic({
+  subsets: ["arabic"],
   display: "swap",
 });
 
-export default function PresentationLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function LandingPage() {
   const [privacyOpen, setPrivacyOpen] = useState(false);
   const [termsOpen, setTermsOpen] = useState(false);
+  const locale = useLocale(); // 4. Get current locale
+
+  // 5. Select font based on locale
+  const fontClass = locale === "ar" ? noto.className : satoshi.className;
 
   return (
-    <div className={`${satoshi.className} ${inter.className}`}>
+    // 6. Apply dynamic font class
+    <div className={fontClass}>
       <PresentationNav />
-
-      <main className="presentation-main">{children}</main>
-
+      <main className="landing-page">
+        <HeroSection />
+        <FeaturesGrid />
+        <DashboardPreview />
+        <StatsSection />
+        <ProblemSolution />
+        <PricingSection />
+        <CTASection />
+        <ContactSection />
+      </main>
       <PresentationFooter
         onOpenPrivacy={() => setPrivacyOpen(true)}
         onOpenTerms={() => setTermsOpen(true)}
       />
-
       <PrivacyPolicyModal
         isOpen={privacyOpen}
         onClose={() => setPrivacyOpen(false)}
       />
-
       <TermsModal isOpen={termsOpen} onClose={() => setTermsOpen(false)} />
     </div>
   );

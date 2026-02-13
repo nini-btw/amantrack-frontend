@@ -1,0 +1,272 @@
+{
+  "presentation": {
+    "hero": {
+      "badge": {
+        "desktop": "La référence des professionnels HSE dans le monde",
+        "mobile": "Recommandé par les pros HSE"
+      },
+      "title": {
+        "line1": "Gestion des équipements de sécurité.",
+        "highlight": "Simplifiée."
+      },
+      "description": "Suivez chaque inspection, maintenez la conformité et assurez la sécurité de votre lieu de travail avec une visibilité en temps réel sur vos équipements.",
+      "cta": {
+        "primary": "Essai gratuit"
+      },
+      "dashboardPreview": {
+        "label": "Tableau de bord en direct",
+        "stats": {
+          "totalAssets": "Total des actifs",
+          "validAssets": "Actifs conformes",
+          "needsAttention": "Action requise",
+          "compliance": "Conformité"
+        }
+      }
+    },
+    "contact": {
+      "badge": "Contact",
+      "title": "Parlons sécurité",
+      "description": "Des questions sur AmanTrack ? Notre équipe est là pour vous aider à rationaliser votre conformité et la gestion de vos actifs.",
+      "info": {
+        "email": "E-mail",
+        "phone": "Téléphone",
+        "location": "Localisation",
+        "emailValue": "support@amantrack.com",
+        "phoneValue": "+1 (555) 123-4567",
+        "locationValue": "Global — Remote First"
+      },
+      "form": {
+        "fullName": "Nom complet",
+        "fullNamePlaceholder": "Jean Dupont",
+        "email": "Adresse e-mail",
+        "emailPlaceholder": "jean@exemple.com",
+        "message": "Message",
+        "messagePlaceholder": "Parlez-nous de vos besoins...",
+        "button": "Envoyer le message"
+      }
+    },
+    "cta": {
+      "title": "Prêt à transformer votre gestion de la sécurité ?",
+      "description": "Rejoignez les entreprises innovantes qui utilisent AmanTrack pour maintenir leur conformité et protéger leurs équipes.",
+      "primaryButton": "Démarrer l'essai gratuit",
+      "secondaryButton": "Contacter les ventes"
+    },
+    "dashboard": {
+      "badge": "Tableau de bord",
+      "title": "Conçu pour la clarté et le contrôle",
+      "description": "Une interface épurée et intuitive qui met les informations de sécurité critiques à portée de main.",
+      "imageAlt": "Tableau de bord AmanTrack"
+    },
+    "features": {
+      "badge": "Fonctionnalités",
+      "title": "Tout pour gérer la sécurité",
+      "description": "Des fonctionnalités puissantes conçues pour les professionnels HSE afin d'optimiser les opérations et garantir la sécurité au travail.",
+      "items": {
+        "assetManagement": {
+          "title": "Gestion des actifs",
+          "desc": "Suivez tous les équipements de sécurité avec les calendriers d'inspection et les statuts de conformité."
+        },
+        "inspectionTracking": {
+          "title": "Suivi des inspections",
+          "desc": "Journalisez les inspections, les rappels et les échéances de conformité."
+        },
+        "realTimeReports": {
+          "title": "Rapports en temps réel",
+          "desc": "Générez instantanément des rapports PDF et CSV prêts pour l'audit."
+        },
+        "locationManagement": {
+          "title": "Gestion multi-sites",
+          "desc": "Organisez les actifs à travers plusieurs installations ou sites."
+        },
+        "smartAlerts": {
+          "title": "Alertes intelligentes",
+          "desc": "Notifications automatisées pour les actifs expirés et les inspections à venir."
+        },
+        "mobileAccess": {
+          "title": "Accès mobile",
+          "desc": "Utilisez la plateforme partout, sur n'importe quel appareil."
+        }
+      }
+    },
+    "stats": {
+      "badge": "Impact",
+      "title": "La confiance des équipes de sécurité",
+      "description": "Rejoignez les organisations qui ont transformé leur gestion de la sécurité avec AmanTrack.",
+      "items": {
+        "assetsTracked": {
+          "value": "5 000+",
+          "label": "Actifs suivis"
+        },
+        "uptime": {
+          "value": "99,2 %",
+          "label": "Disponibilité système"
+        },
+        "timeSaved": {
+          "value": "45 min",
+          "label": "Économisées par inspecteur / semaine"
+        },
+        "auditReady": {
+          "value": "100 %",
+          "label": "Prêt pour l'audit"
+        }
+      }
+    },
+    "pricing": {
+      "badge": "Tarification",
+      "title": "Tarification simple et transparente",
+      "description": "Choisissez un plan adapté à la taille de votre organisation et à vos besoins de conformité.",
+      "mostPopular": "Le plus populaire",
+      "perMonth": "/mois",
+      "buttons": {
+        "startTrial": "Essai gratuit",
+        "contactSales": "Contacter les ventes"
+      },
+      "plans": {
+        "starter": {
+          "name": "Starter",
+          "price": "Gratuit",
+          "description": "Parfait pour les petites équipes débutant le suivi de sécurité.",
+          "features": [
+            "Jusqu'à 100 actifs",
+            "Journalisation de base",
+            "Vue d'ensemble du tableau de bord",
+            "Support par e-mail"
+          ]
+        },
+        "professional": {
+          "name": "Professionnel",
+          "price": "29 $",
+          "description": "Outils avancés pour les équipes HSE en croissance.",
+          "features": [
+            "Actifs illimités",
+            "Suivi d'inspection avancé",
+            "Exports PDF & CSV",
+            "Statistiques en temps réel",
+            "Support prioritaire"
+          ]
+        },
+        "enterprise": {
+          "name": "Entreprise",
+          "price": "Sur mesure",
+          "description": "Solution adaptée pour les grandes organisations.",
+          "features": [
+            "Gestion multi-sites",
+            "Accès basé sur les rôles (RBAC)",
+            "Onboarding dédié",
+            "Intégrations personnalisées",
+            "SLA Entreprise"
+          ]
+        }
+      }
+    },
+    "problemSolution": {
+      "badge": "Pourquoi AmanTrack ?",
+      "title": "Du chaos à la conformité",
+      "description": "De nombreuses organisations luttent avec le suivi manuel. AmanTrack transforme les flux de travail complexes en un système simple et centralisé.",
+      "problem": {
+        "title": "Le Problème",
+        "items": {
+          "paper": "Les registres papier se perdent ou s'abîment.",
+          "missed": "Les inspections manquées entraînent des risques de conformité.",
+          "manual": "Le suivi manuel fait perdre du temps et réduit la productivité.",
+          "visibility": "Manque de visibilité en temps réel entre les équipes."
+        }
+      },
+      "solution": {
+        "title": "La Solution",
+        "items": {
+          "centralized": "Gestion centralisée des actifs et des inspections.",
+          "automated": "Rappels automatisés et suivi de la conformité.",
+          "realtime": "Tableaux de bord et rapports en temps réel.",
+          "secure": "Infrastructure cloud sécurisée."
+        }
+      }
+    },
+    "privacy": {
+      "title": "Politique de confidentialité",
+      "sections": {
+        "informationCollected": {
+          "title": "1. Informations collectées",
+          "content": "AmanTrack collecte les informations de compte, les enregistrements d'actifs, les données d'inspection et les analyses d'utilisation nécessaires pour fournir les services de suivi."
+        },
+        "howWeUse": {
+          "title": "2. Utilisation des informations",
+          "content": "Les données sont utilisées pour opérer la plateforme, améliorer les performances, assurer le suivi de la conformité et fournir le support client."
+        },
+        "dataProtection": {
+          "title": "3. Protection des données",
+          "content": "Nous mettons en œuvre des pratiques de sécurité conformes aux normes de l'industrie pour protéger vos données contre tout accès non autorisé."
+        },
+        "thirdParty": {
+          "title": "4. Services tiers",
+          "content": "AmanTrack peut utiliser des services tiers sécurisés pour l'hébergement, l'analyse et le traitement des paiements."
+        },
+        "contact": {
+          "title": "5. Contact",
+          "content": "Pour toute question relative à la confidentialité, contactez-nous à contact@amantrack.com."
+        }
+      }
+    },
+    "terms": {
+      "title": "Conditions d'utilisation",
+      "sections": {
+        "acceptance": {
+          "title": "1. Acceptation des conditions",
+          "content": "En utilisant AmanTrack, vous acceptez de vous conformer à ces conditions et à toutes les lois et réglementations applicables."
+        },
+        "account": {
+          "title": "2. Responsabilité du compte",
+          "content": "Vous êtes responsable du maintien de la confidentialité de vos identifiants et de toutes les activités effectuées sous votre compte."
+        },
+        "usage": {
+          "title": "3. Utilisation du service",
+          "content": "La plateforme est destinée au suivi de la conformité de sécurité légale et ne doit pas être utilisée pour des activités illicites."
+        },
+        "liability": {
+          "title": "4. Limitation de responsabilité",
+          "content": "AmanTrack n'est pas responsable des dommages indirects, accessoires ou consécutifs découlant de l'utilisation du service."
+        },
+        "modifications": {
+          "title": "5. Modifications",
+          "content": "Nous nous réservons le droit de mettre à jour ces conditions à tout moment."
+        }
+      }
+    },
+    "footer": {
+      "description": "Suivi professionnel des équipements HSE et gestion de la conformité pour les organisations modernes.",
+      "product": {
+        "title": "Produit",
+        "features": "Fonctionnalités",
+        "pricing": "Tarifs",
+        "signin": "Se connecter"
+      },
+      "company": {
+        "title": "Entreprise",
+        "contact": "Contact",
+        "privacy": "Confidentialité",
+        "terms": "Conditions"
+      },
+      "cta": {
+        "title": "Gérez plus intelligemment",
+        "description": "Suivez les inspections, assurez la conformité et simplifiez les opérations HSE.",
+        "button": "Démarrer l'essai gratuit"
+      },
+      "bottom": {
+        "rights": "Tous droits réservés.",
+        "privacy": "Confidentialité",
+        "terms": "Conditions",
+        "cookies": "Cookies"
+      }
+    },
+    "nav": {
+      "features": "Fonctionnalités",
+      "pricing": "Tarifs",
+      "contact": "Contact",
+      "cta": "Essai gratuit",
+      "aria": {
+        "toggle": "Basculer le menu",
+        "close": "Fermer le menu"
+      }
+    }
+  }
+}

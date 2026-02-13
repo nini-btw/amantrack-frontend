@@ -1,17 +1,31 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
-const STATS = [
-  { value: "5,000+", label: "Assets Tracked" },
-  { value: "99.2%", label: "System Uptime" },
-  { value: "45min", label: "Saved Per Inspector / Week" },
-  { value: "100%", label: "Audit Ready" },
-];
+import { useTranslations } from "next-intl";
 
 export default function StatsSection() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const t = useTranslations("presentation.stats");
+
+  const STATS = [
+    {
+      value: t("items.assetsTracked.value"),
+      label: t("items.assetsTracked.label"),
+    },
+    {
+      value: t("items.uptime.value"),
+      label: t("items.uptime.label"),
+    },
+    {
+      value: t("items.timeSaved.value"),
+      label: t("items.timeSaved.label"),
+    },
+    {
+      value: t("items.auditReady.value"),
+      label: t("items.auditReady.label"),
+    },
+  ];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -45,16 +59,15 @@ export default function StatsSection() {
           `}
         >
           <span className="inline-block mb-4 sm:mb-6 px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold tracking-widest uppercase bg-[rgba(239,68,68,0.08)] text-[#EF4444] border border-[rgba(239,68,68,0.25)]">
-            Impact
+            {t("badge")}
           </span>
 
-          <h2 className=" text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-white mb-4 sm:mb-6 tracking-tight px-4">
-            Trusted by safety teams
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-white mb-4 sm:mb-6 tracking-tight px-4">
+            {t("title")}
           </h2>
 
           <p className="text-[#A3A3A3] text-base sm:text-lg max-w-2xl mx-auto leading-relaxed px-4">
-            Join organizations that have transformed their safety management
-            with AmanTrack.
+            {t("description")}
           </p>
         </div>
 
@@ -77,10 +90,9 @@ export default function StatsSection() {
                 transitionDelay: isVisible ? `${i * 100}ms` : "0ms",
               }}
             >
-              {/* Value with scale animation */}
               <div
                 className={`
-                   text-4xl sm:text-5xl font-extrabold
+                  text-4xl sm:text-5xl font-extrabold
                   text-[#EF4444] mb-2 sm:mb-3 tracking-tight
                   transition-transform duration-700
                   ${isVisible ? "scale-100" : "scale-75"}
@@ -92,7 +104,6 @@ export default function StatsSection() {
                 {s.value}
               </div>
 
-              {/* Label */}
               <div className="text-[#A3A3A3] text-xs sm:text-sm font-medium uppercase tracking-wider">
                 {s.label}
               </div>

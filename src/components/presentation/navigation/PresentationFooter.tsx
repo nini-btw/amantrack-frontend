@@ -1,8 +1,9 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/routing";
 import { Mail, Phone, MapPin } from "lucide-react";
 import Logo from "@/components/Logo";
+import { useTranslations } from "next-intl"; // 1. Import useTranslations
 
 interface PresentationFooterProps {
   onOpenPrivacy: () => void;
@@ -13,6 +14,7 @@ export function PresentationFooter({
   onOpenPrivacy,
   onOpenTerms,
 }: PresentationFooterProps) {
+  const t = useTranslations("presentation.footer"); // 2. Initialize translations
   const currentYear = new Date().getFullYear();
 
   const linkStyle =
@@ -37,8 +39,7 @@ export function PresentationFooter({
             </Link>
 
             <p className="text-[#A3A3A3] leading-relaxed text-sm max-w-sm">
-              Professional HSE safety equipment tracking and compliance
-              management for modern organizations.
+              {t("description")}
             </p>
 
             <div className="flex flex-col gap-3 text-sm text-[#A3A3A3]">
@@ -69,40 +70,40 @@ export function PresentationFooter({
           <div className="grid grid-cols-2 gap-8">
             {/* Product */}
             <div className="space-y-4">
-              <h4 className="font-semibold text-white">Product</h4>
+              <h4 className="font-semibold text-white">{t("product.title")}</h4>
               <div className="flex flex-col gap-3 items-start">
                 <Link href="#features" className={linkStyle}>
-                  Features
+                  {t("product.features")}
                 </Link>
                 <Link href="#pricing" className={linkStyle}>
-                  Pricing
+                  {t("product.pricing")}
                 </Link>
                 <Link href="/login" className={linkStyle}>
-                  Sign In
+                  {t("product.signin")}
                 </Link>
               </div>
             </div>
 
             {/* Company */}
             <div className="space-y-4">
-              <h4 className="font-semibold text-white">Company</h4>
+              <h4 className="font-semibold text-white">{t("company.title")}</h4>
               <div className="flex flex-col gap-3 items-start">
                 <Link href="#contact" className={linkStyle}>
-                  Contact
+                  {t("company.contact")}
                 </Link>
 
                 <button
                   onClick={onOpenPrivacy}
                   className={`${linkStyle} text-left`}
                 >
-                  Privacy
+                  {t("company.privacy")}
                 </button>
 
                 <button
                   onClick={onOpenTerms}
                   className={`${linkStyle} text-left`}
                 >
-                  Terms
+                  {t("company.terms")}
                 </button>
               </div>
             </div>
@@ -112,11 +113,10 @@ export function PresentationFooter({
           <div className="bg-[#0F0F0F] border border-[#2A2A2A] rounded-xl p-6 flex flex-col justify-between">
             <div>
               <h4 className="font-semibold text-white mb-2">
-                Start Managing Smarter
+                {t("cta.title")}
               </h4>
               <p className="text-sm text-[#A3A3A3] mb-6">
-                Track inspections, ensure compliance, and simplify HSE
-                operations.
+                {t("cta.description")}
               </p>
             </div>
 
@@ -124,7 +124,7 @@ export function PresentationFooter({
               href="/dashboard"
               className="cursor-pointer w-full text-center rounded-lg bg-[#EF4444] py-3 text-sm font-semibold text-white hover:bg-[#DC2626] transition-all"
             >
-              Start Free Trial
+              {t("cta.button")}
             </Link>
           </div>
         </div>
@@ -132,7 +132,7 @@ export function PresentationFooter({
         {/* Bottom Bar */}
         <div className="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-[#2A2A2A] flex flex-col sm:flex-row items-center justify-between gap-4 text-[#737373] text-xs sm:text-sm">
           <p className="text-center sm:text-left">
-            © {currentYear} AmanTrack. All rights reserved.
+            © {currentYear} AmanTrack. {t("bottom.rights")}
           </p>
 
           <div className="flex flex-wrap gap-4 sm:gap-6 justify-center">
@@ -140,21 +140,21 @@ export function PresentationFooter({
               onClick={onOpenPrivacy}
               className="cursor-pointer hover:text-[#EF4444] transition-colors"
             >
-              Privacy
+              {t("bottom.privacy")}
             </button>
 
             <button
               onClick={onOpenTerms}
               className="cursor-pointer hover:text-[#EF4444] transition-colors"
             >
-              Terms
+              {t("bottom.terms")}
             </button>
 
             <Link
               href="/cookies"
               className="cursor-pointer hover:text-[#EF4444] transition-colors"
             >
-              Cookies
+              {t("bottom.cookies")}
             </Link>
           </div>
         </div>

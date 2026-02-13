@@ -1,6 +1,7 @@
 "use client";
 
 import Modal from "../layout/Modal";
+import { useTranslations } from "next-intl";
 
 export default function PrivacyPolicyModal({
   isOpen,
@@ -9,52 +10,45 @@ export default function PrivacyPolicyModal({
   isOpen: boolean;
   onClose: () => void;
 }) {
+  const t = useTranslations("presentation.privacy");
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Privacy Policy">
+    <Modal isOpen={isOpen} onClose={onClose} title={t("title")}>
       <section>
         <h3 className="text-white font-semibold mb-2">
-          1. Information We Collect
+          {t("sections.informationCollected.title")}
         </h3>
-        <p>
-          AmanTrack collects account information, asset records, inspection
-          data, and usage analytics necessary to provide compliance tracking
-          services.
-        </p>
+        <p>{t("sections.informationCollected.content")}</p>
       </section>
 
       <section>
         <h3 className="text-white font-semibold mb-2">
-          2. How We Use Information
+          {t("sections.howWeUse.title")}
         </h3>
-        <p>
-          Data is used to operate the platform, improve performance, ensure
-          compliance monitoring, and provide customer support.
-        </p>
-      </section>
-
-      <section>
-        <h3 className="text-white font-semibold mb-2">3. Data Protection</h3>
-        <p>
-          We implement industry-standard security practices to protect your data
-          against unauthorized access or disclosure.
-        </p>
+        <p>{t("sections.howWeUse.content")}</p>
       </section>
 
       <section>
         <h3 className="text-white font-semibold mb-2">
-          4. Third-Party Services
+          {t("sections.dataProtection.title")}
         </h3>
-        <p>
-          AmanTrack may use secure third-party services for hosting, analytics,
-          and payment processing.
-        </p>
+        <p>{t("sections.dataProtection.content")}</p>
       </section>
 
       <section>
-        <h3 className="text-white font-semibold mb-2">5. Contact</h3>
+        <h3 className="text-white font-semibold mb-2">
+          {t("sections.thirdParty.title")}
+        </h3>
+        <p>{t("sections.thirdParty.content")}</p>
+      </section>
+
+      <section>
+        <h3 className="text-white font-semibold mb-2">
+          {t("sections.contact.title")}
+        </h3>
         <p>
-          For privacy-related inquiries, contact us at
-          <span className="text-white"> contact@amantrack.com</span>.
+          {t("sections.contact.content")}{" "}
+          <span className="text-white">contact@amantrack.com</span>
         </p>
       </section>
     </Modal>

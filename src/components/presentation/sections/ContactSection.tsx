@@ -2,8 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function ContactSection() {
+  const t = useTranslations("presentation.contact");
+
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -19,6 +22,24 @@ export default function ContactSection() {
 
     return () => observer.disconnect();
   }, []);
+
+  const contactItems = [
+    {
+      icon: Mail,
+      title: t("info.email"),
+      value: t("info.emailValue"),
+    },
+    {
+      icon: Phone,
+      title: t("info.phone"),
+      value: t("info.phoneValue"),
+    },
+    {
+      icon: MapPin,
+      title: t("info.location"),
+      value: t("info.locationValue"),
+    },
+  ];
 
   return (
     <section
@@ -37,16 +58,15 @@ export default function ContactSection() {
           }`}
         >
           <span className="inline-block mb-6 px-5 py-2 rounded-full text-sm font-semibold tracking-widest uppercase bg-[rgba(239,68,68,0.08)] text-[#EF4444] border border-[rgba(239,68,68,0.25)]">
-            Contact
+            {t("badge")}
           </span>
 
-          <h2 className=" text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-6 tracking-tight">
-            Let’s Talk Safety
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-6 tracking-tight">
+            {t("title")}
           </h2>
 
           <p className="text-[#A3A3A3] text-lg max-w-2xl mx-auto leading-relaxed">
-            Have questions about AmanTrack? Our team is here to help you
-            streamline compliance and asset management.
+            {t("description")}
           </p>
         </div>
 
@@ -60,23 +80,7 @@ export default function ContactSection() {
                 : "opacity-0 translate-y-8"
             }`}
           >
-            {[
-              {
-                icon: Mail,
-                title: "Email",
-                value: "support@amantrack.com",
-              },
-              {
-                icon: Phone,
-                title: "Phone",
-                value: "+1 (555) 123-4567",
-              },
-              {
-                icon: MapPin,
-                title: "Location",
-                value: "Global — Remote First",
-              },
-            ].map((item, i) => {
+            {contactItems.map((item, i) => {
               const Icon = item.icon;
               return (
                 <div
@@ -108,33 +112,33 @@ export default function ContactSection() {
             <form className="bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl p-8 sm:p-10 space-y-6 shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
               <div>
                 <label className="block text-sm font-medium text-[#A3A3A3] mb-2">
-                  Full Name
+                  {t("form.fullName")}
                 </label>
                 <input
                   type="text"
-                  placeholder="John Doe"
+                  placeholder={t("form.fullNamePlaceholder")}
                   className="w-full rounded-xl bg-[#0F0F0F] border border-[#2A2A2A] px-4 py-3 text-white focus:outline-none focus:border-[#EF4444] transition-all"
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-[#A3A3A3] mb-2">
-                  Email Address
+                  {t("form.email")}
                 </label>
                 <input
                   type="email"
-                  placeholder="john@example.com"
+                  placeholder={t("form.emailPlaceholder")}
                   className="w-full rounded-xl bg-[#0F0F0F] border border-[#2A2A2A] px-4 py-3 text-white focus:outline-none focus:border-[#EF4444] transition-all"
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-[#A3A3A3] mb-2">
-                  Message
+                  {t("form.message")}
                 </label>
                 <textarea
                   rows={5}
-                  placeholder="Tell us about your needs..."
+                  placeholder={t("form.messagePlaceholder")}
                   className="w-full rounded-xl bg-[#0F0F0F] border border-[#2A2A2A] px-4 py-3 text-white focus:outline-none focus:border-[#EF4444] transition-all resize-none"
                 />
               </div>
@@ -143,7 +147,7 @@ export default function ContactSection() {
                 type="submit"
                 className="w-full rounded-xl py-4 text-sm font-semibold bg-[#EF4444] text-white transition-all hover:bg-[#DC2626] hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(239,68,68,0.35)]"
               >
-                Send Message
+                {t("form.button")}
               </button>
             </form>
           </div>

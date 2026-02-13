@@ -1,0 +1,272 @@
+{
+  "presentation": {
+    "hero": {
+      "badge": {
+        "desktop": "Trusted by HSE Professionals Worldwide",
+        "mobile": "Trusted by HSE Professionals"
+      },
+      "title": {
+        "line1": "Safety Asset Management.",
+        "highlight": "Simplified."
+      },
+      "description": "Track every inspection, maintain compliance, and keep your workplace safe with real-time visibility into your safety equipment.",
+      "cta": {
+        "primary": "Start Free Trial"
+      },
+      "dashboardPreview": {
+        "label": "Live Dashboard",
+        "stats": {
+          "totalAssets": "Total Assets",
+          "validAssets": "Valid Assets",
+          "needsAttention": "Needs Attention",
+          "compliance": "Compliance"
+        }
+      }
+    },
+    "contact": {
+      "badge": "Contact",
+      "title": "Let’s Talk Safety",
+      "description": "Have questions about AmanTrack? Our team is here to help you streamline compliance and asset management.",
+      "info": {
+        "email": "Email",
+        "phone": "Phone",
+        "location": "Location",
+        "emailValue": "support@amantrack.com",
+        "phoneValue": "+1 (555) 123-4567",
+        "locationValue": "Global — Remote First"
+      },
+      "form": {
+        "fullName": "Full Name",
+        "fullNamePlaceholder": "John Doe",
+        "email": "Email Address",
+        "emailPlaceholder": "john@example.com",
+        "message": "Message",
+        "messagePlaceholder": "Tell us about your needs...",
+        "button": "Send Message"
+      }
+    },
+    "cta": {
+      "title": "Ready to transform your safety management?",
+      "description": "Join forward-thinking organizations using AmanTrack to maintain compliance and protect their teams.",
+      "primaryButton": "Start Free Trial",
+      "secondaryButton": "Contact Sales"
+    },
+    "dashboard": {
+      "badge": "Dashboard",
+      "title": "Built for clarity and control",
+      "description": "A clean, intuitive interface that puts critical safety information at your fingertips.",
+      "imageAlt": "AmanTrack Dashboard"
+    },
+    "features": {
+      "badge": "Features",
+      "title": "Everything you need to manage safety",
+      "description": "Powerful features designed for HSE professionals to streamline operations and ensure workplace safety.",
+      "items": {
+        "assetManagement": {
+          "title": "Asset Management",
+          "desc": "Track all safety assets with inspection schedules and compliance status."
+        },
+        "inspectionTracking": {
+          "title": "Inspection Tracking",
+          "desc": "Log inspections, reminders, and compliance deadlines."
+        },
+        "realTimeReports": {
+          "title": "Real-time Reports",
+          "desc": "Generate audit-ready PDF and CSV reports instantly."
+        },
+        "locationManagement": {
+          "title": "Location Management",
+          "desc": "Organize assets across multiple facilities."
+        },
+        "smartAlerts": {
+          "title": "Smart Alerts",
+          "desc": "Automated alerts for expired assets and inspections."
+        },
+        "mobileAccess": {
+          "title": "Mobile Access",
+          "desc": "Use anywhere on any device."
+        }
+      }
+    },
+    "stats": {
+      "badge": "Impact",
+      "title": "Trusted by safety teams",
+      "description": "Join organizations that have transformed their safety management with AmanTrack.",
+      "items": {
+        "assetsTracked": {
+          "value": "5,000+",
+          "label": "Assets Tracked"
+        },
+        "uptime": {
+          "value": "99.2%",
+          "label": "System Uptime"
+        },
+        "timeSaved": {
+          "value": "45min",
+          "label": "Saved Per Inspector / Week"
+        },
+        "auditReady": {
+          "value": "100%",
+          "label": "Audit Ready"
+        }
+      }
+    },
+    "pricing": {
+      "badge": "Pricing",
+      "title": "Simple, Transparent Pricing",
+      "description": "Choose a plan that fits your organization’s size and compliance needs.",
+      "mostPopular": "Most Popular",
+      "perMonth": "/month",
+      "buttons": {
+        "startTrial": "Start Free Trial",
+        "contactSales": "Contact Sales"
+      },
+      "plans": {
+        "starter": {
+          "name": "Starter",
+          "price": "Free",
+          "description": "Perfect for small teams getting started with safety tracking.",
+          "features": [
+            "Up to 100 assets",
+            "Basic inspection logging",
+            "Dashboard overview",
+            "Email support"
+          ]
+        },
+        "professional": {
+          "name": "Professional",
+          "price": "$29",
+          "description": "Advanced tools for growing HSE teams.",
+          "features": [
+            "Unlimited assets",
+            "Advanced inspection tracking",
+            "PDF & CSV exports",
+            "Real-time statistics",
+            "Priority support"
+          ]
+        },
+        "enterprise": {
+          "name": "Enterprise",
+          "price": "Custom",
+          "description": "Tailored solution for large organizations.",
+          "features": [
+            "Multi-location management",
+            "Role-based access",
+            "Dedicated onboarding",
+            "Custom integrations",
+            "Enterprise SLA"
+          ]
+        }
+      }
+    },
+    "problemSolution": {
+      "badge": "Why AmanTrack?",
+      "title": "From Chaos to Compliance",
+      "description": "Many organizations struggle with manual safety tracking. AmanTrack transforms complex compliance workflows into a simple, centralized system.",
+      "problem": {
+        "title": "The Problem",
+        "items": {
+          "paper": "Paper-based inspection records get lost or damaged.",
+          "missed": "Missed inspections lead to compliance risks.",
+          "manual": "Manual tracking wastes time and reduces productivity.",
+          "visibility": "Lack of real-time visibility across teams."
+        }
+      },
+      "solution": {
+        "title": "The Solution",
+        "items": {
+          "centralized": "Centralized asset and inspection management.",
+          "automated": "Automated reminders and compliance tracking.",
+          "realtime": "Real-time dashboards and reporting.",
+          "secure": "Secure cloud-based infrastructure."
+        }
+      }
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "sections": {
+        "informationCollected": {
+          "title": "1. Information We Collect",
+          "content": "AmanTrack collects account information, asset records, inspection data, and usage analytics necessary to provide compliance tracking services."
+        },
+        "howWeUse": {
+          "title": "2. How We Use Information",
+          "content": "Data is used to operate the platform, improve performance, ensure compliance monitoring, and provide customer support."
+        },
+        "dataProtection": {
+          "title": "3. Data Protection",
+          "content": "We implement industry-standard security practices to protect your data against unauthorized access or disclosure."
+        },
+        "thirdParty": {
+          "title": "4. Third-Party Services",
+          "content": "AmanTrack may use secure third-party services for hosting, analytics, and payment processing."
+        },
+        "contact": {
+          "title": "5. Contact",
+          "content": "For privacy-related inquiries, contact us at contact@amantrack.com."
+        }
+      }
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "sections": {
+        "acceptance": {
+          "title": "1. Acceptance of Terms",
+          "content": "By using AmanTrack, you agree to comply with these terms and all applicable laws and regulations."
+        },
+        "account": {
+          "title": "2. Account Responsibility",
+          "content": "You are responsible for maintaining the confidentiality of your account credentials and all activities under your account."
+        },
+        "usage": {
+          "title": "3. Service Usage",
+          "content": "The platform is intended for lawful safety compliance tracking and must not be used for illegal activities."
+        },
+        "liability": {
+          "title": "4. Limitation of Liability",
+          "content": "AmanTrack is not liable for indirect, incidental, or consequential damages arising from use of the service."
+        },
+        "modifications": {
+          "title": "5. Modifications",
+          "content": "We reserve the right to update these terms at any time."
+        }
+      }
+    },
+    "footer": {
+      "description": "Professional HSE safety equipment tracking and compliance management for modern organizations.",
+      "product": {
+        "title": "Product",
+        "features": "Features",
+        "pricing": "Pricing",
+        "signin": "Sign In"
+      },
+      "company": {
+        "title": "Company",
+        "contact": "Contact",
+        "privacy": "Privacy",
+        "terms": "Terms"
+      },
+      "cta": {
+        "title": "Start Managing Smarter",
+        "description": "Track inspections, ensure compliance, and simplify HSE operations.",
+        "button": "Start Free Trial"
+      },
+      "bottom": {
+        "rights": "All rights reserved.",
+        "privacy": "Privacy",
+        "terms": "Terms",
+        "cookies": "Cookies"
+      }
+    },
+    "nav": {
+      "features": "Features",
+      "pricing": "Pricing",
+      "contact": "Contact",
+      "cta": "Start Free Trial",
+      "aria": {
+        "toggle": "Toggle menu",
+        "close": "Close menu"
+      }
+    }
+  }
+}

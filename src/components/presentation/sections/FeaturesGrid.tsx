@@ -9,47 +9,44 @@ import {
   Bell,
   Smartphone,
 } from "lucide-react";
-
-const FEATURES = [
-  {
-    title: "Asset Management",
-    desc: "Track all safety assets with inspection schedules and compliance status.",
-    icon: Package,
-    color: "rgba(59, 130, 246, 0.1)",
-  },
-  {
-    title: "Inspection Tracking",
-    desc: "Log inspections, reminders, and compliance deadlines.",
-    icon: ClipboardCheck,
-    color: "rgba(34, 197, 94, 0.1)",
-  },
-  {
-    title: "Real-time Reports",
-    desc: "Generate audit-ready PDF and CSV reports instantly.",
-    icon: BarChart3,
-    color: "rgba(234, 179, 8, 0.1)",
-  },
-  {
-    title: "Location Management",
-    desc: "Organize assets across multiple facilities.",
-    icon: MapPin,
-    color: "rgba(168, 85, 247, 0.1)",
-  },
-  {
-    title: "Smart Alerts",
-    desc: "Automated alerts for expired assets and inspections.",
-    icon: Bell,
-    color: "rgba(239, 68, 68, 0.1)",
-  },
-  {
-    title: "Mobile Access",
-    desc: "Use anywhere on any device.",
-    icon: Smartphone,
-    color: "rgba(59, 130, 246, 0.1)",
-  },
-];
+import { useTranslations } from "next-intl";
 
 export default function FeaturesGrid() {
+  const t = useTranslations("presentation.features");
+
+  const FEATURES = [
+    {
+      key: "assetManagement",
+      icon: Package,
+      color: "rgba(59, 130, 246, 0.1)",
+    },
+    {
+      key: "inspectionTracking",
+      icon: ClipboardCheck,
+      color: "rgba(34, 197, 94, 0.1)",
+    },
+    {
+      key: "realTimeReports",
+      icon: BarChart3,
+      color: "rgba(234, 179, 8, 0.1)",
+    },
+    {
+      key: "locationManagement",
+      icon: MapPin,
+      color: "rgba(168, 85, 247, 0.1)",
+    },
+    {
+      key: "smartAlerts",
+      icon: Bell,
+      color: "rgba(239, 68, 68, 0.1)",
+    },
+    {
+      key: "mobileAccess",
+      icon: Smartphone,
+      color: "rgba(59, 130, 246, 0.1)",
+    },
+  ];
+
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -86,16 +83,15 @@ export default function FeaturesGrid() {
           `}
         >
           <span className="inline-block mb-4 sm:mb-6 px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold tracking-widest uppercase bg-[rgba(239,68,68,0.08)] text-[#EF4444] border border-[rgba(239,68,68,0.25)]">
-            Features
+            {t("badge")}
           </span>
 
-          <h2 className=" text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-white mb-4 sm:mb-6 tracking-tight px-4">
-            Everything you need to manage safety
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-white mb-4 sm:mb-6 tracking-tight px-4">
+            {t("title")}
           </h2>
 
           <p className="text-[#A3A3A3] text-base sm:text-lg max-w-2xl mx-auto leading-relaxed px-4">
-            Powerful features designed for HSE professionals to streamline
-            operations and ensure workplace safety.
+            {t("description")}
           </p>
         </div>
 
@@ -106,7 +102,7 @@ export default function FeaturesGrid() {
 
             return (
               <div
-                key={i}
+                key={f.key}
                 className={`
                   group relative bg-[#0F0F0F] border border-[#2A2A2A]
                   rounded-2xl p-8 sm:p-10
@@ -119,7 +115,7 @@ export default function FeaturesGrid() {
                   transitionDelay: isVisible ? `${i * 100}ms` : "0ms",
                 }}
               >
-                {/* Top glow line */}
+                {/* Glow line */}
                 <div className="absolute top-0 left-0 right-0 h-0.5 bg-linear-to-r from-transparent via-[#EF4444] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                 {/* Icon */}
@@ -131,13 +127,13 @@ export default function FeaturesGrid() {
                 </div>
 
                 {/* Title */}
-                <h3 className=" text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">
-                  {f.title}
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">
+                  {t(`items.${f.key}.title`)}
                 </h3>
 
-                {/* Desc */}
+                {/* Description */}
                 <p className="text-[#A3A3A3] leading-relaxed text-sm sm:text-base">
-                  {f.desc}
+                  {t(`items.${f.key}.desc`)}
                 </p>
               </div>
             );

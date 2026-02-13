@@ -1,6 +1,7 @@
 "use client";
 
 import Modal from "../layout/Modal";
+import { useTranslations } from "next-intl";
 
 export default function TermsModal({
   isOpen,
@@ -9,49 +10,43 @@ export default function TermsModal({
   isOpen: boolean;
   onClose: () => void;
 }) {
+  const t = useTranslations("presentation.terms");
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Terms of Service">
+    <Modal isOpen={isOpen} onClose={onClose} title={t("title")}>
       <section>
         <h3 className="text-white font-semibold mb-2">
-          1. Acceptance of Terms
+          {t("sections.acceptance.title")}
         </h3>
-        <p>
-          By using AmanTrack, you agree to comply with these terms and all
-          applicable laws and regulations.
-        </p>
+        <p>{t("sections.acceptance.content")}</p>
       </section>
 
       <section>
         <h3 className="text-white font-semibold mb-2">
-          2. Account Responsibility
+          {t("sections.account.title")}
         </h3>
-        <p>
-          You are responsible for maintaining the confidentiality of your
-          account credentials and all activities under your account.
-        </p>
-      </section>
-
-      <section>
-        <h3 className="text-white font-semibold mb-2">3. Service Usage</h3>
-        <p>
-          The platform is intended for lawful safety compliance tracking and
-          must not be used for illegal activities.
-        </p>
+        <p>{t("sections.account.content")}</p>
       </section>
 
       <section>
         <h3 className="text-white font-semibold mb-2">
-          4. Limitation of Liability
+          {t("sections.usage.title")}
         </h3>
-        <p>
-          AmanTrack is not liable for indirect, incidental, or consequential
-          damages arising from use of the service.
-        </p>
+        <p>{t("sections.usage.content")}</p>
       </section>
 
       <section>
-        <h3 className="text-white font-semibold mb-2">5. Modifications</h3>
-        <p>We reserve the right to update these terms at any time.</p>
+        <h3 className="text-white font-semibold mb-2">
+          {t("sections.liability.title")}
+        </h3>
+        <p>{t("sections.liability.content")}</p>
+      </section>
+
+      <section>
+        <h3 className="text-white font-semibold mb-2">
+          {t("sections.modifications.title")}
+        </h3>
+        <p>{t("sections.modifications.content")}</p>
       </section>
     </Modal>
   );
