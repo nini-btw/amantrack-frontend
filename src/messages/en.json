@@ -268,5 +268,30 @@
         "close": "Close menu"
       }
     }
+  },
+  "dashboard": {
+    "sidebar": {
+      "groups": {
+        "dashboard": "Dashboard",
+        "assets": "Assets",
+        "analytics": "Analytics"
+      },
+      "links": {
+        "dashboard": "Dashboard",
+        "assets": "Assets",
+        "locations": "Locations",
+        "statistics": "Statistics",
+        "reports": "Reports"
+      },
+      "footer": {
+        "profile": "Profile",
+        "settings": "Settings",
+        "logout": "Logout",
+        "about": "About Aman Track",
+        "roles": {
+          "hseManager": "HSE Manager"
+        }
+      }
+    }
   }
 }

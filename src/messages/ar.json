@@ -268,5 +268,30 @@
         "close": "إغلاق القائمة"
       }
     }
+  },
+  "dashboard": {
+    "sidebar": {
+      "groups": {
+        "dashboard": "لوحة القيادة",
+        "assets": "الأصول",
+        "analytics": "التحليلات"
+      },
+      "links": {
+        "dashboard": "الرئيسية",
+        "assets": "الأصول",
+        "locations": "المواقع",
+        "statistics": "الإحصائيات",
+        "reports": "التقارير"
+      },
+      "footer": {
+        "profile": "الملف الشخصي",
+        "settings": "الإعدادات",
+        "logout": "تسجيل الخروج",
+        "about": "حول أمان تراك",
+        "roles": {
+          "hseManager": "مدير الصحة والسلامة والبيئة"
+        }
+      }
+    }
   }
 }

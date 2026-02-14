@@ -268,5 +268,30 @@
         "close": "Fermer le menu"
       }
     }
+  },
+  "dashboard": {
+    "sidebar": {
+      "groups": {
+        "dashboard": "Tableau de bord",
+        "assets": "Actifs",
+        "analytics": "Analytiques"
+      },
+      "links": {
+        "dashboard": "Accueil",
+        "assets": "Actifs",
+        "locations": "Emplacements",
+        "statistics": "Statistiques",
+        "reports": "Rapports"
+      },
+      "footer": {
+        "profile": "Profil",
+        "settings": "Paramètres",
+        "logout": "Déconnexion",
+        "about": "À propos de Aman Track",
+        "roles": {
+          "hseManager": "Responsable HSE"
+        }
+      }
+    }
   }
 }
