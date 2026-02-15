@@ -5,13 +5,14 @@ import {
   Calendar,
   User,
   FileText,
-  Eye,
   Trash2,
   ArrowUpDown,
   ArrowUp,
   ArrowDown,
 } from "lucide-react";
+import { useTranslations, useFormatter } from "next-intl";
 import { useDeleteInspection } from "@/features/inspections/hooks/useInspections";
+import { useAssetTranslations } from "@/lib/translations";
 import { LogInspectionResponse } from "@/types/inspection.types";
 import ConfirmDialog from "@/components/ui/ConfirmDialog";
 
@@ -31,6 +32,12 @@ export function InspectionsList({
   onSelectInspection,
   selectedInspection,
 }: InspectionsListProps) {
+  const t = useTranslations("dashboard.reports.list");
+  const format = useFormatter();
+
+  // Use centralized translation hook
+  const { translateInspectionType } = useAssetTranslations();
+
   const [sortField, setSortField] = useState<SortField | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -41,7 +48,6 @@ export function InspectionsList({
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
-      // Cycle through: asc -> desc -> null
       if (sortDirection === "asc") setSortDirection("desc");
       else if (sortDirection === "desc") {
         setSortDirection(null);
@@ -64,7 +70,6 @@ export function InspectionsList({
 
   const handleConfirmDelete = async () => {
     if (!inspectionToDelete) return;
-
     try {
       await deleteInspection.mutateAsync(inspectionToDelete.inspection.id);
       setDeleteDialogOpen(false);
@@ -79,7 +84,6 @@ export function InspectionsList({
     setInspectionToDelete(null);
   };
 
-  // Single Sort Icon Component
   const SortIcon = ({ field }: { field: SortField }) => {
     if (sortField !== field)
       return (
@@ -92,7 +96,6 @@ export function InspectionsList({
     );
   };
 
-  // Filter inspections
   const filteredInspections = inspections?.filter((inspection) => {
     const search = searchQuery.toLowerCase();
     const type = inspection.inspection?.type?.toLowerCase() || "";
@@ -108,7 +111,6 @@ export function InspectionsList({
     );
   });
 
-  // Sort inspections
   let sortedInspections = [...(filteredInspections || [])];
   if (sortField && sortDirection) {
     sortedInspections.sort((a, b) => {
@@ -144,12 +146,10 @@ export function InspectionsList({
             <FileText className="w-12 h-12 text-[#6B7280] dark:text-[#9CA3AF] opacity-50" />
           </div>
           <h3 className="text-lg font-semibold text-[#111827] dark:text-[#E4E6EB] mb-2">
-            No Inspections Found
+            {t("empty.title")}
           </h3>
           <p className="text-sm text-[#6B7280] dark:text-[#9CA3AF] max-w-md">
-            {searchQuery
-              ? "No inspections match your search criteria. Try adjusting your filters."
-              : "Get started by creating your first inspection record."}
+            {searchQuery ? t("empty.searchActive") : t("empty.getStarted")}
           </p>
         </div>
       </div>
@@ -157,9 +157,9 @@ export function InspectionsList({
   }
 
   const tableHeaders = [
-    { label: "Type", field: "type" as SortField },
-    { label: "Date", field: "inspectionDate" as SortField },
-    { label: "Performed By", field: "performedBy" as SortField },
+    { label: t("table.type"), field: "type" as SortField },
+    { label: t("table.date"), field: "inspectionDate" as SortField },
+    { label: t("table.performedBy"), field: "performedBy" as SortField },
   ];
 
   return (
@@ -183,10 +183,10 @@ export function InspectionsList({
                   </th>
                 ))}
                 <th className="px-4 py-4 text-left text-xs font-semibold text-[#6B7280] dark:text-[#9CA3AF] uppercase tracking-wider">
-                  Notes
+                  {t("table.notes")}
                 </th>
                 <th className="px-4 py-4 text-right text-xs font-semibold text-[#6B7280] dark:text-[#9CA3AF] uppercase tracking-wider">
-                  Actions
+                  {t("table.actions")}
                 </th>
               </tr>
             </thead>
@@ -201,86 +201,72 @@ export function InspectionsList({
                   }`}
                   onClick={() => onSelectInspection(inspection.inspection.id)}
                 >
-                  {/* Type */}
                   <td className="px-4 py-4 whitespace-nowrap">
-                    <div className="flex items-center gap-2">
-                      <div
-                        className={`px-3 py-1 rounded-full text-xs font-medium ${
-                          inspection.inspection.type === "OFFICIAL"
-                            ? "bg-blue-100 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400"
-                            : inspection.inspection.type === "VISUAL"
-                              ? "bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400"
-                              : "bg-purple-100 dark:bg-purple-900/20 text-purple-700 dark:text-purple-400"
-                        }`}
-                      >
-                        {inspection.inspection.type}
-                      </div>
+                    <div
+                      className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
+                        inspection.inspection.type === "OFFICIAL"
+                          ? "bg-blue-100 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400"
+                          : inspection.inspection.type === "VISUAL"
+                            ? "bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400"
+                            : "bg-purple-100 dark:bg-purple-900/20 text-purple-700 dark:text-purple-400"
+                      }`}
+                    >
+                      {translateInspectionType(inspection.inspection.type)}
                     </div>
                   </td>
-
-                  {/* Date */}
                   <td className="px-4 py-4 whitespace-nowrap">
                     <div className="flex items-center gap-2 text-sm text-[#111827] dark:text-[#E4E6EB]">
                       <Calendar className="w-4 h-4 text-[#6B7280] dark:text-[#9CA3AF]" />
-                      {new Date(
-                        inspection.inspection.inspectionDate,
-                      ).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
+                      {format.dateTime(
+                        new Date(inspection.inspection.inspectionDate),
+                        {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        },
+                      )}
                     </div>
                   </td>
-
-                  {/* Performed By */}
                   <td className="px-4 py-4 whitespace-nowrap">
                     <div className="flex items-center gap-2 text-sm text-[#111827] dark:text-[#E4E6EB]">
                       <User className="w-4 h-4 text-[#6B7280] dark:text-[#9CA3AF]" />
                       {inspection.inspection.performedBy}
                     </div>
                   </td>
-
-                  {/* Notes */}
                   <td className="px-4 py-4">
                     <p className="text-sm text-[#6B7280] dark:text-[#9CA3AF] line-clamp-2 max-w-xs">
-                      {inspection.inspection.notes || "No notes provided"}
+                      {inspection.inspection.notes || t("table.noNotes")}
                     </p>
                   </td>
-
-                  {/* Actions */}
                   <td className="px-4 py-4 whitespace-nowrap text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <button
-                        onClick={(e) => handleDeleteClick(inspection, e)}
-                        className="cursor-pointer p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-lg transition-colors"
-                        title="Delete"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
+                    <button
+                      onClick={(e) => handleDeleteClick(inspection, e)}
+                      className="cursor-pointer p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-lg transition-colors"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-
-        {/* Pagination footer */}
         <div className="px-6 py-4 border-t border-[#E5E7EB] dark:border-[#2D3340] bg-[#F6F7FA] dark:bg-[#0D1117]">
           <p className="text-sm text-[#6B7280] dark:text-[#9CA3AF] text-center">
-            Showing {sortedInspections.length} of {inspections?.length || 0}{" "}
-            inspections
+            {t("footer", {
+              current: sortedInspections.length,
+              total: inspections?.length || 0,
+            })}
           </p>
         </div>
       </div>
 
       {/* Mobile Cards */}
       <div className="lg:hidden bg-white dark:bg-[#1B1F28] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg shadow-lg dark:shadow-none overflow-hidden">
-        {/* Mobile Sort Controls */}
         <div className="p-4 bg-[#F6F7FA] dark:bg-[#0D1117] border-b border-[#E5E7EB] dark:border-[#2D3340]">
           <div className="flex items-center gap-2 overflow-x-auto pb-2">
             <span className="text-xs font-semibold text-[#6B7280] dark:text-[#9CA3AF] uppercase tracking-wider whitespace-nowrap">
-              Sort by:
+              {t("table.sortBy")}
             </span>
             {tableHeaders.map(({ label, field }) => (
               <button
@@ -299,7 +285,6 @@ export function InspectionsList({
           </div>
         </div>
 
-        {/* Mobile Cards List */}
         <div className="divide-y divide-[#E5E7EB] dark:divide-[#2D3340]">
           {sortedInspections.map((inspection) => (
             <div
@@ -311,7 +296,6 @@ export function InspectionsList({
               }`}
               onClick={() => onSelectInspection(inspection.inspection.id)}
             >
-              {/* Card Header */}
               <div className="flex items-start justify-between gap-3 mb-3">
                 <div
                   className={`px-3 py-1 rounded-full text-xs font-medium shrink-0 ${
@@ -322,33 +306,28 @@ export function InspectionsList({
                         : "bg-purple-100 dark:bg-purple-900/20 text-purple-700 dark:text-purple-400"
                   }`}
                 >
-                  {inspection.inspection.type}
+                  {translateInspectionType(inspection.inspection.type)}
                 </div>
-
-                {/* Actions */}
-                <div className="flex items-center gap-1">
-                  <button
-                    onClick={(e) => handleDeleteClick(inspection, e)}
-                    className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-lg transition-colors active:scale-95"
-                    title="Delete"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </div>
+                <button
+                  onClick={(e) => handleDeleteClick(inspection, e)}
+                  className="p-2 text-red-600 dark:text-red-400 rounded-lg active:scale-95"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
               </div>
 
-              {/* Card Details */}
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-sm text-[#111827] dark:text-[#E4E6EB]">
                   <Calendar className="w-4 h-4 text-[#6B7280] dark:text-[#9CA3AF] shrink-0" />
                   <span className="font-medium">
-                    {new Date(
-                      inspection.inspection.inspectionDate,
-                    ).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                    })}
+                    {format.dateTime(
+                      new Date(inspection.inspection.inspectionDate),
+                      {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      },
+                    )}
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-[#111827] dark:text-[#E4E6EB]">
@@ -367,33 +346,31 @@ export function InspectionsList({
             </div>
           ))}
         </div>
-
-        {/* Mobile Pagination Footer */}
         <div className="px-4 py-3 border-t border-[#E5E7EB] dark:border-[#2D3340] bg-[#F6F7FA] dark:bg-[#0D1117]">
           <p className="text-xs text-[#6B7280] dark:text-[#9CA3AF] text-center">
-            Showing {sortedInspections.length} of {inspections?.length || 0}{" "}
-            inspections
+            {t("footer", {
+              current: sortedInspections.length,
+              total: inspections?.length || 0,
+            })}
           </p>
         </div>
       </div>
 
-      {/* Delete Confirmation Dialog */}
       <ConfirmDialog
         open={deleteDialogOpen}
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
-        title="Delete Inspection"
-        description={`Are you sure you want to delete this ${
-          inspectionToDelete?.inspection.type.toLowerCase() || ""
-        } inspection performed on ${
-          inspectionToDelete
-            ? new Date(
-                inspectionToDelete.inspection.inspectionDate,
-              ).toLocaleDateString()
-            : ""
-        }? This action cannot be undone.`}
-        confirmText="Delete"
-        cancelText="Cancel"
+        title={t("delete.title")}
+        description={t("delete.description", {
+          type: inspectionToDelete?.inspection.type.toLowerCase() || "",
+          date: inspectionToDelete
+            ? format.dateTime(
+                new Date(inspectionToDelete.inspection.inspectionDate),
+              )
+            : "",
+        })}
+        confirmText={t("delete.confirm")}
+        cancelText={t("delete.cancel")}
         variant="danger"
         loading={deleteInspection.isPending}
       />

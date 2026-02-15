@@ -1,6 +1,8 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Statistics } from "@/types/statistics.types";
+import { useAssetTranslations } from "@/lib/translations";
 import {
   BarChart,
   Bar,
@@ -37,22 +39,32 @@ const COLORS = {
 };
 
 export function StatisticsCharts({ statistics }: StatisticsChartsProps) {
+  const t = useTranslations("dashboard.statistics.charts");
+
+  // Use centralized translation hook
+  const { translateType } = useAssetTranslations();
+
   const statusData = [
     {
-      name: "Valid",
+      name: t("statusDist.labels.GREEN"),
       value: statistics.byStatus.GREEN || 0,
       color: COLORS.GREEN,
     },
     {
-      name: "Warning",
+      name: t("statusDist.labels.YELLOW"),
       value: statistics.byStatus.YELLOW || 0,
       color: COLORS.YELLOW,
     },
-    { name: "Expired", value: statistics.byStatus.RED || 0, color: COLORS.RED },
+    {
+      name: t("statusDist.labels.RED"),
+      value: statistics.byStatus.RED || 0,
+      color: COLORS.RED,
+    },
   ].filter((i) => i.value > 0);
 
+  // Translate type names for the chart
   const typeData = Object.entries(statistics.byType).map(([name, value]) => ({
-    name,
+    name: translateType(name),
     count: value,
   }));
 
@@ -63,15 +75,12 @@ export function StatisticsCharts({ statistics }: StatisticsChartsProps) {
     }),
   );
 
-  // New: Compliance trend data (you can replace with actual data if available)
-
   const CustomPie = (props: any) => {
     return <Sector {...props} fill={props.payload.color} />;
   };
 
   const renderCustomizedLabel = (props: any) => {
     const { x, y, cx, payload, percent, name } = props;
-
     return (
       <text
         x={x}
@@ -88,6 +97,11 @@ export function StatisticsCharts({ statistics }: StatisticsChartsProps) {
 
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
+      const dataKey = payload[0].dataKey;
+      let label = t("tooltip.assets");
+      if (dataKey === "value") label = t("tooltip.count");
+      if (dataKey === "compliance") label = t("tooltip.rate");
+
       return (
         <div className="bg-white dark:bg-[#1B1F28] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg p-3 shadow-lg">
           <p className="text-sm font-medium text-[#111827] dark:text-[#E4E6EB]">
@@ -96,15 +110,10 @@ export function StatisticsCharts({ statistics }: StatisticsChartsProps) {
               payload[0].payload.subject}
           </p>
           <p className="text-sm text-[#6B7280] dark:text-[#9CA3AF] mt-1">
-            {payload[0].dataKey === "value"
-              ? "Count"
-              : payload[0].dataKey === "compliance"
-                ? "Rate"
-                : "Assets"}
-            :{" "}
+            {label}:{" "}
             <span className="font-semibold text-[#111827] dark:text-[#E4E6EB]">
               {payload[0].value}
-              {payload[0].dataKey === "compliance" ? "%" : ""}
+              {dataKey === "compliance" ? "%" : ""}
             </span>
           </p>
         </div>
@@ -114,14 +123,12 @@ export function StatisticsCharts({ statistics }: StatisticsChartsProps) {
   };
 
   const CustomXAxisTick = ({ x, y, payload }: any) => {
-    // Check screen width
     const isSmallScreen =
-      typeof window !== "undefined" && window.innerWidth < 640; // sm breakpoint in Tailwind
-
+      typeof window !== "undefined" && window.innerWidth < 640;
     return (
       <text
         x={x}
-        y={y + 5} // move down a bit
+        y={y + 5}
         textAnchor={isSmallScreen ? "start" : "middle"}
         transform={isSmallScreen ? `rotate(+90, ${x}, ${y + 5})` : undefined}
         fill="#6B7280"
@@ -135,37 +142,33 @@ export function StatisticsCharts({ statistics }: StatisticsChartsProps) {
 
   return (
     <div className="space-y-4 sm:space-y-6 lg:space-y-8">
-      {/* Summary Cards - 2x2 Grid */}
+      {/* Summary Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
         {[
           {
-            label: "Total Assets",
+            label: t("summary.total"),
             value: statistics.total,
-            color: "blue",
             icon: Package,
             bgColor: "bg-blue-50 dark:bg-blue-900/10",
             iconColor: "text-blue-600 dark:text-blue-400",
           },
           {
-            label: "Valid",
+            label: t("summary.valid"),
             value: statistics.valid,
-            color: "green",
             icon: CheckCircle2,
             bgColor: "bg-green-50 dark:bg-green-900/10",
             iconColor: "text-green-600 dark:text-green-400",
           },
           {
-            label: "Warning",
+            label: t("summary.warning"),
             value: statistics.byStatus.YELLOW || 0,
-            color: "yellow",
             icon: AlertTriangle,
             bgColor: "bg-yellow-50 dark:bg-yellow-900/10",
             iconColor: "text-yellow-600 dark:text-yellow-400",
           },
           {
-            label: "Expired",
+            label: t("summary.expired"),
             value: statistics.expired,
-            color: "red",
             icon: AlertTriangle,
             bgColor: "bg-red-50 dark:bg-red-900/10",
             iconColor: "text-red-600 dark:text-red-400",
@@ -175,15 +178,7 @@ export function StatisticsCharts({ statistics }: StatisticsChartsProps) {
           return (
             <div
               key={i}
-              className="
-                bg-white dark:bg-[#1B1F28]
-                border border-[#E5E7EB] dark:border-[#2D3340]
-                rounded-lg shadow-lg dark:shadow-none
-                p-3 sm:p-4 lg:p-6 
-                transition-all duration-200
-                hover:shadow-xl hover:scale-105
-                hover:border-[#D1D5DB] dark:hover:border-[#3D4350]
-              "
+              className="bg-white dark:bg-[#1B1F28] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg shadow-lg dark:shadow-none p-3 sm:p-4 lg:p-6 transition-all duration-200 hover:shadow-xl hover:scale-105"
             >
               <div className="flex items-center justify-between mb-2 sm:mb-3">
                 <p className="text-xs sm:text-sm text-[#6B7280] dark:text-[#9CA3AF] font-medium">
@@ -201,24 +196,15 @@ export function StatisticsCharts({ statistics }: StatisticsChartsProps) {
         })}
       </div>
 
-      {/* Compliance Progress Bar - Full Width */}
-      <div
-        className="
-        bg-white dark:bg-[#1B1F28]
-        border border-[#E5E7EB] dark:border-[#2D3340]
-        rounded-lg shadow-lg dark:shadow-none
-        p-4 sm:p-5 lg:p-6
-        transition-all duration-200
-        hover:shadow-xl
-      "
-      >
+      {/* Compliance Progress Bar */}
+      <div className="bg-white dark:bg-[#1B1F28] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg shadow-lg dark:shadow-none p-4 sm:p-5 lg:p-6 hover:shadow-xl transition-all duration-200">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <div className="bg-purple-50 dark:bg-purple-900/10 p-2 rounded-lg">
               <TrendingUp className="w-5 h-5 text-purple-600 dark:text-purple-400" />
             </div>
             <h3 className="text-base sm:text-lg font-semibold text-[#111827] dark:text-[#E4E6EB]">
-              Compliance Rate
+              {t("compliance.title")}
             </h3>
           </div>
           <span className="text-2xl sm:text-3xl font-bold text-purple-600 dark:text-purple-400">
@@ -226,7 +212,6 @@ export function StatisticsCharts({ statistics }: StatisticsChartsProps) {
           </span>
         </div>
 
-        {/* Progress Bar */}
         <div className="relative w-full h-6 sm:h-8 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
           <div
             className="absolute top-0 left-0 h-full bg-linear-to-r from-purple-500 to-purple-600 dark:from-purple-600 dark:to-purple-700 transition-all duration-500 ease-out flex items-center justify-end pr-3"
@@ -243,36 +228,34 @@ export function StatisticsCharts({ statistics }: StatisticsChartsProps) {
         <p className="mt-3 text-xs sm:text-sm text-[#6B7280] dark:text-[#9CA3AF] text-center flex items-center justify-center gap-1">
           {statistics.compliancePercentage >= 90 ? (
             <span className="text-green-600 dark:text-green-400 font-medium flex items-center gap-1">
-              <Check className="w-4 h-4" />
-              Excellent compliance level
+              <Check className="w-4 h-4" /> {t("compliance.levels.excellent")}
             </span>
           ) : statistics.compliancePercentage >= 75 ? (
             <span className="text-blue-600 dark:text-blue-400 font-medium flex items-center gap-1">
-              <ArrowRight className="w-4 h-4" />
-              Good compliance level
+              <ArrowRight className="w-4 h-4" /> {t("compliance.levels.good")}
             </span>
           ) : statistics.compliancePercentage >= 50 ? (
             <span className="text-yellow-600 dark:text-yellow-400 font-medium flex items-center gap-1">
-              <AlertTriangle className="w-4 h-4" />
-              Moderate compliance level
+              <AlertTriangle className="w-4 h-4" />{" "}
+              {t("compliance.levels.moderate")}
             </span>
           ) : (
             <span className="text-red-600 dark:text-red-400 font-medium flex items-center gap-1">
-              <X className="w-4 h-4" />
-              Low compliance level - action required
+              <X className="w-4 h-4" /> {t("compliance.levels.low")}
             </span>
           )}
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8">
-        <div className="lg:col-span-5 bg-white dark:bg-[#1B1F28] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg shadow-lg dark:shadow-none p-4 sm:p-5 lg:p-6 hover:shadow-xl transition-shadow duration-200 flex flex-col">
+        {/* Pie Chart */}
+        <div className="lg:col-span-5 bg-white dark:bg-[#1B1F28] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg p-4 sm:p-5 lg:p-6 flex flex-col">
           <div className="flex items-center gap-2 mb-3 sm:mb-4">
             <div className="bg-indigo-50 dark:bg-indigo-900/10 p-2 rounded-lg">
               <Target className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
             </div>
             <h3 className="text-base sm:text-lg font-semibold text-[#111827] dark:text-[#E4E6EB]">
-              Status Distribution
+              {t("statusDist.title")}
             </h3>
           </div>
 
@@ -284,7 +267,6 @@ export function StatisticsCharts({ statistics }: StatisticsChartsProps) {
                     data={statusData}
                     cx="50%"
                     cy="50%"
-                    labelLine={true}
                     outerRadius="70%"
                     dataKey="value"
                     shape={CustomPie}
@@ -297,34 +279,19 @@ export function StatisticsCharts({ statistics }: StatisticsChartsProps) {
           ) : (
             <div className="flex-1 min-h-62.5 flex flex-col items-center justify-center text-[#6B7280] dark:text-[#9CA3AF]">
               <Target className="w-12 h-12 mb-2 opacity-30" />
-              <p className="text-sm">No data available</p>
-            </div>
-          )}
-
-          {/* Legend */}
-          {statusData.length > 0 && (
-            <div className="flex flex-wrap gap-3 sm:gap-4 mt-4 justify-center border-t border-[#E5E7EB] dark:border-[#2D3340] pt-4">
-              {statusData.map((item, idx) => (
-                <div key={idx} className="flex items-center gap-2">
-                  <div
-                    className="w-3 h-3 rounded-full"
-                    style={{ backgroundColor: item.color }}
-                  />
-                  <span className="text-xs sm:text-sm text-[#6B7280] dark:text-[#9CA3AF]">
-                    {item.name}: {item.value}
-                  </span>
-                </div>
-              ))}
+              <p className="text-sm">{t("noData")}</p>
             </div>
           )}
         </div>
-        <div className="lg:col-span-7 bg-white dark:bg-[#1B1F28] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg shadow-lg dark:shadow-none p-4 sm:p-5 lg:p-6 hover:shadow-xl transition-shadow duration-200 flex flex-col">
+
+        {/* Bar Chart - Type */}
+        <div className="lg:col-span-7 bg-white dark:bg-[#1B1F28] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg p-4 sm:p-5 lg:p-6 flex flex-col">
           <div className="flex items-center gap-2 mb-3 sm:mb-4">
             <div className="bg-blue-50 dark:bg-blue-900/10 p-2 rounded-lg">
               <FileText className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             </div>
             <h3 className="text-base sm:text-lg font-semibold text-[#111827] dark:text-[#E4E6EB]">
-              Assets by Type
+              {t("assetsByType")}
             </h3>
           </div>
 
@@ -337,33 +304,23 @@ export function StatisticsCharts({ statistics }: StatisticsChartsProps) {
                 >
                   <CartesianGrid
                     strokeDasharray="3 3"
-                    stroke="#E5E7EB"
                     className="dark:stroke-[#2D3340]"
                   />
-                  <XAxis
-                    dataKey="name"
-                    tick={<CustomXAxisTick />}
-                    className="dark:fill-[#9CA3AF] text-xs sm:text-sm"
-                    angle={0} // <-- horizontal labels
-                    textAnchor="middle" // center them
-                  />
-                  <YAxis
-                    tick={{ fill: "#6B7280", fontSize: 11 }}
-                    className="dark:fill-[#9CA3AF]"
-                  />
+                  <XAxis dataKey="name" tick={<CustomXAxisTick />} />
+                  <YAxis tick={{ fill: "#6B7280", fontSize: 11 }} />
                   <Tooltip
                     content={({ active, payload }) => {
                       if (active && payload && payload.length) {
-                        const data = payload[0].payload; // original data object
+                        const data = payload[0].payload;
                         return (
                           <div className="bg-white dark:bg-[#1B1F28] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg p-3 shadow-lg">
                             <p className="text-sm font-medium text-[#111827] dark:text-[#E4E6EB]">
-                              {data.name} {/* <-- X-axis label */}
+                              {data.name}
                             </p>
                             <p className="text-sm text-[#6B7280] dark:text-[#9CA3AF] mt-1">
-                              Value:{" "}
+                              {t("tooltip.value")}:{" "}
                               <span className="font-semibold text-[#111827] dark:text-[#E4E6EB]">
-                                {data.count} {/* <-- corresponding value */}
+                                {data.count}
                               </span>
                             </p>
                           </div>
@@ -372,7 +329,6 @@ export function StatisticsCharts({ statistics }: StatisticsChartsProps) {
                       return null;
                     }}
                   />
-
                   <Bar dataKey="count" fill="#3b82f6" radius={[8, 8, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
@@ -380,19 +336,20 @@ export function StatisticsCharts({ statistics }: StatisticsChartsProps) {
           ) : (
             <div className="flex-1 min-h-62.5 flex flex-col items-center justify-center text-[#6B7280] dark:text-[#9CA3AF]">
               <FileText className="w-12 h-12 mb-2 opacity-30" />
-              <p className="text-sm">No data available</p>
+              <p className="text-sm">{t("noData")}</p>
             </div>
           )}
         </div>
       </div>
 
-      <div className="bg-white dark:bg-[#1B1F28] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg shadow-lg dark:shadow-none p-4 sm:p-5 lg:p-6 hover:shadow-xl transition-shadow duration-200">
+      {/* Bar Chart - Location */}
+      <div className="bg-white dark:bg-[#1B1F28] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg p-4 sm:p-5 lg:p-6">
         <div className="flex items-center gap-2 mb-3 sm:mb-4">
           <div className="bg-green-50 dark:bg-green-900/10 p-2 rounded-lg">
             <MapPin className="w-5 h-5 text-green-600 dark:text-green-400" />
           </div>
           <h3 className="text-base sm:text-lg font-semibold text-[#111827] dark:text-[#E4E6EB]">
-            Assets by Location
+            {t("assetsByLocation")}
           </h3>
         </div>
 
@@ -405,33 +362,23 @@ export function StatisticsCharts({ statistics }: StatisticsChartsProps) {
               >
                 <CartesianGrid
                   strokeDasharray="3 3"
-                  stroke="#E5E7EB"
                   className="dark:stroke-[#2D3340]"
                 />
-                <XAxis
-                  dataKey="name"
-                  tick={<CustomXAxisTick />}
-                  className="dark:fill-[#9CA3AF] text-xs sm:text-sm"
-                  angle={0} // <-- horizontal labels
-                  textAnchor="middle"
-                />
-                <YAxis
-                  tick={{ fill: "#6B7280", fontSize: 11 }}
-                  className="dark:fill-[#9CA3AF]"
-                />
+                <XAxis dataKey="name" tick={<CustomXAxisTick />} />
+                <YAxis tick={{ fill: "#6B7280", fontSize: 11 }} />
                 <Tooltip
                   content={({ active, payload }) => {
                     if (active && payload && payload.length) {
-                      const data = payload[0].payload; // original data object
+                      const data = payload[0].payload;
                       return (
                         <div className="bg-white dark:bg-[#1B1F28] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg p-3 shadow-lg">
                           <p className="text-sm font-medium text-[#111827] dark:text-[#E4E6EB]">
-                            {data.name} {/* <-- X-axis label */}
+                            {data.name}
                           </p>
                           <p className="text-sm text-[#6B7280] dark:text-[#9CA3AF] mt-1">
-                            Value:{" "}
+                            {t("tooltip.value")}:{" "}
                             <span className="font-semibold text-[#111827] dark:text-[#E4E6EB]">
-                              {data.count} {/* <-- corresponding value */}
+                              {data.count}
                             </span>
                           </p>
                         </div>
@@ -440,7 +387,6 @@ export function StatisticsCharts({ statistics }: StatisticsChartsProps) {
                     return null;
                   }}
                 />
-
                 <Bar dataKey="count" fill="#10b981" radius={[8, 8, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
@@ -451,7 +397,7 @@ export function StatisticsCharts({ statistics }: StatisticsChartsProps) {
             style={{ height: "350px" }}
           >
             <MapPin className="w-12 h-12 mb-2 opacity-30" />
-            <p className="text-sm">No data available</p>
+            <p className="text-sm">{t("noData")}</p>
           </div>
         )}
       </div>

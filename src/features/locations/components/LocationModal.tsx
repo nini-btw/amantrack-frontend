@@ -2,6 +2,7 @@
 
 import { X } from "lucide-react";
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 interface LocationModalProps {
   open: boolean;
@@ -14,6 +15,8 @@ export default function LocationModal({
   onClose,
   children,
 }: LocationModalProps) {
+  const t = useTranslations("dashboard.locations.modal");
+
   // Prevent body scroll when modal is open
   useEffect(() => {
     if (open) {
@@ -47,7 +50,7 @@ export default function LocationModal({
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" />
 
-      {/* Modal */}
+      {/* Modal Container */}
       <div
         className="
           relative w-full sm:max-w-lg
@@ -64,11 +67,12 @@ export default function LocationModal({
         <div className="sticky top-0 z-10 bg-white dark:bg-[#1B1F28] border-b border-[#E5E7EB] dark:border-[#2D3340] px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between">
             <h2 className="text-lg sm:text-xl font-semibold text-[#111827] dark:text-[#E4E6EB]">
-              Location Details
+              {t("title")}
             </h2>
             <button
               onClick={onClose}
               className="
+                cursor-pointer
                 p-2 rounded-lg
                 text-[#6B7280] dark:text-[#9CA3AF]
                 hover:bg-gray-100 dark:hover:bg-[#2D3340]
@@ -76,7 +80,7 @@ export default function LocationModal({
                 transition-all
                 active:scale-95
               "
-              aria-label="Close modal"
+              aria-label={t("aria.close")}
             >
               <X className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>

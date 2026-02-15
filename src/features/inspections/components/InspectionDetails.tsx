@@ -4,6 +4,7 @@ import { useInspection } from "@/features/inspections/hooks/useInspections";
 import { X, Calendar, User, FileText, Clock, Tag } from "lucide-react";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { Inspection } from "@/types/inspection.types";
+import { useTranslations } from "next-intl";
 
 interface InspectionDetailsProps {
   inspectionId: string;
@@ -26,6 +27,7 @@ export function InspectionDetails({
   onClose,
 }: InspectionDetailsProps) {
   const { data: inspection, isLoading } = useInspection(inspectionId);
+  const t = useTranslations("dashboard.reports.details");
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
@@ -37,12 +39,12 @@ export function InspectionDetails({
               <FileText className="w-6 h-6 text-blue-600 dark:text-blue-400" />
             </div>
             <h2 className="text-xl font-semibold text-[#111827] dark:text-[#E4E6EB]">
-              Inspection Details
+              {t("title")}
             </h2>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg text-[#6B7280] dark:text-[#9CA3AF] hover:bg-[#F6F7FA] dark:hover:bg-[#0D1117] transition-colors"
+            className="cursor-pointer p-2 rounded-lg text-[#6B7280] dark:text-[#9CA3AF] hover:bg-[#F6F7FA] dark:hover:bg-[#0D1117] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -52,14 +54,14 @@ export function InspectionDetails({
         <div className="flex-1 overflow-y-auto p-4 sm:p-6">
           {isLoading ? (
             <div className="flex items-center justify-center py-12">
-              <LoadingSpinner message="Loading inspection details..." />
+              <LoadingSpinner message={t("loading")} />
             </div>
           ) : inspection ? (
             <div className="space-y-6">
               {/* Type Badge */}
               <div>
                 <label className="text-xs font-medium text-[#6B7280] dark:text-[#9CA3AF] uppercase tracking-wider mb-2 block">
-                  Inspection Type
+                  {t("type.label")}
                 </label>
                 <div
                   className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium ${getInspectionBadgeClasses(inspection.inspection.type)}`}
@@ -72,7 +74,7 @@ export function InspectionDetails({
               {/* Date */}
               <div>
                 <label className="text-xs font-medium text-[#6B7280] dark:text-[#9CA3AF] uppercase tracking-wider mb-2 flex items-center gap-2">
-                  <Calendar className="w-4 h-4" /> Inspection Date
+                  <Calendar className="w-4 h-4" /> {t("date.label")}
                 </label>
                 <p className="text-base text-[#111827] dark:text-[#E4E6EB] font-medium">
                   {new Date(
@@ -89,7 +91,7 @@ export function InspectionDetails({
               {/* Performed By */}
               <div>
                 <label className="text-xs font-medium text-[#6B7280] dark:text-[#9CA3AF] uppercase tracking-wider mb-2 flex items-center gap-2">
-                  <User className="w-4 h-4" /> Performed By
+                  <User className="w-4 h-4" /> {t("performedBy.label")}
                 </label>
                 <p className="text-base text-[#111827] dark:text-[#E4E6EB] font-medium">
                   {inspection.inspection.performedBy}
@@ -100,7 +102,7 @@ export function InspectionDetails({
               {inspection.inspection.notes && (
                 <div>
                   <label className="text-xs font-medium text-[#6B7280] dark:text-[#9CA3AF] uppercase tracking-wider mb-2 flex items-center gap-2">
-                    <FileText className="w-4 h-4" /> Notes
+                    <FileText className="w-4 h-4" /> {t("notes.label")}
                   </label>
                   <div className="bg-[#F6F7FA] dark:bg-[#0D1117] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg p-4">
                     <p className="text-sm text-[#111827] dark:text-[#E4E6EB] whitespace-pre-wrap">
@@ -113,12 +115,12 @@ export function InspectionDetails({
               {/* Metadata */}
               <div className="border-t border-[#E5E7EB] dark:border-[#2D3340] pt-4">
                 <label className="text-xs font-medium text-[#6B7280] dark:text-[#9CA3AF] uppercase tracking-wider mb-3 block">
-                  Record Information
+                  {t("metadata.title")}
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <p className="text-xs text-[#6B7280] dark:text-[#9CA3AF] mb-1">
-                      Inspection ID
+                      {t("metadata.inspectionId")}
                     </p>
                     <p className="text-sm text-[#111827] dark:text-[#E4E6EB] font-mono">
                       {inspection.inspection.id}
@@ -126,7 +128,7 @@ export function InspectionDetails({
                   </div>
                   <div>
                     <p className="text-xs text-[#6B7280] dark:text-[#9CA3AF] mb-1">
-                      Asset ID
+                      {t("metadata.assetId")}
                     </p>
                     <p className="text-sm text-[#111827] dark:text-[#E4E6EB] font-mono">
                       {inspection.inspection.assetId}
@@ -134,7 +136,7 @@ export function InspectionDetails({
                   </div>
                   <div>
                     <p className="text-xs text-[#6B7280] dark:text-[#9CA3AF] mb-1 flex items-center gap-1">
-                      <Clock className="w-3 h-3" /> Created At
+                      <Clock className="w-3 h-3" /> {t("metadata.createdAt")}
                     </p>
                     <p className="text-sm text-[#111827] dark:text-[#E4E6EB]">
                       {new Date(inspection.inspection.createdAt).toLocaleString(
@@ -155,7 +157,7 @@ export function InspectionDetails({
           ) : (
             <div className="text-center py-12">
               <p className="text-[#6B7280] dark:text-[#9CA3AF]">
-                Inspection not found
+                {t("notFound")}
               </p>
             </div>
           )}
@@ -165,9 +167,9 @@ export function InspectionDetails({
         <div className="flex items-center justify-end gap-3 p-4 sm:p-6 border-t border-[#E5E7EB] dark:border-[#2D3340]">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-[#F6F7FA] dark:bg-[#0D1117] border border-[#E5E7EB] dark:border-[#2D3340] text-[#111827] dark:text-[#E4E6EB] rounded-lg font-medium hover:bg-gray-100 dark:hover:bg-[#2A2E37] transition-colors"
+            className="cursor-pointer px-4 py-2 bg-[#F6F7FA] dark:bg-[#0D1117] border border-[#E5E7EB] dark:border-[#2D3340] text-[#111827] dark:text-[#E4E6EB] rounded-lg font-medium hover:bg-gray-100 dark:hover:bg-[#2A2E37] transition-colors"
           >
-            Close
+            {t("close")}
           </button>
         </div>
       </div>

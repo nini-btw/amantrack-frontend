@@ -4,11 +4,17 @@ import { useState, useEffect } from "react";
 import { Link } from "@/routing";
 import { Menu, X } from "lucide-react";
 import Logo from "@/components/Logo";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import LanguageToggle from "@/components/LanguageToggle-presentation";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export function PresentationNav() {
   const t = useTranslations("presentation.nav");
+  const locale = useLocale();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Determine if current locale is RTL
+  const isRTL = locale === "ar";
 
   useEffect(() => {
     document.body.style.overflow = mobileMenuOpen ? "hidden" : "auto";
@@ -32,8 +38,8 @@ export function PresentationNav() {
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 bg-[rgba(15,15,15,0.85)] backdrop-blur-xl border-b border-[#2A2A2A]">
         <div
-          dir="ltr"
-          className="max-w-350 mx-auto px-6 sm:px-8 py-4 sm:py-5 flex items-center justify-between"
+          dir={isRTL ? "rtl" : "ltr"}
+          className="max-w-7xl mx-auto px-6 sm:px-8 py-4 sm:py-5 flex items-center justify-between"
         >
           {/* Logo */}
           <Link
@@ -49,8 +55,8 @@ export function PresentationNav() {
             </div>
           </Link>
 
-          {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-10">
+          {/* Desktop Links & Actions */}
+          <div className="hidden md:flex items-center gap-6 lg:gap-8">
             <Link
               href="#features"
               className="text-[#A3A3A3] hover:text-white transition-colors font-medium text-[0.95rem]"
@@ -69,6 +75,12 @@ export function PresentationNav() {
             >
               {t("contact")}
             </Link>
+
+            {/* Theme & Language Toggles */}
+            <div className="flex items-center gap-2">
+              <LanguageToggle />
+            </div>
+
             <Link
               href="/dashboard"
               className="bg-[#EF4444] hover:bg-[#DC2626] text-white font-semibold px-6 py-3 rounded-lg transition-all transform hover:-translate-y-0.5 shadow-lg hover:shadow-[0_8px_20px_rgba(239,68,68,0.2)]"
@@ -77,22 +89,28 @@ export function PresentationNav() {
             </Link>
           </div>
 
-          {/* Mobile Toggle */}
-          <button
-            className="md:hidden text-white p-2 hover:bg-white/5 rounded-lg transition-colors"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label={t("aria.toggle")}
-            aria-expanded={mobileMenuOpen}
-          >
-            <Menu size={28} />
-          </button>
+          {/* Mobile Right Actions */}
+          <div className="md:hidden flex items-center gap-2">
+            {/* Theme & Language Toggles for Mobile */}
+            <LanguageToggle />
+
+            {/* Mobile Menu Toggle */}
+            <button
+              className="text-white p-2 hover:bg-white/5 rounded-lg transition-colors"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={t("aria.toggle")}
+              aria-expanded={mobileMenuOpen}
+            >
+              <Menu size={28} />
+            </button>
+          </div>
         </div>
       </nav>
 
       {/* Mobile Menu */}
       <div
         className={`
-          fixed inset-0 z-55 bg-[rgba(0,0,0,0.95)] backdrop-blur-xl
+          fixed inset-0 z-60 bg-[rgba(0,0,0,0.95)] backdrop-blur-xl
           md:hidden
           transition-all duration-300 ease-in-out
           ${
@@ -107,7 +125,9 @@ export function PresentationNav() {
       >
         <button
           onClick={() => setMobileMenuOpen(false)}
-          className="absolute top-6 right-6 z-60 text-white hover:text-[#EF4444] transition-all duration-200 hover:rotate-90 p-2"
+          className={`absolute top-6 z-70 text-white hover:text-[#EF4444] transition-all duration-200 hover:rotate-90 p-2 ${
+            isRTL ? "left-6" : "right-6"
+          }`}
           aria-label={t("aria.close")}
         >
           <X size={32} strokeWidth={2} />
@@ -116,6 +136,7 @@ export function PresentationNav() {
         <div
           className="h-full w-full flex flex-col items-center justify-center gap-6 px-6"
           onClick={(e) => e.stopPropagation()}
+          dir={isRTL ? "rtl" : "ltr"}
         >
           <Link
             href="#features"

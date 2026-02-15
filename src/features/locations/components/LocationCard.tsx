@@ -2,6 +2,7 @@
 
 import { MapPin, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Location } from "@/types/location.types";
 import ConfirmDialog from "@/components/ui/ConfirmDialog";
 
@@ -18,6 +19,7 @@ export function LocationCard({
   onEdit,
   onDelete,
 }: LocationCardProps) {
+  const t = useTranslations("dashboard.locations.card");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -32,7 +34,6 @@ export function LocationCard({
       setShowDeleteDialog(false);
     } catch (error) {
       console.error("Failed to delete location:", error);
-      // Error handling - you might want to show a toast notification here
     } finally {
       setIsDeleting(false);
     }
@@ -74,7 +75,6 @@ export function LocationCard({
 
         {/* Actions + Assets count */}
         <div className="flex justify-between items-center mt-4 sm:mt-5 pt-4 border-t border-[#E5E7EB] dark:border-[#2D3340]">
-          {/* Display assets count */}
           <div
             className="
               text-xs sm:text-sm font-medium text-[#111827] dark:text-[#E4E6EB]
@@ -82,11 +82,12 @@ export function LocationCard({
               flex items-center gap-1.5
             "
           >
-            <span className="text-[#6B7280] dark:text-[#9CA3AF]">Assets:</span>
+            <span className="text-[#6B7280] dark:text-[#9CA3AF]">
+              {t("assetsLabel")}
+            </span>
             <span className="font-semibold">{assetCount}</span>
           </div>
 
-          {/* Action buttons */}
           <div className="flex gap-1.5 sm:gap-2">
             <button
               onClick={() => onEdit(location)}
@@ -99,7 +100,7 @@ export function LocationCard({
                 transition-all
                 active:scale-95
               "
-              aria-label="Edit location"
+              aria-label={t("actions.edit")}
             >
               <Pencil className="w-4 h-4" />
             </button>
@@ -118,7 +119,7 @@ export function LocationCard({
                 disabled:opacity-50
                 disabled:cursor-not-allowed
               "
-              aria-label="Delete location"
+              aria-label={t("actions.delete")}
             >
               <Trash2 className="w-4 h-4" />
             </button>
@@ -130,14 +131,14 @@ export function LocationCard({
         open={showDeleteDialog}
         onConfirm={handleDeleteConfirm}
         onCancel={handleDeleteCancel}
-        title="Delete Location?"
+        title={t("deleteDialog.title")}
         description={
           assetCount > 0
-            ? `This location has ${assetCount} asset${assetCount !== 1 ? "s" : ""}. All assets assigned to this location will need to be reassigned. This action cannot be undone.`
-            : "This action cannot be undone. This location will be permanently deleted."
+            ? t("deleteDialog.descriptionWithAssets", { count: assetCount })
+            : t("deleteDialog.descriptionEmpty")
         }
-        confirmText="Delete"
-        cancelText="Cancel"
+        confirmText={t("deleteDialog.confirm")}
+        cancelText={t("deleteDialog.cancel")}
         variant="danger"
         loading={isDeleting}
       />

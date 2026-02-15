@@ -1,18 +1,21 @@
 "use client";
 
 import { BarChart2 } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/routing";
+import { useTranslations } from "next-intl";
 
 export function StatisticsHeader() {
+  const t = useTranslations("dashboard.statistics.header");
+
   return (
     <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
       <div>
         <h1 className="text-2xl sm:text-3xl font-bold text-[#111827] dark:text-[#E4E6EB] flex items-center gap-2 sm:gap-3">
           <BarChart2 className="w-8 h-8 sm:w-10 sm:h-10 text-purple-700 dark:text-purple-500 shrink-0" />
-          <span className="leading-tight">Statistics & Charts</span>
+          <span className="leading-tight">{t("title")}</span>
         </h1>
         <p className="text-xs sm:text-sm text-[#6B7280] dark:text-[#9CA3AF] mt-1">
-          Asset statistics, compliance rates, and trends
+          {t("description")}
         </p>
       </div>
 
@@ -35,7 +38,7 @@ export function StatisticsHeader() {
         "
       >
         <span className="text-lg leading-none">←</span>
-        <span>Back to Dashboard</span>
+        <span>{t("backBtn")}</span>
       </Link>
     </div>
   );

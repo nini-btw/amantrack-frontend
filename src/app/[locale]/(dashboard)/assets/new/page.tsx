@@ -1,10 +1,13 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/routing";
+import { useTranslations } from "next-intl";
 import { AssetForm } from "@/features/assets/components/AssetForm";
 import { PlusCircle, ArrowLeft } from "lucide-react";
 
 export default function NewAssetPage() {
+  const t = useTranslations("dashboard.assets");
+
   return (
     <div className="rounded-lg min-h-screen bg-gray-50 dark:bg-[#1B1F28] p-3 sm:p-4 md:p-6 lg:p-8 transition-colors">
       <div className="max-w-3xl mx-auto">
@@ -12,7 +15,7 @@ export default function NewAssetPage() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-[#E4E6EB] flex items-center gap-2 sm:gap-3">
             <PlusCircle className="w-8 h-8 sm:w-10 sm:h-10 text-blue-600 dark:text-blue-400 shrink-0" />
-            <span>New Fire Extinguisher</span>
+            <span>{t("new.pageTitle")}</span>
           </h1>
           <Link
             href="/assets"
@@ -31,11 +34,11 @@ export default function NewAssetPage() {
             "
           >
             <ArrowLeft className="w-5 h-5 shrink-0" />
-            <span>Back to List</span>
+            <span>{t("new.backToList")}</span>
           </Link>
         </div>
 
-        {/* Form Container - No border on mobile to avoid duplicate with form's border */}
+        {/* Form Container */}
         <div className="sm:bg-white sm:dark:bg-[#1B1F28] sm:border sm:border-[#E5E7EB] sm:dark:border-[#2D3340] sm:rounded-xl sm:shadow-lg sm:dark:shadow-none sm:p-4 md:p-6 transition-colors">
           <AssetForm />
         </div>

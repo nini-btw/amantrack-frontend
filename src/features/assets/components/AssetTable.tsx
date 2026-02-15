@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { Link } from "@/routing";
+import { useTranslations } from "next-intl";
 import { Eye, Trash2, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 import { Asset } from "@/types/asset.types";
 import { StatusBadge } from "@/components/StatusBadge";
 import { formatDate, getRowBackgroundColor } from "@/lib/utils";
 import { useDeleteAsset } from "@/features/assets/hooks/useAssets";
+import { useAssetTranslations } from "@/lib/translations";
 import ConfirmDialog from "@/components/ui/ConfirmDialog";
 
 interface AssetTableProps {
@@ -25,6 +27,11 @@ type SortField =
 type SortDirection = "asc" | "desc" | null;
 
 export function AssetTable({ assets, locations }: AssetTableProps) {
+  const t = useTranslations("dashboard.assets");
+
+  // Use centralized translation hook
+  const { translateType, translateClass } = useAssetTranslations();
+
   const [sortField, setSortField] = useState<SortField | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -39,7 +46,6 @@ export function AssetTable({ assets, locations }: AssetTableProps) {
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
-      // Cycle through: asc -> desc -> null
       if (sortDirection === "asc") {
         setSortDirection("desc");
       } else if (sortDirection === "desc") {
@@ -59,7 +65,6 @@ export function AssetTable({ assets, locations }: AssetTableProps) {
 
   const handleConfirmDelete = async () => {
     if (!assetToDelete) return;
-
     try {
       await deleteAsset.mutateAsync(assetToDelete.id);
       setDeleteDialogOpen(false);
@@ -74,20 +79,18 @@ export function AssetTable({ assets, locations }: AssetTableProps) {
     setAssetToDelete(null);
   };
 
-  // Sort assets
+  // Sort logic
   let sortedAssets = [...assets];
   if (sortField && sortDirection) {
     sortedAssets.sort((a, b) => {
       let aValue: any = a[sortField];
       let bValue: any = b[sortField];
 
-      // Handle location names
       if (sortField === "locationId") {
         aValue = getLocationName(a.locationId);
         bValue = getLocationName(b.locationId);
       }
 
-      // Handle dates
       if (
         sortField === "visualInspectionNext" ||
         sortField === "officialInspectionNext"
@@ -96,7 +99,6 @@ export function AssetTable({ assets, locations }: AssetTableProps) {
         bValue = new Date(bValue).getTime();
       }
 
-      // Handle status (RED < YELLOW < GREEN)
       if (sortField === "status") {
         const statusOrder = { RED: 0, YELLOW: 1, GREEN: 2 };
         aValue = statusOrder[aValue as keyof typeof statusOrder];
@@ -126,19 +128,27 @@ export function AssetTable({ assets, locations }: AssetTableProps) {
     return (
       <div className="text-center py-12 bg-white dark:bg-[#1B1F28] rounded-lg border border-gray-200 dark:border-[#2D3340]">
         <div className="text-6xl mb-4">🧯</div>
-        <p className="text-gray-600 dark:text-[#E4E6EB]">No assets found</p>
+        <p className="text-gray-600 dark:text-[#E4E6EB]">
+          {t("table.noAssets")}
+        </p>
       </div>
     );
   }
 
   const tableHeaders = [
-    { label: "Ref #", field: "referenceNumber" as SortField },
-    { label: "Type", field: "type" as SortField },
-    { label: "Location", field: "locationId" as SortField },
-    { label: "Class", field: "class" as SortField },
-    { label: "Visual Insp.", field: "visualInspectionNext" as SortField },
-    { label: "Official Insp.", field: "officialInspectionNext" as SortField },
-    { label: "Status", field: "status" as SortField },
+    { label: t("table.headers.ref"), field: "referenceNumber" as SortField },
+    { label: t("table.headers.type"), field: "type" as SortField },
+    { label: t("table.headers.location"), field: "locationId" as SortField },
+    { label: t("table.headers.class"), field: "class" as SortField },
+    {
+      label: t("table.headers.visual"),
+      field: "visualInspectionNext" as SortField,
+    },
+    {
+      label: t("table.headers.official"),
+      field: "officialInspectionNext" as SortField,
+    },
+    { label: t("table.headers.status"), field: "status" as SortField },
   ];
 
   return (
@@ -159,7 +169,6 @@ export function AssetTable({ assets, locations }: AssetTableProps) {
               key={asset.id}
               className={`bg-white dark:bg-[#1B1F28] border-2 border-[#E5E7EB] dark:border-[#2D3340] rounded-lg p-4 ${lightBg} ${darkBg}`}
             >
-              {/* Header */}
               <div className="flex items-center justify-between mb-3">
                 <h3 className="font-bold text-lg text-[#111827] dark:text-[#E4E6EB]">
                   {asset.referenceNumber}
@@ -170,19 +179,18 @@ export function AssetTable({ assets, locations }: AssetTableProps) {
                 />
               </div>
 
-              {/* Details */}
               <div className="space-y-2 text-sm mb-4">
                 <div className="flex justify-between">
                   <span className="text-[#6B7280] dark:text-[#9CA3AF]">
-                    Type:
+                    {t("table.headers.type")}:
                   </span>
                   <span className="font-medium text-[#111827] dark:text-[#E4E6EB]">
-                    {asset.type}
+                    {translateType(asset.type)}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#6B7280] dark:text-[#9CA3AF]">
-                    Location:
+                    {t("table.headers.location")}:
                   </span>
                   <span className="font-medium text-[#111827] dark:text-[#E4E6EB]">
                     {getLocationName(asset.locationId)}
@@ -190,15 +198,15 @@ export function AssetTable({ assets, locations }: AssetTableProps) {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#6B7280] dark:text-[#9CA3AF]">
-                    Class:
+                    {t("table.headers.class")}:
                   </span>
                   <span className="font-medium text-[#111827] dark:text-[#E4E6EB]">
-                    {asset.class}
+                    {translateClass(asset.class)}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#6B7280] dark:text-[#9CA3AF]">
-                    Visual:
+                    {t("table.mobileLabels.visual")}
                   </span>
                   <span className="font-medium text-[#111827] dark:text-[#E4E6EB]">
                     {formatDate(asset.visualInspectionNext)}
@@ -206,7 +214,7 @@ export function AssetTable({ assets, locations }: AssetTableProps) {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#6B7280] dark:text-[#9CA3AF]">
-                    Official:
+                    {t("table.mobileLabels.official")}
                   </span>
                   <span className="font-medium text-[#111827] dark:text-[#E4E6EB]">
                     {formatDate(asset.officialInspectionNext)}
@@ -214,18 +222,17 @@ export function AssetTable({ assets, locations }: AssetTableProps) {
                 </div>
               </div>
 
-              {/* Actions */}
               <div className="flex gap-2 pt-3 border-t border-[#E5E7EB] dark:border-[#2D3340]">
                 <Link
                   href={`/assets/${asset.id}`}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors font-medium"
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
                 >
                   <Eye className="w-4 h-4" />
-                  View
+                  {t("table.mobileLabels.view")}
                 </Link>
                 <button
                   onClick={() => handleDeleteClick(asset)}
-                  className="flex items-center justify-center gap-2 px-4 py-2 bg-red-600 dark:bg-red-500 text-white rounded-lg hover:bg-red-700 dark:hover:bg-red-600 transition-colors font-medium"
+                  className="flex items-center justify-center gap-2 px-4 py-2 bg-red-600 dark:bg-red-500 text-white rounded-lg hover:bg-red-700 transition-colors"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -236,7 +243,7 @@ export function AssetTable({ assets, locations }: AssetTableProps) {
       </div>
 
       {/* Desktop Table View */}
-      <div className="hidden lg:block overflow-x-auto bg-white dark:bg-[#1B1F28] rounded-lg shadow dark:shadow-none border border-gray-200 dark:border-[#2D3340]">
+      <div className="hidden lg:block overflow-x-auto bg-white dark:bg-[#1B1F28] rounded-lg border border-gray-200 dark:border-[#2D3340]">
         <table className="min-w-full">
           <thead className="bg-gray-100 dark:bg-[#2D3340] border-b border-gray-200 dark:border-[#3B3F50]">
             <tr>
@@ -253,7 +260,7 @@ export function AssetTable({ assets, locations }: AssetTableProps) {
                 </th>
               ))}
               <th className="px-4 py-3 text-left text-xs font-semibold text-gray-700 dark:text-[#E4E6EB] uppercase tracking-wider">
-                Actions
+                {t("table.headers.actions")}
               </th>
             </tr>
           </thead>
@@ -277,13 +284,13 @@ export function AssetTable({ assets, locations }: AssetTableProps) {
                     {asset.referenceNumber}
                   </td>
                   <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-[#E4E6EB]">
-                    {asset.type}
+                    {translateType(asset.type)}
                   </td>
                   <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-[#E4E6EB]">
                     {getLocationName(asset.locationId)}
                   </td>
                   <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-[#E4E6EB]">
-                    {asset.class}
+                    {translateClass(asset.class)}
                   </td>
                   <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-[#E4E6EB]">
                     {formatDate(asset.visualInspectionNext)}
@@ -302,14 +309,12 @@ export function AssetTable({ assets, locations }: AssetTableProps) {
                       <Link
                         href={`/assets/${asset.id}`}
                         className="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
-                        title="View details"
                       >
                         <Eye className="w-4 h-4" />
                       </Link>
                       <button
                         onClick={() => handleDeleteClick(asset)}
-                        className="cursor-pointer p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
-                        title="Delete asset"
+                        className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -327,10 +332,10 @@ export function AssetTable({ assets, locations }: AssetTableProps) {
         open={deleteDialogOpen}
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
-        title="Delete Asset"
+        title={t("deleteDialog.title")}
         description={`Are you sure you want to delete "${assetToDelete?.referenceNumber}"? This action cannot be undone.`}
-        confirmText="Delete"
-        cancelText="Cancel"
+        confirmText={t("deleteDialog.confirm")}
+        cancelText={t("deleteDialog.cancel")}
         variant="danger"
         loading={deleteAsset.isPending}
       />

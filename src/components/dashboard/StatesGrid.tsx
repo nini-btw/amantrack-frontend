@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { StatCard } from "./StateCard";
 import { Archive, CheckCircle2, AlertTriangle, PieChart } from "lucide-react";
 
@@ -20,54 +21,65 @@ interface StatsGridProps {
 }
 
 export function StatsGrid({ statistics }: StatsGridProps) {
+  const t = useTranslations("dashboard.dashboard.stats");
+
   const needsAttentionCount =
     (statistics.byStatus.YELLOW || 0) + (statistics.byStatus.RED || 0);
+
+  const validPercentage =
+    statistics.total > 0
+      ? Math.round((statistics.valid / statistics.total) * 100)
+      : 0;
+
+  // Logic for Compliance Label
+  const getComplianceLabel = (percentage: number) => {
+    if (percentage >= 90) return t("compliance.status.excellent");
+    if (percentage >= 70) return t("compliance.status.good");
+    return t("compliance.status.needsWork");
+  };
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
       {/* Total Assets */}
       <StatCard
-        title="Total Assets"
+        title={t("totalAssets.title")}
         value={statistics.total}
         icon={Archive}
         color="blue"
         href="/assets"
-        subtitle={`${statistics.valid} valid`}
+        subtitle={t("totalAssets.subtitle", { count: statistics.valid })}
         progress={{
-          value:
-            statistics.total > 0
-              ? Math.round((statistics.valid / statistics.total) * 100)
-              : 0,
+          value: validPercentage,
         }}
       />
 
       {/* Valid Assets */}
       <StatCard
-        title="Valid"
+        title={t("validAssets.title")}
         value={statistics.valid}
         icon={CheckCircle2}
         color="green"
-        subtitle={`${statistics.total > 0 ? Math.round((statistics.valid / statistics.total) * 100) : 0}% of total`}
+        subtitle={t("validAssets.subtitle", { percentage: validPercentage })}
         badge={{
-          text: "Good",
+          text: t("validAssets.badge"),
           variant: "success",
         }}
       />
 
       {/* Needs Attention */}
       <StatCard
-        title="Needs Attention"
+        title={t("needsAttention.title")}
         value={needsAttentionCount}
         icon={AlertTriangle}
         color="yellow"
         breakdown={[
           {
-            label: "Warning",
+            label: t("needsAttention.warning"),
             value: statistics.byStatus.YELLOW || 0,
             color: "text-yellow-600 dark:text-yellow-400",
           },
           {
-            label: "Expired",
+            label: t("needsAttention.expired"),
             value: statistics.byStatus.RED || 0,
             color: "text-red-600 dark:text-red-400",
           },
@@ -76,18 +88,13 @@ export function StatsGrid({ statistics }: StatsGridProps) {
 
       {/* Compliance */}
       <StatCard
-        title="Compliance"
+        title={t("compliance.title")}
         value={`${statistics.compliancePercentage}%`}
         icon={PieChart}
         color="purple"
         progress={{
           value: statistics.compliancePercentage,
-          label:
-            statistics.compliancePercentage >= 90
-              ? "Excellent"
-              : statistics.compliancePercentage >= 70
-                ? "Good"
-                : "Needs Work",
+          label: getComplianceLabel(statistics.compliancePercentage),
         }}
       />
     </div>

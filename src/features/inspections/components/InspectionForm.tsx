@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { Calendar, CheckCircle, AlertCircle, FileText } from "lucide-react";
 import { useLogInspection } from "../hooks/useInspections";
 import { InspectionType } from "@/types/asset.types";
+import { useTranslations } from "next-intl";
 
 // Custom Scrollbar Styles
 const scrollbarStyles = `
@@ -156,11 +157,13 @@ function CustomDatePicker({
   onChange,
   required = false,
   error = "",
+  t,
 }: {
   value: string;
   onChange: (value: string) => void;
   required?: boolean;
   error?: string;
+  t: any;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [viewDate, setViewDate] = useState(new Date(value || new Date()));
@@ -180,7 +183,7 @@ function CustomDatePicker({
   }, []);
 
   const formatDate = (dateString: string) => {
-    if (!dateString) return "Select date";
+    if (!dateString) return t("datePickerPlaceholder");
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
       year: "numeric",
@@ -384,6 +387,7 @@ interface InspectionFormProps {
 
 export function InspectionForm({ assetId, onSuccess }: InspectionFormProps) {
   const logInspection = useLogInspection();
+  const t = useTranslations("dashboard.assets.inspection.form");
 
   const [formData, setFormData] = useState({
     type: "VISUAL" as InspectionType,
@@ -399,25 +403,25 @@ export function InspectionForm({ assetId, onSuccess }: InspectionFormProps) {
     switch (name) {
       case "type":
         if (!value || value.trim() === "") {
-          return "Inspection type is required";
+          return t("validation.typeRequired");
         }
         return "";
       case "inspectionDate":
         if (!value || value.trim() === "") {
-          return "Inspection date is required";
+          return t("validation.dateRequired");
         }
         // Check if date is not in the future
         const selectedDate = new Date(value);
         const today = new Date();
         today.setHours(23, 59, 59, 999);
         if (selectedDate > today) {
-          return "Inspection date cannot be in the future";
+          return t("validation.dateFuture");
         }
         return "";
       case "notes":
         // Notes are optional
         if (value && value.length > 500) {
-          return "Notes must be less than 500 characters";
+          return t("validation.notesMaxLength");
         }
         return "";
       default:
@@ -481,9 +485,7 @@ export function InspectionForm({ assetId, onSuccess }: InspectionFormProps) {
     } catch (error) {
       console.error("Failed to log inspection:", error);
       const errorMessage =
-        error instanceof Error
-          ? error.message
-          : "Failed to log inspection. Please try again.";
+        error instanceof Error ? error.message : t("submitError");
       alert(errorMessage);
     }
   };
@@ -501,8 +503,8 @@ export function InspectionForm({ assetId, onSuccess }: InspectionFormProps) {
     "block text-sm font-medium text-gray-700 dark:text-[#E4E6EB] mb-1.5 sm:mb-2";
 
   const inspectionTypeOptions = [
-    { value: "VISUAL", label: "Visual Inspection (Monthly)" },
-    { value: "OFFICIAL", label: "Official Inspection (Yearly)" },
+    { value: "VISUAL", label: t("typeOptions.visual") },
+    { value: "OFFICIAL", label: t("typeOptions.official") },
   ];
 
   return (
@@ -518,12 +520,11 @@ export function InspectionForm({ assetId, onSuccess }: InspectionFormProps) {
               <Calendar className="w-5 h-5 text-green-600 dark:text-green-400" />
             </div>
             <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-[#E4E6EB]">
-              Inspection Details
+              {t("title")}
             </h3>
           </div>
           <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">
-            Fill in the inspection details below. Fields marked with * are
-            required.
+            {t("description")}
           </p>
         </div>
 
@@ -532,7 +533,7 @@ export function InspectionForm({ assetId, onSuccess }: InspectionFormProps) {
           <label className={labelClass}>
             <div className="flex items-center gap-2">
               <CheckCircle className="w-4 h-4" />
-              Inspection Type <span className="text-red-500">*</span>
+              {t("type.label")} <span className="text-red-500">*</span>
             </div>
           </label>
           <CustomSelect
@@ -543,8 +544,7 @@ export function InspectionForm({ assetId, onSuccess }: InspectionFormProps) {
             error={touched.type ? errors.type : ""}
           />
           <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-            Visual inspections are required each months, official inspections
-            yearly
+            {t("type.help")}
           </p>
         </div>
 
@@ -553,7 +553,7 @@ export function InspectionForm({ assetId, onSuccess }: InspectionFormProps) {
           <label className={labelClass}>
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
-              Inspection Date <span className="text-red-500">*</span>
+              {t("date.label")} <span className="text-red-500">*</span>
             </div>
           </label>
           <CustomDatePicker
@@ -561,10 +561,11 @@ export function InspectionForm({ assetId, onSuccess }: InspectionFormProps) {
             onChange={(value) => handleChange("inspectionDate", value)}
             required
             error={touched.inspectionDate ? errors.inspectionDate : ""}
+            t={t}
           />
           {touched.inspectionDate && !errors.inspectionDate && (
             <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-              Inspection date cannot be in the future
+              {t("date.help")}
             </p>
           )}
         </div>
@@ -574,7 +575,10 @@ export function InspectionForm({ assetId, onSuccess }: InspectionFormProps) {
           <label className={labelClass}>
             <div className="flex items-center gap-2">
               <FileText className="w-4 h-4" />
-              Notes <span className="text-gray-400 text-xs">(Optional)</span>
+              {t("notes.label")}{" "}
+              <span className="text-gray-400 text-xs">
+                ({t("notes.optional")})
+              </span>
             </div>
           </label>
           <textarea
@@ -584,7 +588,7 @@ export function InspectionForm({ assetId, onSuccess }: InspectionFormProps) {
             rows={4}
             maxLength={500}
             className={getInputClassName("notes")}
-            placeholder="Any additional notes about the inspection..."
+            placeholder={t("notes.placeholder")}
           />
           <div className="flex justify-between items-center mt-1.5">
             {touched.notes && errors.notes ? (
@@ -604,7 +608,7 @@ export function InspectionForm({ assetId, onSuccess }: InspectionFormProps) {
               </p>
             ) : (
               <p className="text-xs text-gray-500 dark:text-gray-400">
-                Optional notes about the inspection
+                {t("notes.help")}
               </p>
             )}
             <p className="text-xs text-gray-500 dark:text-gray-400">
@@ -619,13 +623,10 @@ export function InspectionForm({ assetId, onSuccess }: InspectionFormProps) {
             <AlertCircle className="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
             <div className="flex-1">
               <h4 className="text-sm font-semibold text-blue-900 dark:text-blue-200 mb-1">
-                Inspection Schedule
+                {t("infoBox.title")}
               </h4>
               <p className="text-xs text-blue-800 dark:text-blue-300">
-                Visual inspections reset the monthly inspection schedule.
-                Official inspections reset the annual inspection schedule. All
-                due dates are automatically recalculated based on this
-                inspection.
+                {t("infoBox.description")}
               </p>
             </div>
           </div>
@@ -659,12 +660,12 @@ export function InspectionForm({ assetId, onSuccess }: InspectionFormProps) {
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                   />
                 </svg>
-                Logging Inspection...
+                {t("submitLoading")}
               </>
             ) : (
               <>
                 <CheckCircle className="w-5 h-5" />
-                Log Inspection
+                {t("submitButton")}
               </>
             )}
           </button>

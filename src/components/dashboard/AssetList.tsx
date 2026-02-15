@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/routing";
+import { useTranslations } from "next-intl";
 import {
   LucideIcon,
   AlertTriangle,
-  Clock,
   Plus,
   CheckCircle,
   XCircle,
@@ -37,33 +37,6 @@ interface AssetListProps {
   showViewAll?: boolean;
 }
 
-const statusConfig = {
-  GREEN: {
-    label: "Valid",
-    icon: CheckCircle,
-    bg: "bg-green-50 dark:bg-green-900/20",
-    text: "text-green-700 dark:text-green-400",
-    border: "border-green-200 dark:border-green-800",
-    dot: "bg-green-500",
-  },
-  YELLOW: {
-    label: "Warning",
-    icon: AlertTriangle,
-    bg: "bg-yellow-50 dark:bg-yellow-900/20",
-    text: "text-yellow-700 dark:text-yellow-400",
-    border: "border-yellow-200 dark:border-yellow-800",
-    dot: "bg-yellow-500",
-  },
-  RED: {
-    label: "Expired",
-    icon: XCircle,
-    bg: "bg-red-50 dark:bg-red-900/20",
-    text: "text-red-700 dark:text-red-400",
-    border: "border-red-200 dark:border-red-800",
-    dot: "bg-red-500",
-  },
-};
-
 export function AssetList({
   title,
   icon: Icon,
@@ -72,11 +45,40 @@ export function AssetList({
   variant = "recent",
   showViewAll = false,
 }: AssetListProps) {
+  const t = useTranslations("dashboard.dashboard.assetList");
   const EmptyIcon = emptyState.icon;
   const ActionIcon = emptyState.action?.icon;
 
+  // Status configuration moved inside to use translation hook
+  const statusConfig = {
+    GREEN: {
+      label: t("status.valid"),
+      icon: CheckCircle,
+      bg: "bg-green-50 dark:bg-green-900/20",
+      text: "text-green-700 dark:text-green-400",
+      border: "border-green-200 dark:border-green-800",
+      dot: "bg-green-500",
+    },
+    YELLOW: {
+      label: t("status.warning"),
+      icon: AlertTriangle,
+      bg: "bg-yellow-50 dark:bg-yellow-900/20",
+      text: "text-yellow-700 dark:text-yellow-400",
+      border: "border-yellow-200 dark:border-yellow-800",
+      dot: "bg-yellow-500",
+    },
+    RED: {
+      label: t("status.expired"),
+      icon: XCircle,
+      bg: "bg-red-50 dark:bg-red-900/20",
+      text: "text-red-700 dark:text-red-400",
+      border: "border-red-200 dark:border-red-800",
+      dot: "bg-red-500",
+    },
+  };
+
   return (
-    <div className="bg-white dark:bg-[#1b1f28] rounded-lg shadow-lg dark:shadow-none transition-colors">
+    <div className="bg-white dark:bg-[#1b1f28] rounded-lg shadow-lg dark:shadow-none transition-colors h-full flex flex-col">
       {/* Header */}
       <div className="rounded-t-lg bg-linear-to-r from-gray-50 to-gray-100 dark:from-[#0F172A] dark:to-[#1E293B] px-4 sm:px-6 py-3 sm:py-4 shadow-sm dark:shadow-black/40">
         <div className="flex items-center justify-between gap-3">
@@ -97,7 +99,7 @@ export function AssetList({
                   href="/assets"
                   className="text-xs sm:text-sm text-blue-600 dark:text-blue-400 hover:underline font-medium whitespace-nowrap"
                 >
-                  View all
+                  {t("viewAll")}
                 </Link>
               )}
             </div>
@@ -106,7 +108,7 @@ export function AssetList({
       </div>
 
       {/* Content */}
-      <div className="p-4 sm:p-6">
+      <div className="p-4 sm:p-6 flex-1">
         {assets.length === 0 ? (
           <div className="text-center py-8 sm:py-12">
             <div className="text-4xl sm:text-5xl lg:text-6xl mb-3">
@@ -145,14 +147,12 @@ export function AssetList({
                 >
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3 min-w-0 flex-1">
-                      {/* Status Indicator */}
                       {variant === "attention" && (
                         <div
                           className={`w-3 h-3 rounded-full shrink-0 ${config.dot}`}
                         />
                       )}
 
-                      {/* Asset Info */}
                       <div className="min-w-0 flex-1">
                         <p className="font-semibold text-sm sm:text-base text-[#111827] dark:text-[#E4E6EB] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate">
                           {asset.referenceNumber}
@@ -164,7 +164,6 @@ export function AssetList({
                       </div>
                     </div>
 
-                    {/* Status Badge or Days Remaining */}
                     <div className="shrink-0">
                       {variant === "attention" &&
                       asset.daysRemaining !== undefined ? (
@@ -177,11 +176,15 @@ export function AssetList({
                             }`}
                           >
                             {asset.daysRemaining > 0
-                              ? `${asset.daysRemaining}d left`
-                              : `${Math.abs(asset.daysRemaining)}d overdue`}
+                              ? t("time.daysLeft", {
+                                  count: asset.daysRemaining,
+                                })
+                              : t("time.daysOverdue", {
+                                  count: Math.abs(asset.daysRemaining),
+                                })}
                           </p>
                           <p className="text-xs text-[#6B7280] dark:text-[#9CA3AF] mt-0.5">
-                            {asset.status === "RED" ? "Expired" : "Warning"}
+                            {config.label}
                           </p>
                         </div>
                       ) : (

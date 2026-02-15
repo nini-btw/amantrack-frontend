@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Search } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useInspections } from "@/features/inspections/hooks/useInspections";
 import { useStatistics } from "@/features/statistics/hooks/useStatistics";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
@@ -14,6 +15,8 @@ import { InspectionType } from "@/types/asset.types";
 import { ReportsHeader } from "@/components/dashboard/pagesHeaders/ReportsHeader";
 
 export default function ReportsPage() {
+  const t = useTranslations("dashboard.reports");
+
   const [selectedType, setSelectedType] = useState<InspectionType | "ALL">(
     "ALL",
   );
@@ -32,19 +35,20 @@ export default function ReportsPage() {
 
   const { data: statistics } = useStatistics();
 
+  // Localized types for the filter tabs
   const inspectionTypes: {
     value: InspectionType | "ALL";
     label: string;
   }[] = [
-    { value: "ALL", label: "All" },
-    { value: "OFFICIAL", label: "Official" },
-    { value: "VISUAL", label: "Visual" },
+    { value: "ALL", label: t("types.all") },
+    { value: "OFFICIAL", label: t("types.official") },
+    { value: "VISUAL", label: t("types.visual") },
   ];
 
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[#F6F7FA] dark:bg-[#0D1117] transition-colors duration-300 p-4 sm:p-6 lg:p-8">
-        <LoadingSpinner message="Loading reports..." />
+        <LoadingSpinner message={t("loading")} />
       </div>
     );
   }
@@ -52,10 +56,7 @@ export default function ReportsPage() {
   if (error) {
     return (
       <div className="min-h-screen bg-[#F6F7FA] dark:bg-[#0D1117] transition-colors duration-300 p-4 sm:p-6 lg:p-8">
-        <ErrorMessage
-          message="Failed to load reports. Please try again."
-          onRetry={refetch}
-        />
+        <ErrorMessage message={t("error")} onRetry={refetch} />
       </div>
     );
   }
@@ -77,7 +78,7 @@ export default function ReportsPage() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6B7280] dark:text-[#9CA3AF] pointer-events-none" />
               <input
                 type="text"
-                placeholder="Search inspections..."
+                placeholder={t("searchPlaceholder")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4 py-2.5 bg-[#F6F7FA] dark:bg-[#0D1117] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg text-[#111827] dark:text-[#E4E6EB] placeholder:text-[#6B7280] dark:placeholder:text-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all"

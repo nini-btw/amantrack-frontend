@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/routing";
 import { useRouter } from "next/navigation";
 
 export default function UnauthorizedPage() {

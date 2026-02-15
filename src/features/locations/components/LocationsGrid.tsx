@@ -1,4 +1,6 @@
 "use client";
+
+import { useTranslations } from "next-intl";
 import { Location } from "@/types/location.types";
 import { LocationCard } from "./LocationCard";
 
@@ -15,15 +17,17 @@ export function LocationsGrid({
   onDelete,
   assetCounts,
 }: LocationsGridProps) {
+  const t = useTranslations("dashboard.locations.grid.empty");
+
   if (locations.length === 0) {
     return (
       <div className="text-center py-12 sm:py-16 lg:py-20">
         <div className="text-5xl sm:text-6xl lg:text-7xl mb-4">📍</div>
         <h3 className="text-lg sm:text-xl font-semibold text-[#111827] dark:text-[#E4E6EB] mb-2">
-          No locations yet
+          {t("title")}
         </h3>
         <p className="text-sm sm:text-base text-[#6B7280] dark:text-[#9CA3AF] max-w-md mx-auto px-4">
-          Get started by adding your first location
+          {t("description")}
         </p>
       </div>
     );

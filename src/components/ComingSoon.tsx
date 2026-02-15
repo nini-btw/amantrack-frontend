@@ -1,7 +1,7 @@
 "use client";
 
 import { LucideIcon, Sparkles, Rocket, Clock, Hammer } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/routing";
 
 interface ComingSoonProps {
   title?: string;

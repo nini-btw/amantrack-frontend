@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/routing";
 import { LucideIcon } from "lucide-react";
 import { ReactNode } from "react";
 

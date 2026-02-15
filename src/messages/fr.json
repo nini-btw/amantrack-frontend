@@ -1,24 +1,30 @@
 {
+  "languageToggle": {
+    "title": "Langue",
+    "currentLanguage": "Langue actuelle",
+    "active": "Actif",
+    "hint": "Cliquez pour changer de langue"
+  },
   "presentation": {
     "hero": {
       "badge": {
-        "desktop": "La référence des professionnels HSE dans le monde",
-        "mobile": "Recommandé par les pros HSE"
+        "desktop": "Approuvé par les professionnels HSE du monde entier",
+        "mobile": "Approuvé par les professionnels HSE"
       },
       "title": {
-        "line1": "Gestion des équipements de sécurité.",
+        "line1": "Gestion des actifs de sécurité.",
         "highlight": "Simplifiée."
       },
-      "description": "Suivez chaque inspection, maintenez la conformité et assurez la sécurité de votre lieu de travail avec une visibilité en temps réel sur vos équipements.",
+      "description": "Suivez chaque inspection, maintenez la conformité et assurez la sécurité de votre lieu de travail avec une visibilité en temps réel sur vos équipements de sécurité.",
       "cta": {
-        "primary": "Essai gratuit"
+        "primary": "Démarrer l'essai gratuit"
       },
       "dashboardPreview": {
         "label": "Tableau de bord en direct",
         "stats": {
           "totalAssets": "Total des actifs",
-          "validAssets": "Actifs conformes",
-          "needsAttention": "Action requise",
+          "validAssets": "Actifs valides",
+          "needsAttention": "Nécessite attention",
           "compliance": "Conformité"
         }
       }
@@ -26,14 +32,14 @@
     "contact": {
       "badge": "Contact",
       "title": "Parlons sécurité",
-      "description": "Des questions sur AmanTrack ? Notre équipe est là pour vous aider à rationaliser votre conformité et la gestion de vos actifs.",
+      "description": "Vous avez des questions sur AmanTrack ? Notre équipe est là pour vous aider à rationaliser la conformité et la gestion des actifs.",
       "info": {
         "email": "E-mail",
         "phone": "Téléphone",
         "location": "Localisation",
         "emailValue": "support@amantrack.com",
         "phoneValue": "+1 (555) 123-4567",
-        "locationValue": "Global — Remote First"
+        "locationValue": "Mondial — Travail à distance en priorité"
       },
       "form": {
         "fullName": "Nom complet",
@@ -47,66 +53,66 @@
     },
     "cta": {
       "title": "Prêt à transformer votre gestion de la sécurité ?",
-      "description": "Rejoignez les entreprises innovantes qui utilisent AmanTrack pour maintenir leur conformité et protéger leurs équipes.",
+      "description": "Rejoignez les organisations avant-gardistes qui utilisent AmanTrack pour maintenir la conformité et protéger leurs équipes.",
       "primaryButton": "Démarrer l'essai gratuit",
       "secondaryButton": "Contacter les ventes"
     },
     "dashboard": {
       "badge": "Tableau de bord",
       "title": "Conçu pour la clarté et le contrôle",
-      "description": "Une interface épurée et intuitive qui met les informations de sécurité critiques à portée de main.",
+      "description": "Une interface claire et intuitive qui met les informations de sécurité critiques à portée de main.",
       "imageAlt": "Tableau de bord AmanTrack"
     },
     "features": {
       "badge": "Fonctionnalités",
-      "title": "Tout pour gérer la sécurité",
-      "description": "Des fonctionnalités puissantes conçues pour les professionnels HSE afin d'optimiser les opérations et garantir la sécurité au travail.",
+      "title": "Tout ce dont vous avez besoin pour gérer la sécurité",
+      "description": "Des fonctionnalités puissantes conçues pour les professionnels HSE pour rationaliser les opérations et assurer la sécurité du lieu de travail.",
       "items": {
         "assetManagement": {
           "title": "Gestion des actifs",
-          "desc": "Suivez tous les équipements de sécurité avec les calendriers d'inspection et les statuts de conformité."
+          "desc": "Suivez tous les actifs de sécurité avec les calendriers d'inspection et le statut de conformité."
         },
         "inspectionTracking": {
           "title": "Suivi des inspections",
-          "desc": "Journalisez les inspections, les rappels et les échéances de conformité."
+          "desc": "Enregistrez les inspections, les rappels et les échéances de conformité."
         },
         "realTimeReports": {
           "title": "Rapports en temps réel",
           "desc": "Générez instantanément des rapports PDF et CSV prêts pour l'audit."
         },
         "locationManagement": {
-          "title": "Gestion multi-sites",
-          "desc": "Organisez les actifs à travers plusieurs installations ou sites."
+          "title": "Gestion des emplacements",
+          "desc": "Organisez les actifs dans plusieurs installations."
         },
         "smartAlerts": {
           "title": "Alertes intelligentes",
-          "desc": "Notifications automatisées pour les actifs expirés et les inspections à venir."
+          "desc": "Alertes automatisées pour les actifs et inspections expirés."
         },
         "mobileAccess": {
           "title": "Accès mobile",
-          "desc": "Utilisez la plateforme partout, sur n'importe quel appareil."
+          "desc": "Utilisez n'importe où sur n'importe quel appareil."
         }
       }
     },
     "stats": {
       "badge": "Impact",
-      "title": "La confiance des équipes de sécurité",
+      "title": "Approuvé par les équipes de sécurité",
       "description": "Rejoignez les organisations qui ont transformé leur gestion de la sécurité avec AmanTrack.",
       "items": {
         "assetsTracked": {
-          "value": "5 000+",
+          "value": "+5 000",
           "label": "Actifs suivis"
         },
         "uptime": {
-          "value": "99,2 %",
-          "label": "Disponibilité système"
+          "value": "99,2%",
+          "label": "Disponibilité du système"
         },
         "timeSaved": {
-          "value": "45 min",
+          "value": "45min",
           "label": "Économisées par inspecteur / semaine"
         },
         "auditReady": {
-          "value": "100 %",
+          "value": "100%",
           "label": "Prêt pour l'audit"
         }
       }
@@ -118,43 +124,43 @@
       "mostPopular": "Le plus populaire",
       "perMonth": "/mois",
       "buttons": {
-        "startTrial": "Essai gratuit",
+        "startTrial": "Démarrer l'essai gratuit",
         "contactSales": "Contacter les ventes"
       },
       "plans": {
         "starter": {
-          "name": "Starter",
+          "name": "Débutant",
           "price": "Gratuit",
-          "description": "Parfait pour les petites équipes débutant le suivi de sécurité.",
+          "description": "Parfait pour les petites équipes qui débutent avec le suivi de la sécurité.",
           "features": [
             "Jusqu'à 100 actifs",
-            "Journalisation de base",
+            "Enregistrement d'inspection de base",
             "Vue d'ensemble du tableau de bord",
             "Support par e-mail"
           ]
         },
         "professional": {
           "name": "Professionnel",
-          "price": "29 $",
+          "price": "29$",
           "description": "Outils avancés pour les équipes HSE en croissance.",
           "features": [
             "Actifs illimités",
             "Suivi d'inspection avancé",
-            "Exports PDF & CSV",
+            "Exportations PDF et CSV",
             "Statistiques en temps réel",
             "Support prioritaire"
           ]
         },
         "enterprise": {
           "name": "Entreprise",
-          "price": "Sur mesure",
-          "description": "Solution adaptée pour les grandes organisations.",
+          "price": "Personnalisé",
+          "description": "Solution sur mesure pour les grandes organisations.",
           "features": [
             "Gestion multi-sites",
-            "Accès basé sur les rôles (RBAC)",
-            "Onboarding dédié",
+            "Accès basé sur les rôles",
+            "Intégration dédiée",
             "Intégrations personnalisées",
-            "SLA Entreprise"
+            "SLA d'entreprise"
           ]
         }
       }
@@ -162,18 +168,18 @@
     "problemSolution": {
       "badge": "Pourquoi AmanTrack ?",
       "title": "Du chaos à la conformité",
-      "description": "De nombreuses organisations luttent avec le suivi manuel. AmanTrack transforme les flux de travail complexes en un système simple et centralisé.",
+      "description": "De nombreuses organisations ont du mal avec le suivi manuel de la sécurité. AmanTrack transforme les flux de travail de conformité complexes en un système simple et centralisé.",
       "problem": {
-        "title": "Le Problème",
+        "title": "Le problème",
         "items": {
-          "paper": "Les registres papier se perdent ou s'abîment.",
+          "paper": "Les registres d'inspection papier sont perdus ou endommagés.",
           "missed": "Les inspections manquées entraînent des risques de conformité.",
           "manual": "Le suivi manuel fait perdre du temps et réduit la productivité.",
           "visibility": "Manque de visibilité en temps réel entre les équipes."
         }
       },
       "solution": {
-        "title": "La Solution",
+        "title": "La solution",
         "items": {
           "centralized": "Gestion centralisée des actifs et des inspections.",
           "automated": "Rappels automatisés et suivi de la conformité.",
@@ -186,16 +192,16 @@
       "title": "Politique de confidentialité",
       "sections": {
         "informationCollected": {
-          "title": "1. Informations collectées",
-          "content": "AmanTrack collecte les informations de compte, les enregistrements d'actifs, les données d'inspection et les analyses d'utilisation nécessaires pour fournir les services de suivi."
+          "title": "1. Informations que nous collectons",
+          "content": "AmanTrack collecte les informations de compte, les enregistrements d'actifs, les données d'inspection et les analyses d'utilisation nécessaires pour fournir des services de suivi de la conformité."
         },
         "howWeUse": {
-          "title": "2. Utilisation des informations",
-          "content": "Les données sont utilisées pour opérer la plateforme, améliorer les performances, assurer le suivi de la conformité et fournir le support client."
+          "title": "2. Comment nous utilisons les informations",
+          "content": "Les données sont utilisées pour exploiter la plateforme, améliorer les performances, assurer la surveillance de la conformité et fournir un support client."
         },
         "dataProtection": {
           "title": "3. Protection des données",
-          "content": "Nous mettons en œuvre des pratiques de sécurité conformes aux normes de l'industrie pour protéger vos données contre tout accès non autorisé."
+          "content": "Nous mettons en œuvre des pratiques de sécurité standard de l'industrie pour protéger vos données contre l'accès ou la divulgation non autorisés."
         },
         "thirdParty": {
           "title": "4. Services tiers",
@@ -203,7 +209,7 @@
         },
         "contact": {
           "title": "5. Contact",
-          "content": "Pour toute question relative à la confidentialité, contactez-nous à contact@amantrack.com."
+          "content": "Pour les demandes liées à la confidentialité, contactez-nous à contact@amantrack.com."
         }
       }
     },
@@ -216,15 +222,15 @@
         },
         "account": {
           "title": "2. Responsabilité du compte",
-          "content": "Vous êtes responsable du maintien de la confidentialité de vos identifiants et de toutes les activités effectuées sous votre compte."
+          "content": "Vous êtes responsable du maintien de la confidentialité de vos identifiants de compte et de toutes les activités sous votre compte."
         },
         "usage": {
           "title": "3. Utilisation du service",
-          "content": "La plateforme est destinée au suivi de la conformité de sécurité légale et ne doit pas être utilisée pour des activités illicites."
+          "content": "La plateforme est destinée au suivi légal de la conformité à la sécurité et ne doit pas être utilisée pour des activités illégales."
         },
         "liability": {
           "title": "4. Limitation de responsabilité",
-          "content": "AmanTrack n'est pas responsable des dommages indirects, accessoires ou consécutifs découlant de l'utilisation du service."
+          "content": "AmanTrack n'est pas responsable des dommages indirects, accessoires ou consécutifs résultant de l'utilisation du service."
         },
         "modifications": {
           "title": "5. Modifications",
@@ -233,11 +239,11 @@
       }
     },
     "footer": {
-      "description": "Suivi professionnel des équipements HSE et gestion de la conformité pour les organisations modernes.",
+      "description": "Suivi professionnel des équipements de sécurité HSE et gestion de la conformité pour les organisations modernes.",
       "product": {
         "title": "Produit",
         "features": "Fonctionnalités",
-        "pricing": "Tarifs",
+        "pricing": "Tarification",
         "signin": "Se connecter"
       },
       "company": {
@@ -247,7 +253,7 @@
         "terms": "Conditions"
       },
       "cta": {
-        "title": "Gérez plus intelligemment",
+        "title": "Commencez à gérer plus intelligemment",
         "description": "Suivez les inspections, assurez la conformité et simplifiez les opérations HSE.",
         "button": "Démarrer l'essai gratuit"
       },
@@ -260,9 +266,9 @@
     },
     "nav": {
       "features": "Fonctionnalités",
-      "pricing": "Tarifs",
+      "pricing": "Tarification",
       "contact": "Contact",
-      "cta": "Essai gratuit",
+      "cta": "Démarrer l'essai gratuit",
       "aria": {
         "toggle": "Basculer le menu",
         "close": "Fermer le menu"
@@ -270,14 +276,79 @@
     }
   },
   "dashboard": {
+    "common": {
+      "confirmDialog": {
+        "defaultConfirm": "Confirmer",
+        "defaultCancel": "Annuler",
+        "aria": {
+          "loading": "Traitement en cours..."
+        }
+      },
+      "error": {
+        "title": "Erreur",
+        "retry": "Réessayer"
+      }
+    },
+    "dashboard": {
+      "assetList": {
+        "viewAll": "Tout voir",
+        "status": {
+          "valid": "Valide",
+          "warning": "Avertissement",
+          "expired": "Expiré"
+        },
+        "time": {
+          "daysLeft": "{count}j restant",
+          "daysOverdue": "{count}j en retard"
+        }
+      },
+      "quickActions": {
+        "newAsset": {
+          "title": "Ajouter un nouvel actif",
+          "description": "Enregistrer un nouvel équipement"
+        },
+        "viewAssets": {
+          "title": "Voir les actifs",
+          "description": "Parcourir et rechercher tous les actifs"
+        },
+        "statistics": {
+          "title": "Statistiques",
+          "description": "Voir les rapports détaillés"
+        }
+      },
+      "stats": {
+        "totalAssets": {
+          "title": "Total des actifs",
+          "subtitle": "{count} valide"
+        },
+        "validAssets": {
+          "title": "Valide",
+          "subtitle": "{percentage}% du total",
+          "badge": "Bon"
+        },
+        "needsAttention": {
+          "title": "Nécessite attention",
+          "warning": "Avertissement",
+          "expired": "Expiré"
+        },
+        "compliance": {
+          "title": "Conformité",
+          "status": {
+            "excellent": "Excellent",
+            "good": "Bon",
+            "needsWork": "À améliorer"
+          }
+        }
+      }
+    },
     "sidebar": {
       "groups": {
         "dashboard": "Tableau de bord",
         "assets": "Actifs",
-        "analytics": "Analytiques"
+        "analytics": "Analytique"
       },
       "links": {
-        "dashboard": "Accueil",
+        "dashboard": "Tableau de bord",
         "assets": "Actifs",
         "locations": "Emplacements",
         "statistics": "Statistiques",
@@ -287,11 +358,505 @@
         "profile": "Profil",
         "settings": "Paramètres",
         "logout": "Déconnexion",
-        "about": "À propos de Aman Track",
+        "about": "À propos d'Aman Track",
         "roles": {
           "hseManager": "Responsable HSE"
         }
       }
+    },
+    "assets": {
+      "constants": {
+        "types": {
+          "co2": "CO2",
+          "powder": "Poudre",
+          "foam": "Mousse",
+          "water": "Eau",
+          "wetChemical": "Chimique Humide",
+          "cleanAgent": "Agent Propre"
+        },
+        "classes": {
+          "none": "Aucune",
+          "a": "Classe A (Combustibles Ordinaires)",
+          "b": "Classe B (Liquides Inflammables)",
+          "c": "Classe C (Électrique)",
+          "d": "Classe D (Métaux)",
+          "k": "Classe K (Cuisine)",
+          "ab": "Classe A, B",
+          "abc": "Classe A, B, C",
+          "bc": "Classe B, C"
+        },
+        "status": {
+          "green": "Conforme",
+          "yellow": "Attention",
+          "red": "En Retard"
+        },
+        "inspectionTypes": {
+          "visual": "Inspection Visuelle",
+          "official": "Inspection Officielle"
+        }
+      },
+      "header": {
+        "title": "Gestion des actifs",
+        "description": "Gérer tous les actifs, le suivi de la conformité et les inspections"
+      },
+      "actions": {
+        "newAsset": "Nouvel actif"
+      },
+      "new": {
+        "pageTitle": "Nouvel actif",
+        "backToList": "Retour à la liste"
+      },
+      "form": {
+        "title": "Créer un nouvel actif",
+        "description": "Remplissez les détails ci-dessous. Les champs marqués d'un * sont obligatoires.",
+        "fields": {
+          "referenceNumber": {
+            "label": "Numéro de référence",
+            "placeholder": "ex : M1C001",
+            "validation": {
+              "required": "Le numéro de référence est obligatoire",
+              "minLength": "Le numéro de référence doit comporter au moins 3 caractères"
+            }
+          },
+          "type": {
+            "label": "Type",
+            "validation": {
+              "required": "Le type est obligatoire"
+            }
+          },
+          "location": {
+            "label": "Emplacement",
+            "placeholder": "Sélectionner un emplacement",
+            "validation": {
+              "required": "L'emplacement est obligatoire"
+            }
+          },
+          "class": {
+            "label": "Classe",
+            "optional": "(Facultatif)",
+            "placeholder": "Aucune",
+            "help": "Laisser comme \"Aucune\" si non applicable"
+          },
+          "weight": {
+            "label": "Poids (kg)",
+            "optional": "(Facultatif)",
+            "placeholder": "0",
+            "help": "Laisser vide si le poids n'est pas applicable",
+            "validation": {
+              "positive": "Le poids doit être un nombre positif"
+            }
+          },
+          "visualInspectionDate": {
+            "label": "Date de la dernière inspection visuelle",
+            "validation": {
+              "required": "La date de l'inspection visuelle est obligatoire"
+            }
+          },
+          "officialInspectionDate": {
+            "label": "Date de la dernière inspection officielle",
+            "validation": {
+              "required": "La date de l'inspection officielle est obligatoire"
+            }
+          }
+        },
+        "datePicker": {
+          "selectDate": "Sélectionner la date",
+          "days": {
+            "su": "Dim",
+            "mo": "Lun",
+            "tu": "Mar",
+            "we": "Mer",
+            "th": "Jeu",
+            "fr": "Ven",
+            "sa": "Sam"
+          }
+        },
+        "buttons": {
+          "create": "Créer l'actif",
+          "creating": "Création en cours...",
+          "cancel": "Annuler"
+        },
+        "alerts": {
+          "noLocations": {
+            "title": "Aucun emplacement disponible",
+            "description": "Vous devez créer au moins un emplacement avant d'ajouter des actifs.",
+            "button": "Créer un emplacement"
+          },
+          "loadingLocations": "Chargement des emplacements...",
+          "createError": "Échec de la création de l'actif. Veuillez réessayer."
+        }
+      },
+      "list": {
+        "loading": "Chargement des actifs...",
+        "error": "Échec du chargement des actifs. Veuillez réessayer.",
+        "searchPlaceholder": "Rechercher par numéro de référence ou type...",
+        "activeFilters": "Filtres actifs :",
+        "clearAll": "Tout effacer",
+        "showingResults": "Affichage de {count} sur {total} {item}",
+        "asset": "actif",
+        "assets": "actifs",
+        "filters": {
+          "all": "Tous",
+          "valid": "Valide",
+          "warning": "Avertissement",
+          "expired": "Expiré"
+        },
+        "statusLabel": "Statut :",
+        "emptyStates": {
+          "noResults": {
+            "title": "Aucun actif trouvé",
+            "description": "Essayez d'ajuster vos critères de recherche ou de filtre",
+            "button": "Effacer les filtres"
+          },
+          "noAssets": {
+            "title": "Pas encore d'actifs",
+            "description": "Commencez par ajouter votre premier extincteur pour commencer à suivre la conformité et les inspections",
+            "button": "Ajouter votre premier actif"
+          }
+        }
+      },
+      "table": {
+        "noAssets": "Aucun actif trouvé",
+        "headers": {
+          "ref": "Réf. n°",
+          "type": "Type",
+          "location": "Emplacement",
+          "class": "Classe",
+          "visual": "Insp. visuelle",
+          "official": "Insp. officielle",
+          "status": "Statut",
+          "actions": "Actions"
+        },
+        "mobileLabels": {
+          "visual": "Visuelle :",
+          "official": "Officielle :",
+          "view": "Voir"
+        }
+      },
+      "deleteDialog": {
+        "title": "Supprimer l'actif",
+        "description": "Êtes-vous sûr de vouloir supprimer \"{ref}\" ? Cette action est irréversible.",
+        "confirm": "Supprimer",
+        "cancel": "Annuler"
+      },
+      "detail": {
+        "title": "Détails de l'actif",
+        "loading": "Chargement des détails de l'actif...",
+        "error": "Échec du chargement des détails de l'actif. Veuillez réessayer.",
+        "back": "Retour",
+        "edit": "Modifier",
+        "editing": "Modification",
+        "delete": "Supprimer",
+        "save": "Enregistrer",
+        "saving": "Enregistrement...",
+        "cancel": "Annuler",
+        "fields": {
+          "id": "ID de l'actif",
+          "reference": "Numéro de référence",
+          "type": "Type",
+          "location": "Emplacement",
+          "class": "Classe",
+          "weight": "Poids",
+          "weightUnit": "kg",
+          "immutableNote": "(Ne peut pas être modifié)"
+        },
+        "inspections": {
+          "title": "Détails de l'inspection",
+          "visual": "Inspection visuelle",
+          "official": "Inspection officielle",
+          "last": "Dernière inspection :",
+          "next": "Prochaine échéance :",
+          "logButton": "+ Enregistrer une nouvelle inspection",
+          "logTitle": "Enregistrer une nouvelle inspection"
+        },
+        "deleteDialog": {
+          "title": "Supprimer l'actif",
+          "description": "Êtes-vous sûr de vouloir supprimer \"{ref}\" ? Cette action est irréversible et supprimera également tous les enregistrements d'inspection associés.",
+          "confirm": "Supprimer définitivement"
+        },
+        "alerts": {
+          "updateError": "Échec de la mise à jour de l'actif. Veuillez réessayer.",
+          "deleteError": "Échec de la suppression de l'actif. Veuillez réessayer."
+        }
+      },
+      "inspection": {
+        "form": {
+          "title": "Détails de l'inspection",
+          "description": "Remplissez les détails de l'inspection ci-dessous. Les champs marqués d'un * sont obligatoires.",
+          "datePickerPlaceholder": "Sélectionner la date",
+          "type": {
+            "label": "Type d'inspection",
+            "help": "Les inspections visuelles sont requises chaque mois, les inspections officielles annuellement"
+          },
+          "typeOptions": {
+            "visual": "Inspection visuelle (Mensuelle)",
+            "official": "Inspection officielle (Annuelle)"
+          },
+          "date": {
+            "label": "Date de l'inspection",
+            "help": "La date de l'inspection ne peut pas être dans le futur"
+          },
+          "notes": {
+            "label": "Notes",
+            "optional": "Facultatif",
+            "placeholder": "Toutes notes supplémentaires sur l'inspection...",
+            "help": "Notes facultatives sur l'inspection"
+          },
+          "validation": {
+            "typeRequired": "Le type d'inspection est obligatoire",
+            "dateRequired": "La date de l'inspection est obligatoire",
+            "dateFuture": "La date de l'inspection ne peut pas être dans le futur",
+            "notesMaxLength": "Les notes doivent comporter moins de 500 caractères"
+          },
+          "infoBox": {
+            "title": "Calendrier d'inspection",
+            "description": "Les inspections visuelles réinitialisent le calendrier d'inspection mensuel. Les inspections officielles réinitialisent le calendrier d'inspection annuel. Toutes les dates d'échéance sont automatiquement recalculées en fonction de cette inspection."
+          },
+          "submitButton": "Enregistrer l'inspection",
+          "submitLoading": "Enregistrement de l'inspection...",
+          "submitError": "Échec de l'enregistrement de l'inspection. Veuillez réessayer."
+        }
+      }
+    },
+    "locations": {
+      "header": {
+        "title": "Emplacements",
+        "description": "Gérer les emplacements d'actifs et les installations",
+        "addBtn": "Ajouter un emplacement"
+      },
+      "grid": {
+        "empty": {
+          "title": "Pas encore d'emplacements",
+          "description": "Commencez par ajouter votre premier emplacement"
+        }
+      },
+      "card": {
+        "assetsLabel": "Actifs :",
+        "actions": {
+          "edit": "Modifier l'emplacement",
+          "delete": "Supprimer l'emplacement"
+        },
+        "deleteDialog": {
+          "title": "Supprimer l'emplacement ?",
+          "descriptionEmpty": "Cette action est irréversible. Cet emplacement sera définitivement supprimé.",
+          "descriptionWithAssets": "Cet emplacement contient {count} {count, plural, one {actif} other {actifs}}. Tous les actifs affectés à cet emplacement devront être réaffectés. Cette action est irréversible.",
+          "confirm": "Supprimer",
+          "cancel": "Annuler"
+        }
+      },
+      "modal": {
+        "title": "Détails de l'emplacement",
+        "aria": {
+          "close": "Fermer la fenêtre"
+        }
+      },
+      "form": {
+        "name": {
+          "label": "Nom de l'emplacement",
+          "placeholder": "ex : Bâtiment A, Étage 2"
+        },
+        "description": {
+          "label": "Description",
+          "optional": "(facultatif)",
+          "placeholder": "Ajouter des détails supplémentaires sur cet emplacement..."
+        },
+        "submit": "Enregistrer l'emplacement"
+      }
+    },
+    "statistics": {
+      "loading": "Chargement des statistiques...",
+      "error": "Échec du chargement des statistiques. Veuillez réessayer.",
+      "footer": {
+        "lastUpdated": "Dernière mise à jour : {date}"
+      },
+      "header": {
+        "title": "Statistiques et graphiques",
+        "description": "Statistiques des actifs, taux de conformité et tendances",
+        "backBtn": "Retour au tableau de bord"
+      },
+      "charts": {
+        "summary": {
+          "total": "Total des actifs",
+          "valid": "Valide",
+          "warning": "Avertissement",
+          "expired": "Expiré"
+        },
+        "compliance": {
+          "title": "Taux de conformité",
+          "levels": {
+            "excellent": "Excellent niveau de conformité",
+            "good": "Bon niveau de conformité",
+            "moderate": "Niveau de conformité modéré",
+            "low": "Faible niveau de conformité - action requise"
+          }
+        },
+        "statusDist": {
+          "title": "Distribution par statut",
+          "labels": {
+            "GREEN": "Valide",
+            "YELLOW": "Avertissement",
+            "RED": "Expiré"
+          }
+        },
+        "assetsByType": "Actifs par type",
+        "assetsByLocation": "Actifs par emplacement",
+        "noData": "Aucune donnée disponible",
+        "tooltip": {
+          "count": "Nombre",
+          "rate": "Taux",
+          "assets": "Actifs",
+          "value": "Valeur"
+        }
+      }
+    },
+    "reports": {
+      "details": {
+        "title": "Détails de l'inspection",
+        "loading": "Chargement des détails de l'inspection...",
+        "notFound": "Inspection non trouvée",
+        "close": "Fermer",
+        "type": {
+          "label": "Type d'inspection"
+        },
+        "date": {
+          "label": "Date de l'inspection"
+        },
+        "performedBy": {
+          "label": "Effectuée par"
+        },
+        "notes": {
+          "label": "Notes"
+        },
+        "metadata": {
+          "title": "Informations sur l'enregistrement",
+          "inspectionId": "ID de l'inspection",
+          "assetId": "ID de l'actif",
+          "createdAt": "Créé le"
+        }
+      },
+      "loading": "Chargement des rapports...",
+      "error": "Échec du chargement des rapports. Veuillez réessayer.",
+      "searchPlaceholder": "Rechercher des inspections...",
+      "types": {
+        "all": "Tous",
+        "official": "Officielle",
+        "visual": "Visuelle"
+      },
+      "header": {
+        "title": "Rapports et inspections",
+        "description": "Gérer les actifs, suivre le statut et maintenir la conformité",
+        "newBtn": "Nouvelle inspection"
+      },
+      "export": {
+        "title": "Exportation et rapports",
+        "description": "Télécharger les données d'inspection et générer des rapports",
+        "btnCsv": "Exporter CSV",
+        "btnReport": "Générer un rapport",
+        "btnPdf": "Exporter PDF",
+        "noDataAlert": "Aucune inspection à exporter",
+        "errors": {
+          "pdf": "Échec de l'exportation du PDF des inspections"
+        },
+        "reportTemplate": {
+          "title": "Rapport d'inspection",
+          "generatedAt": "Généré le : {date}",
+          "summaryTitle": "Statistiques récapitulatives",
+          "total": "Total des actifs",
+          "valid": "Actifs valides",
+          "expired": "Actifs expirés",
+          "compliance": "Taux de conformité",
+          "table": {
+            "assetId": "ID de l'actif",
+            "type": "Type",
+            "date": "Date",
+            "performedBy": "Effectuée par",
+            "notes": "Notes",
+            "status": "Statut"
+          },
+          "footer": "Ce rapport a été généré par AmanTrack - Système de gestion des actifs"
+        }
+      },
+      "list": {
+        "empty": {
+          "title": "Aucune inspection trouvée",
+          "searchActive": "Aucune inspection ne correspond à vos critères de recherche. Essayez d'ajuster vos filtres.",
+          "getStarted": "Commencez par créer votre premier enregistrement d'inspection."
+        },
+        "table": {
+          "type": "Type",
+          "date": "Date",
+          "performedBy": "Effectuée par",
+          "notes": "Notes",
+          "actions": "Actions",
+          "noNotes": "Aucune note fournie",
+          "sortBy": "Trier par :"
+        },
+        "footer": "Affichage de {current} sur {total} inspections",
+        "delete": {
+          "title": "Supprimer l'inspection",
+          "description": "Êtes-vous sûr de vouloir supprimer cette inspection {type} effectuée le {date} ? Cette action est irréversible.",
+          "confirm": "Supprimer",
+          "cancel": "Annuler"
+        }
+      },
+      "create": {
+        "title": "Enregistrer une nouvelle inspection",
+        "assetId": {
+          "label": "ID de l'actif",
+          "placeholder": "Entrer l'ID de l'actif",
+          "help": "L'identifiant unique de l'actif inspecté",
+          "error": "Veuillez entrer un ID d'actif"
+        },
+        "type": {
+          "label": "Type d'inspection",
+          "OFFICIAL": "OFFICIELLE",
+          "VISUAL": "VISUELLE"
+        },
+        "date": {
+          "label": "Date de l'inspection"
+        },
+        "notes": {
+          "label": "Notes (Facultatif)",
+          "placeholder": "Ajouter des observations, constatations ou remarques...",
+          "help": "Documenter les constatations ou observations importantes"
+        },
+        "actions": {
+          "cancel": "Annuler",
+          "submit": "Créer l'inspection",
+          "loading": "Création en cours...",
+          "error": "Échec de la création de l'inspection. Veuillez réessayer."
+        }
+      }
+    }
+  },
+  "constants": {
+    "types": {
+      "co2": "CO2",
+      "powder": "Poudre",
+      "foam": "Mousse",
+      "water": "Eau",
+      "wetChemical": "Chimique Humide",
+      "cleanAgent": "Agent Propre"
+    },
+    "classes": {
+      "none": "Aucune",
+      "a": "Classe A (Combustibles Ordinaires)",
+      "b": "Classe B (Liquides Inflammables)",
+      "c": "Classe C (Électrique)",
+      "d": "Classe D (Métaux)",
+      "k": "Classe K (Cuisine)",
+      "ab": "Classe A, B",
+      "abc": "Classe A, B, C",
+      "bc": "Classe B, C"
+    },
+    "status": {
+      "green": "Conforme",
+      "yellow": "Attention",
+      "red": "En Retard"
+    },
+    "inspectionTypes": {
+      "visual": "Inspection Visuelle",
+      "official": "Inspection Officielle"
     }
   }
 }

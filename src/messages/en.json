@@ -1,4 +1,10 @@
 {
+  "languageToggle": {
+    "title": "Language",
+    "currentLanguage": "Current language",
+    "active": "Active",
+    "hint": "Click to switch language"
+  },
   "presentation": {
     "hero": {
       "badge": {
@@ -270,6 +276,71 @@
     }
   },
   "dashboard": {
+    "common": {
+      "confirmDialog": {
+        "defaultConfirm": "Confirm",
+        "defaultCancel": "Cancel",
+        "aria": {
+          "loading": "Processing..."
+        }
+      },
+      "error": {
+        "title": "Error",
+        "retry": "Try Again"
+      }
+    },
+    "dashboard": {
+      "assetList": {
+        "viewAll": "View all",
+        "status": {
+          "valid": "Valid",
+          "warning": "Warning",
+          "expired": "Expired"
+        },
+        "time": {
+          "daysLeft": "{count}d left",
+          "daysOverdue": "{count}d overdue"
+        }
+      },
+      "quickActions": {
+        "newAsset": {
+          "title": "Add New Asset",
+          "description": "Register new equipment"
+        },
+        "viewAssets": {
+          "title": "View Assets",
+          "description": "Browse and search all assets"
+        },
+        "statistics": {
+          "title": "Statistics",
+          "description": "View detailed reports"
+        }
+      },
+      "stats": {
+        "totalAssets": {
+          "title": "Total Assets",
+          "subtitle": "{count} valid"
+        },
+        "validAssets": {
+          "title": "Valid",
+          "subtitle": "{percentage}% of total",
+          "badge": "Good"
+        },
+        "needsAttention": {
+          "title": "Needs Attention",
+          "warning": "Warning",
+          "expired": "Expired"
+        },
+        "compliance": {
+          "title": "Compliance",
+          "status": {
+            "excellent": "Excellent",
+            "good": "Good",
+            "needsWork": "Needs Work"
+          }
+        }
+      }
+    },
     "sidebar": {
       "groups": {
         "dashboard": "Dashboard",
@@ -292,6 +363,500 @@
           "hseManager": "HSE Manager"
         }
       }
+    },
+    "assets": {
+      "constants": {
+        "types": {
+          "co2": "CO2",
+          "powder": "Powder",
+          "foam": "Foam",
+          "water": "Water",
+          "wetChemical": "Wet Chemical",
+          "cleanAgent": "Clean Agent"
+        },
+        "classes": {
+          "none": "None",
+          "a": "Class A (Ordinary Combustibles)",
+          "b": "Class B (Flammable Liquids)",
+          "c": "Class C (Electrical)",
+          "d": "Class D (Metals)",
+          "k": "Class K (Kitchen)",
+          "ab": "Class A, B",
+          "abc": "Class A, B, C",
+          "bc": "Class B, C"
+        },
+        "status": {
+          "green": "Compliant",
+          "yellow": "Warning",
+          "red": "Overdue"
+        },
+        "inspectionTypes": {
+          "visual": "Visual Inspection",
+          "official": "Official Inspection"
+        }
+      },
+      "header": {
+        "title": "Asset Management",
+        "description": "Manage all assets, compliance tracking, and inspections"
+      },
+      "actions": {
+        "newAsset": "New Asset"
+      },
+      "new": {
+        "pageTitle": "New Asset",
+        "backToList": "Back to List"
+      },
+      "form": {
+        "title": "Create New Asset",
+        "description": "Fill in the details below. Fields marked with * are required.",
+        "fields": {
+          "referenceNumber": {
+            "label": "Reference Number",
+            "placeholder": "e.g., M1C001",
+            "validation": {
+              "required": "Reference number is required",
+              "minLength": "Reference number must be at least 3 characters"
+            }
+          },
+          "type": {
+            "label": "Type",
+            "validation": {
+              "required": "Type is required"
+            }
+          },
+          "location": {
+            "label": "Location",
+            "placeholder": "Select a location",
+            "validation": {
+              "required": "Location is required"
+            }
+          },
+          "class": {
+            "label": "Class",
+            "optional": "(Optional)",
+            "placeholder": "None",
+            "help": "Leave as \"None\" if not applicable"
+          },
+          "weight": {
+            "label": "Weight (kg)",
+            "optional": "(Optional)",
+            "placeholder": "0",
+            "help": "Leave empty if weight is not applicable",
+            "validation": {
+              "positive": "Weight must be a positive number"
+            }
+          },
+          "visualInspectionDate": {
+            "label": "Last Visual Inspection Date",
+            "validation": {
+              "required": "Visual inspection date is required"
+            }
+          },
+          "officialInspectionDate": {
+            "label": "Last Official Inspection Date",
+            "validation": {
+              "required": "Official inspection date is required"
+            }
+          }
+        },
+        "datePicker": {
+          "selectDate": "Select date",
+          "days": {
+            "su": "Su",
+            "mo": "Mo",
+            "tu": "Tu",
+            "we": "We",
+            "th": "Th",
+            "fr": "Fr",
+            "sa": "Sa"
+          }
+        },
+        "buttons": {
+          "create": "Create Asset",
+          "creating": "Creating...",
+          "cancel": "Cancel"
+        },
+        "alerts": {
+          "noLocations": {
+            "title": "No Locations Available",
+            "description": "You need to create at least one location before adding assets.",
+            "button": "Create Location"
+          },
+          "loadingLocations": "Loading locations...",
+          "createError": "Failed to create asset. Please try again."
+        }
+      },
+      "list": {
+        "loading": "Loading Assets...",
+        "error": "Failed to load assets. Please try again.",
+        "searchPlaceholder": "Search by reference number or type...",
+        "activeFilters": "Active filters:",
+        "clearAll": "Clear all",
+        "showingResults": "Showing {count} of {total} {item}",
+        "asset": "asset",
+        "assets": "assets",
+        "filters": {
+          "all": "All",
+          "valid": "Valid",
+          "warning": "Warning",
+          "expired": "Expired"
+        },
+        "statusLabel": "Status:",
+        "emptyStates": {
+          "noResults": {
+            "title": "No assets found",
+            "description": "Try adjusting your search or filter criteria",
+            "button": "Clear Filters"
+          },
+          "noAssets": {
+            "title": "No assets yet",
+            "description": "Get started by adding your first fire extinguisher to begin tracking compliance and inspections",
+            "button": "Add Your First Asset"
+          }
+        }
+      },
+      "table": {
+        "noAssets": "No assets found",
+        "headers": {
+          "ref": "Ref #",
+          "type": "Type",
+          "location": "Location",
+          "class": "Class",
+          "visual": "Visual Insp.",
+          "official": "Official Insp.",
+          "status": "Status",
+          "actions": "Actions"
+        },
+        "mobileLabels": {
+          "visual": "Visual:",
+          "official": "Official:",
+          "view": "View"
+        }
+      },
+      "deleteDialog": {
+        "title": "Delete Asset",
+        "description": "Are you sure you want to delete \"{ref}\"? This action cannot be undone.",
+        "confirm": "Delete",
+        "cancel": "Cancel"
+      },
+      "detail": {
+        "title": "Asset Details",
+        "loading": "Loading asset details...",
+        "error": "Failed to load asset details. Please try again.",
+        "back": "Back",
+        "edit": "Edit",
+        "editing": "Editing",
+        "delete": "Delete",
+        "save": "Save",
+        "saving": "Saving...",
+        "cancel": "Cancel",
+        "fields": {
+          "id": "Asset ID",
+          "reference": "Reference Number",
+          "type": "Type",
+          "location": "Location",
+          "class": "Class",
+          "weight": "Weight",
+          "weightUnit": "kg",
+          "immutableNote": "(Cannot be changed)"
+        },
+        "inspections": {
+          "title": "Inspection Details",
+          "visual": "Visual Inspection",
+          "official": "Official Inspection",
+          "last": "Last Inspection:",
+          "next": "Next Due:",
+          "logButton": "+ Log New Inspection",
+          "logTitle": "Log New Inspection"
+        },
+        "deleteDialog": {
+          "title": "Delete Asset",
+          "description": "Are you sure you want to delete \"{ref}\"? This action cannot be undone and will also delete all associated inspection records.",
+          "confirm": "Delete Permanently"
+        },
+        "alerts": {
+          "updateError": "Failed to update asset. Please try again.",
+          "deleteError": "Failed to delete asset. Please try again."
+        }
+      },
+      "inspection": {
+        "form": {
+          "title": "Inspection Details",
+          "description": "Fill in the inspection details below. Fields marked with * are required.",
+          "datePickerPlaceholder": "Select date",
+          "type": {
+            "label": "Inspection Type",
+            "help": "Visual inspections are required each months, official inspections yearly"
+          },
+          "typeOptions": {
+            "visual": "Visual Inspection (Monthly)",
+            "official": "Official Inspection (Yearly)"
+          },
+          "date": {
+            "label": "Inspection Date",
+            "help": "Inspection date cannot be in the future"
+          },
+          "notes": {
+            "label": "Notes",
+            "optional": "Optional",
+            "placeholder": "Any additional notes about the inspection...",
+            "help": "Optional notes about the inspection"
+          },
+          "validation": {
+            "typeRequired": "Inspection type is required",
+            "dateRequired": "Inspection date is required",
+            "dateFuture": "Inspection date cannot be in the future",
+            "notesMaxLength": "Notes must be less than 500 characters"
+          },
+          "infoBox": {
+            "title": "Inspection Schedule",
+            "description": "Visual inspections reset the monthly inspection schedule. Official inspections reset the annual inspection schedule. All due dates are automatically recalculated based on this inspection."
+          },
+          "submitButton": "Log Inspection",
+          "submitLoading": "Logging Inspection...",
+          "submitError": "Failed to log inspection. Please try again."
+        }
+      }
+    },
+    "locations": {
+      "header": {
+        "title": "Locations",
+        "description": "Manage asset locations and facilities",
+        "addBtn": "Add Location"
+      },
+      "grid": {
+        "empty": {
+          "title": "No locations yet",
+          "description": "Get started by adding your first location"
+        }
+      },
+      "card": {
+        "assetsLabel": "Assets:",
+        "actions": {
+          "edit": "Edit location",
+          "delete": "Delete location"
+        },
+        "deleteDialog": {
+          "title": "Delete Location?",
+          "descriptionEmpty": "This action cannot be undone. This location will be permanently deleted.",
+          "descriptionWithAssets": "This location has {count} {count, plural, one {asset} other {assets}}. All assets assigned to this location will need to be reassigned. This action cannot be undone.",
+          "confirm": "Delete",
+          "cancel": "Cancel"
+        }
+      },
+      "modal": {
+        "title": "Location Details",
+        "aria": {
+          "close": "Close modal"
+        }
+      },
+      "form": {
+        "name": {
+          "label": "Location Name",
+          "placeholder": "e.g., Building A, Floor 2"
+        },
+        "description": {
+          "label": "Description",
+          "optional": "(optional)",
+          "placeholder": "Add additional details about this location..."
+        },
+        "submit": "Save Location"
+      }
+    },
+    "statistics": {
+      "loading": "Loading statistics...",
+      "error": "Failed to load statistics. Please try again.",
+      "footer": {
+        "lastUpdated": "Last updated: {date}"
+      },
+      "header": {
+        "title": "Statistics & Charts",
+        "description": "Asset statistics, compliance rates, and trends",
+        "backBtn": "Back to Dashboard"
+      },
+      "charts": {
+        "summary": {
+          "total": "Total Assets",
+          "valid": "Valid",
+          "warning": "Warning",
+          "expired": "Expired"
+        },
+        "compliance": {
+          "title": "Compliance Rate",
+          "levels": {
+            "excellent": "Excellent compliance level",
+            "good": "Good compliance level",
+            "moderate": "Moderate compliance level",
+            "low": "Low compliance level - action required"
+          }
+        },
+        "statusDist": {
+          "title": "Status Distribution",
+          "labels": {
+            "GREEN": "Valid",
+            "YELLOW": "Warning",
+            "RED": "Expired"
+          }
+        },
+        "assetsByType": "Assets by Type",
+        "assetsByLocation": "Assets by Location",
+        "noData": "No data available",
+        "tooltip": {
+          "count": "Count",
+          "rate": "Rate",
+          "assets": "Assets",
+          "value": "Value"
+        }
+      }
+    },
+    "reports": {
+      "details": {
+        "title": "Inspection Details",
+        "loading": "Loading inspection details...",
+        "notFound": "Inspection not found",
+        "close": "Close",
+        "type": {
+          "label": "Inspection Type"
+        },
+        "date": {
+          "label": "Inspection Date"
+        },
+        "performedBy": {
+          "label": "Performed By"
+        },
+        "notes": {
+          "label": "Notes"
+        },
+        "metadata": {
+          "title": "Record Information",
+          "inspectionId": "Inspection ID",
+          "assetId": "Asset ID",
+          "createdAt": "Created At"
+        }
+      },
+      "loading": "Loading reports...",
+      "error": "Failed to load reports. Please try again.",
+      "searchPlaceholder": "Search inspections...",
+      "types": {
+        "all": "All",
+        "official": "Official",
+        "visual": "Visual"
+      },
+      "header": {
+        "title": "Reports & Inspections",
+        "description": "Manage assets, track status, and maintain compliance",
+        "newBtn": "New Inspection"
+      },
+      "export": {
+        "title": "Export & Reports",
+        "description": "Download inspection data and generate reports",
+        "btnCsv": "Export CSV",
+        "btnReport": "Generate Report",
+        "btnPdf": "Export PDF",
+        "noDataAlert": "No inspections to export",
+        "errors": {
+          "pdf": "Failed to export inspections PDF"
+        },
+        "reportTemplate": {
+          "title": "Inspection Report",
+          "generatedAt": "Generated on: {date}",
+          "summaryTitle": "Summary Statistics",
+          "total": "Total Assets",
+          "valid": "Valid Assets",
+          "expired": "Expired Assets",
+          "compliance": "Compliance Rate",
+          "table": {
+            "assetId": "Asset ID",
+            "type": "Type",
+            "date": "Date",
+            "performedBy": "Performed By",
+            "notes": "Notes",
+            "status": "Status"
+          },
+          "footer": "This report was generated by AmanTrack - Asset Management System"
+        }
+      },
+      "list": {
+        "empty": {
+          "title": "No Inspections Found",
+          "searchActive": "No inspections match your search criteria. Try adjusting your filters.",
+          "getStarted": "Get started by creating your first inspection record."
+        },
+        "table": {
+          "type": "Type",
+          "date": "Date",
+          "performedBy": "Performed By",
+          "notes": "Notes",
+          "actions": "Actions",
+          "noNotes": "No notes provided",
+          "sortBy": "Sort by:"
+        },
+        "footer": "Showing {current} of {total} inspections",
+        "delete": {
+          "title": "Delete Inspection",
+          "description": "Are you sure you want to delete this {type} inspection performed on {date}? This action cannot be undone.",
+          "confirm": "Delete",
+          "cancel": "Cancel"
+        }
+      },
+      "create": {
+        "title": "Log New Inspection",
+        "assetId": {
+          "label": "Asset ID",
+          "placeholder": "Enter asset ID",
+          "help": "The unique identifier of the asset being inspected",
+          "error": "Please enter an Asset ID"
+        },
+        "type": {
+          "label": "Inspection Type",
+          "OFFICIAL": "OFFICIAL",
+          "VISUAL": "VISUAL"
+        },
+        "date": {
+          "label": "Inspection Date"
+        },
+        "notes": {
+          "label": "Notes (Optional)",
+          "placeholder": "Add any observations, findings, or remarks...",
+          "help": "Document any important findings or observations"
+        },
+        "actions": {
+          "cancel": "Cancel",
+          "submit": "Create Inspection",
+          "loading": "Creating...",
+          "error": "Failed to create inspection. Please try again."
+        }
+      }
+    }
+  },
+  "constants": {
+    "types": {
+      "co2": "CO2",
+      "powder": "Powder",
+      "foam": "Foam",
+      "water": "Water",
+      "wetChemical": "Wet Chemical",
+      "cleanAgent": "Clean Agent"
+    },
+    "classes": {
+      "none": "None",
+      "a": "Class A (Ordinary Combustibles)",
+      "b": "Class B (Flammable Liquids)",
+      "c": "Class C (Electrical)",
+      "d": "Class D (Metals)",
+      "k": "Class K (Kitchen)",
+      "ab": "Class A, B",
+      "abc": "Class A, B, C",
+      "bc": "Class B, C"
+    },
+    "status": {
+      "green": "Compliant",
+      "yellow": "Warning",
+      "red": "Overdue"
+    },
+    "inspectionTypes": {
+      "visual": "Visual Inspection",
+      "official": "Official Inspection"
     }
   }
 }

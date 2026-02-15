@@ -1,50 +1,44 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { Link } from "@/routing";
+import { useTranslations } from "next-intl";
 import { useAssets } from "@/features/assets/hooks/useAssets";
 import { useLocations } from "@/features/locations/hooks/useLocations";
 import { AssetTable } from "@/features/assets/components/AssetTable";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { ErrorMessage } from "@/components/ErrorMessage";
 import { ComplianceStatus } from "@/types/asset.types";
-import {
-  Archive,
-  Search,
-  CheckCircle,
-  AlertTriangle,
-  XCircle,
-} from "lucide-react";
+import { Search, CheckCircle, AlertTriangle, XCircle } from "lucide-react";
 import { AssetsHeader } from "@/components/dashboard/pagesHeaders/AssetsHeader";
 
 export default function AssetsListPage() {
+  const t = useTranslations("dashboard.assets.list");
+
   const {
     data: assets = [],
     isLoading: loadingAssets,
     error: assetsError,
     refetch,
   } = useAssets();
+
   const { data: locations = [], isLoading: loadingLocations } = useLocations();
   const [filter, setFilter] = useState<"ALL" | ComplianceStatus>("ALL");
   const [searchTerm, setSearchTerm] = useState("");
 
   const isLoading = loadingAssets || loadingLocations;
 
-  // ENHANCED LOADING STATE
+  // 1. Loading State
   if (isLoading) {
-    return <LoadingSpinner message="Loading Assets..." />;
+    return <LoadingSpinner message={t("loading")} />;
   }
 
+  // 2. Error State
   if (assetsError) {
-    return (
-      <ErrorMessage
-        message="Failed to load assets. Please try again."
-        onRetry={() => refetch()}
-      />
-    );
+    return <ErrorMessage message={t("error")} onRetry={() => refetch()} />;
   }
 
-  // Filter assets
+  // 3. Filter Logic
   let filteredAssets = assets;
 
   if (filter !== "ALL") {
@@ -61,7 +55,6 @@ export default function AssetsListPage() {
     );
   }
 
-  // Count by status
   const counts = {
     total: assets.length,
     green: assets.filter((a) => a.status === "GREEN").length,
@@ -74,82 +67,59 @@ export default function AssetsListPage() {
       <div className="max-w-7xl mx-auto">
         <AssetsHeader />
 
+        {/* Filters and Search Bar */}
         <div className="bg-white dark:bg-[#1B1F28] border border-[#E5E7EB] dark:border-[#2D3340] p-6 rounded-lg shadow-lg dark:shadow-none mb-6 transition-colors duration-300">
           <div className="flex flex-col lg:flex-row gap-4">
             {/* Search Input */}
             <div className="flex-1">
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <svg
-                    className="h-5 w-5 text-[#6B7280] dark:text-[#9CA3AF]"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
+                  <Search className="h-5 w-5 text-[#6B7280] dark:text-[#9CA3AF]" />
                 </div>
                 <input
                   type="text"
-                  placeholder="Search by reference number or type..."
+                  placeholder={t("searchPlaceholder")}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white dark:bg-[#0D1117] border border-[#E5E7EB] dark:border-[#2D3340] text-[#111827] dark:text-[#E4E6EB] placeholder:text-[#9CA3AF] dark:placeholder:text-[#6B7280] focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white dark:bg-[#0D1117] border border-[#E5E7EB] dark:border-[#2D3340] text-[#111827] dark:text-[#E4E6EB] placeholder:text-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
                 />
                 {searchTerm && (
                   <button
                     onClick={() => setSearchTerm("")}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#6B7280] dark:text-[#9CA3AF] hover:text-[#111827] dark:hover:text-[#E4E6EB]"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#6B7280] hover:text-[#111827]"
                   >
-                    <svg
-                      className="h-5 w-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
+                    <XCircle className="h-5 w-5" />
                   </button>
                 )}
               </div>
             </div>
 
-            {/* Filter Buttons */}
+            {/* Status Filter Buttons */}
             <div className="flex flex-wrap gap-2">
               {[
                 {
                   key: "ALL" as const,
-                  label: "All",
+                  label: t("filters.all"),
                   count: counts.total,
                   color: "blue",
                 },
                 {
                   key: "GREEN" as const,
-                  label: "Valid",
+                  label: t("filters.valid"),
                   count: counts.green,
                   color: "green",
                   icon: CheckCircle,
                 },
                 {
                   key: "YELLOW" as const,
-                  label: "Warning",
+                  label: t("filters.warning"),
                   count: counts.yellow,
                   color: "yellow",
                   icon: AlertTriangle,
                 },
                 {
                   key: "RED" as const,
-                  label: "Expired",
+                  label: t("filters.expired"),
                   count: counts.red,
                   color: "red",
                   icon: XCircle,
@@ -161,24 +131,22 @@ export default function AssetsListPage() {
                   { active: string; inactive: string }
                 > = {
                   blue: {
-                    active: "bg-blue-600 dark:bg-blue-500 text-white",
-                    inactive:
-                      "bg-gray-100 dark:bg-[#2A2E37] text-[#6B7280] dark:text-[#9CA3AF] hover:bg-gray-200 dark:hover:bg-[#3D4350]",
+                    active: "bg-blue-600 text-white",
+                    inactive: "bg-gray-100 dark:bg-[#2A2E37] text-[#6B7280]",
                   },
                   green: {
-                    active: "bg-green-600 dark:bg-green-500 text-white",
+                    active: "bg-green-600 text-white",
                     inactive:
-                      "bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/30 border border-green-200 dark:border-green-800",
+                      "bg-green-100 dark:bg-green-900/20 text-green-700",
                   },
                   yellow: {
-                    active: "bg-yellow-600 dark:bg-yellow-500 text-white",
+                    active: "bg-yellow-600 text-white",
                     inactive:
-                      "bg-yellow-100 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-400 hover:bg-yellow-200 dark:hover:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-800",
+                      "bg-yellow-100 dark:bg-yellow-900/20 text-yellow-700",
                   },
                   red: {
-                    active: "bg-red-600 dark:bg-red-500 text-white",
-                    inactive:
-                      "bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/30 border border-red-200 dark:border-red-800",
+                    active: "bg-red-600 text-white",
+                    inactive: "bg-red-100 dark:bg-red-900/20 text-red-700",
                   },
                 };
 
@@ -186,10 +154,11 @@ export default function AssetsListPage() {
                   <button
                     key={btn.key}
                     onClick={() => setFilter(btn.key)}
-                    className={`
-          flex-1 min-w-30 flex items-center justify-center gap-1.5 py-2 rounded-lg font-semibold transition-all duration-200 cursor-pointer
-          ${isActive ? colors[btn.color].active + " shadow-md" : colors[btn.color].inactive}
-        `}
+                    className={`flex-1 min-w-30 flex items-center justify-center gap-1.5 py-2 px-4 rounded-lg font-semibold transition-all cursor-pointer ${
+                      isActive
+                        ? colors[btn.color].active + " shadow-md"
+                        : colors[btn.color].inactive
+                    }`}
                   >
                     {btn.icon && <btn.icon className="w-4 h-4 shrink-0" />}
                     {btn.label} ({btn.count})
@@ -199,35 +168,25 @@ export default function AssetsListPage() {
             </div>
           </div>
 
-          {/* Active Filters Display */}
+          {/* Active Chips */}
           {(filter !== "ALL" || searchTerm) && (
             <div className="mt-4 pt-4 border-t border-[#E5E7EB] dark:border-[#2D3340]">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-sm font-medium text-[#6B7280] dark:text-[#9CA3AF]">
-                  Active filters:
+                <span className="text-sm font-medium text-[#6B7280]">
+                  {t("activeFilters")}
                 </span>
 
                 {filter !== "ALL" && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 text-sm font-medium">
-                    Status: {filter}
-                    <button
-                      onClick={() => setFilter("ALL")}
-                      className="hover:text-blue-600 dark:hover:text-blue-300"
-                    >
-                      ✕
-                    </button>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-sm">
+                    {t("statusLabel")} {filter}
+                    <button onClick={() => setFilter("ALL")}>✕</button>
                   </span>
                 )}
 
                 {searchTerm && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 text-sm font-medium">
-                    Search: "{searchTerm}"
-                    <button
-                      onClick={() => setSearchTerm("")}
-                      className="hover:text-blue-600 dark:hover:text-blue-300"
-                    >
-                      ✕
-                    </button>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-sm">
+                    {t("searchLabel")} "{searchTerm}"
+                    <button onClick={() => setSearchTerm("")}>✕</button>
                   </span>
                 )}
 
@@ -236,9 +195,9 @@ export default function AssetsListPage() {
                     setFilter("ALL");
                     setSearchTerm("");
                   }}
-                  className="text-sm text-blue-600 dark:text-blue-400 hover:underline font-medium"
+                  className="text-sm text-blue-600 hover:underline font-medium"
                 >
-                  Clear all
+                  {t("clearAll")}
                 </button>
               </div>
             </div>
@@ -248,60 +207,57 @@ export default function AssetsListPage() {
         {/* Results Summary */}
         {filteredAssets.length !== assets.length && (
           <div className="mb-4 px-2">
-            <p className="text-sm text-[#6B7280] dark:text-[#9CA3AF]">
-              Showing {filteredAssets.length} of {assets.length} asset
-              {assets.length !== 1 ? "s" : ""}
+            <p className="text-sm text-[#6B7280]">
+              {t("showingResults", {
+                count: filteredAssets.length,
+                total: assets.length,
+                item: filteredAssets.length === 1 ? t("asset") : t("assets"),
+              })}
             </p>
           </div>
         )}
 
-        {/* EMPTY STATE - No Results */}
+        {/* Empty States */}
         {filteredAssets.length === 0 && assets.length > 0 && (
-          <div className="bg-white dark:bg-[#1B1F28] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg shadow-lg dark:shadow-none p-12 text-center">
-            <div className="flex items-center justify-center mb-4">
-              <Search className="w-14 h-14 text-[#9CA3AF] dark:text-[#6B7280]" />
-            </div>
-            <h3 className="text-xl font-semibold text-[#111827] dark:text-[#E4E6EB] mb-2">
-              No assets found
+          <div className="bg-white dark:bg-[#1B1F28] rounded-lg p-12 text-center border border-[#E5E7EB] dark:border-[#2D3340]">
+            <Search className="w-14 h-14 mx-auto text-[#9CA3AF] mb-4" />
+            <h3 className="text-xl font-semibold mb-2">
+              {t("emptyStates.noResults.title")}
             </h3>
-
-            <p className="text-[#6B7280] dark:text-[#9CA3AF] mb-6">
-              Try adjusting your search or filter criteria
+            <p className="text-[#6B7280] mb-6">
+              {t("emptyStates.noResults.description")}
             </p>
             <button
               onClick={() => {
                 setFilter("ALL");
                 setSearchTerm("");
               }}
-              className="px-6 py-3 bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
+              className="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg transition-all"
             >
-              Clear Filters
+              {t("emptyStates.noResults.button")}
             </button>
           </div>
         )}
 
-        {/* EMPTY STATE - No Assets at All */}
         {assets.length === 0 && (
-          <div className="bg-white dark:bg-[#1B1F28] border border-[#E5E7EB] dark:border-[#2D3340] rounded-lg shadow-lg dark:shadow-none p-16 text-center">
+          <div className="bg-white dark:bg-[#1B1F28] rounded-lg p-16 text-center border border-[#E5E7EB] dark:border-[#2D3340]">
             <div className="text-7xl mb-4">📦</div>
-            <h3 className="text-2xl font-bold text-[#111827] dark:text-[#E4E6EB] mb-2">
-              No assets yet
+            <h3 className="text-2xl font-bold mb-2">
+              {t("emptyStates.noAssets.title")}
             </h3>
-            <p className="text-[#6B7280] dark:text-[#9CA3AF] mb-8 max-w-md mx-auto">
-              Get started by adding your first fire extinguisher to begin
-              tracking compliance and inspections
+            <p className="text-[#6B7280] mb-8 max-w-md mx-auto">
+              {t("emptyStates.noAssets.description")}
             </p>
             <Link
               href="/assets/new"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 active:scale-[0.98]"
+              className="px-8 py-4 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg shadow-lg active:scale-[0.98] transition-all"
             >
-              <span className="text-xl">+</span>
-              Add Your First Asset
+              + {t("emptyStates.noAssets.button")}
             </Link>
           </div>
         )}
 
-        {/* Assets Table */}
+        {/* Table View */}
         {filteredAssets.length > 0 && (
           <AssetTable assets={filteredAssets} locations={locations} />
         )}

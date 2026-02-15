@@ -4,6 +4,7 @@ import { FileSpreadsheet, Download, FileText } from "lucide-react";
 import { LogInspectionResponse } from "@/types/inspection.types";
 import { Statistics } from "@/types/statistics.types";
 import { exportService } from "@/services/export.service";
+import { useTranslations, useFormatter } from "next-intl";
 
 interface ExportSectionProps {
   inspections?: LogInspectionResponse[];
@@ -14,25 +15,28 @@ export function ExportSection({
   inspections = [],
   statistics,
 }: ExportSectionProps) {
+  const t = useTranslations("dashboard.reports.export");
+  const format = useFormatter();
+
   const handleExportCSV = () => {
     if (!inspections || inspections.length === 0) {
-      alert("No inspections to export");
+      alert(t("noDataAlert"));
       return;
     }
 
     const headers = [
-      "Asset ID",
-      "Type",
-      "Date",
-      "Performed By",
-      "Notes",
-      "Status",
+      t("reportTemplate.table.assetId"),
+      t("reportTemplate.table.type"),
+      t("reportTemplate.table.date"),
+      t("reportTemplate.table.performedBy"),
+      t("reportTemplate.table.notes"),
+      t("reportTemplate.table.status"),
     ];
 
     const rows = inspections.map((item) => [
       item.inspection.assetId,
       item.inspection.type,
-      new Date(item.inspection.inspectionDate).toLocaleDateString(),
+      format.dateTime(new Date(item.inspection.inspectionDate)),
       item.inspection.performedBy,
       item.inspection.notes || "",
       item.asset.status,
@@ -55,7 +59,6 @@ export function ExportSection({
     );
     link.href = url;
     link.style.visibility = "hidden";
-
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -63,7 +66,7 @@ export function ExportSection({
 
   const handleExportReport = () => {
     if (!inspections || inspections.length === 0) {
-      alert("No inspections to generate report");
+      alert(t("noDataAlert"));
       return;
     }
 
@@ -72,9 +75,9 @@ export function ExportSection({
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Inspection Report</title>
+  <title>${t("reportTemplate.title")}</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; }
+    body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
     h1 { color: #111827; border-bottom: 2px solid #E5E7EB; padding-bottom: 10px; }
     .summary { background: #F6F7FA; padding: 20px; border-radius: 8px; margin: 20px 0; }
     .summary-item { display: flex; justify-content: space-between; margin: 10px 0; }
@@ -85,28 +88,28 @@ export function ExportSection({
   </style>
 </head>
 <body>
-  <h1>AmanTrack Inspection Report</h1>
-  <p>Generated on: ${new Date().toLocaleString()}</p>
+  <h1>${t("reportTemplate.title")}</h1>
+  <p>${t("reportTemplate.generatedAt", { date: format.dateTime(new Date()) })}</p>
 
   ${
     statistics
       ? `
   <div class="summary">
-    <h2>Summary Statistics</h2>
+    <h2>${t("reportTemplate.summaryTitle")}</h2>
     <div class="summary-item">
-      <span>Total Assets:</span>
+      <span>${t("reportTemplate.total")}:</span>
       <strong>${statistics.total}</strong>
     </div>
     <div class="summary-item">
-      <span>Valid Assets:</span>
+      <span>${t("reportTemplate.valid")}:</span>
       <strong>${statistics.valid}</strong>
     </div>
     <div class="summary-item">
-      <span>Expired Assets:</span>
+      <span>${t("reportTemplate.expired")}:</span>
       <strong>${statistics.expired}</strong>
     </div>
     <div class="summary-item">
-      <span>Compliance Rate:</span>
+      <span>${t("reportTemplate.compliance")}:</span>
       <strong>${statistics.compliancePercentage.toFixed(1)}%</strong>
     </div>
   </div>
@@ -114,15 +117,15 @@ export function ExportSection({
       : ""
   }
 
-  <h2>Inspections (${inspections.length})</h2>
+  <h2>${t("reportTemplate.title")} (${inspections.length})</h2>
   <table>
     <thead>
       <tr>
-        <th>Asset ID</th>
-        <th>Type</th>
-        <th>Date</th>
-        <th>Performed By</th>
-        <th>Notes</th>
+        <th>${t("reportTemplate.table.assetId")}</th>
+        <th>${t("reportTemplate.table.type")}</th>
+        <th>${t("reportTemplate.table.date")}</th>
+        <th>${t("reportTemplate.table.performedBy")}</th>
+        <th>${t("reportTemplate.table.notes")}</th>
       </tr>
     </thead>
     <tbody>
@@ -132,7 +135,7 @@ export function ExportSection({
         <tr>
           <td>${item.inspection.assetId}</td>
           <td><strong>${item.inspection.type}</strong></td>
-          <td>${new Date(item.inspection.inspectionDate).toLocaleDateString()}</td>
+          <td>${format.dateTime(new Date(item.inspection.inspectionDate))}</td>
           <td>${item.inspection.performedBy}</td>
           <td>${item.inspection.notes || "-"}</td>
         </tr>
@@ -143,7 +146,7 @@ export function ExportSection({
   </table>
 
   <div class="footer">
-    <p>This report was generated by AmanTrack - Asset Management System</p>
+    <p>${t("reportTemplate.footer")}</p>
   </div>
 </body>
 </html>
@@ -152,7 +155,6 @@ export function ExportSection({
     const blob = new Blob([reportContent], {
       type: "text/html;charset=utf-8;",
     });
-
     const link = document.createElement("a");
     const url = URL.createObjectURL(blob);
 
@@ -162,7 +164,6 @@ export function ExportSection({
     );
     link.href = url;
     link.style.visibility = "hidden";
-
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -173,7 +174,7 @@ export function ExportSection({
       await exportService.downloadInspectionsPdf();
     } catch (error) {
       console.error("Failed to export PDF:", error);
-      alert("Failed to export inspections PDF");
+      alert(t("errors.pdf"));
     }
   };
 
@@ -183,42 +184,39 @@ export function ExportSection({
         <div>
           <h2 className="text-lg sm:text-xl font-semibold text-[#111827] dark:text-[#E4E6EB] flex items-center gap-2">
             <Download className="w-5 h-5 sm:w-6 sm:h-6" />
-            Export & Reports
+            {t("title")}
           </h2>
           <p className="text-xs sm:text-sm text-[#6B7280] dark:text-[#9CA3AF] mt-1">
-            Download inspection data and generate reports
+            {t("description")}
           </p>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full sm:w-auto">
-          {/* CSV */}
           <button
             onClick={handleExportCSV}
             disabled={!inspections || inspections.length === 0}
             className="cursor-pointer inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white font-medium text-sm rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
           >
             <FileSpreadsheet className="w-4 h-4" />
-            Export CSV
+            {t("btnCsv")}
           </button>
 
-          {/* HTML Report */}
           <button
             onClick={handleExportReport}
             disabled={!inspections || inspections.length === 0}
             className="cursor-pointer inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
           >
             <Download className="w-4 h-4" />
-            Generate Report
+            {t("btnReport")}
           </button>
 
-          {/* PDF Export */}
           <button
             onClick={handleExportInspectionsPdf}
             disabled={!inspections || inspections.length === 0}
             className="cursor-pointer inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white font-medium text-sm rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
           >
             <FileText className="w-4 h-4" />
-            Export PDF
+            {t("btnPdf")}
           </button>
         </div>
       </div>

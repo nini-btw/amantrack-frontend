@@ -2,6 +2,7 @@
 
 import { AlertTriangle, AlertCircle, Info, CheckCircle } from "lucide-react";
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 type DialogVariant = "danger" | "warning" | "info" | "success";
 
@@ -54,11 +55,12 @@ export default function ConfirmDialog({
   onCancel,
   title,
   description,
-  confirmText = "Confirm",
-  cancelText = "Cancel",
+  confirmText,
+  cancelText,
   variant = "danger",
   loading = false,
 }: ConfirmDialogProps) {
+  const t = useTranslations("dashboard.common.confirmDialog");
   const config = variantConfig[variant];
   const Icon = config.icon;
 
@@ -148,7 +150,7 @@ export default function ConfirmDialog({
               cursor-pointer
             "
           >
-            {cancelText}
+            {cancelText || t("defaultCancel")}
           </button>
           <button
             onClick={onConfirm}
@@ -170,9 +172,12 @@ export default function ConfirmDialog({
             `}
           >
             {loading && (
-              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <div
+                className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"
+                aria-label={t("aria.loading")}
+              />
             )}
-            {confirmText}
+            {confirmText || t("defaultConfirm")}
           </button>
         </div>
       </div>

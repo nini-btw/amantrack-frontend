@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/routing";
+import { useTranslations } from "next-intl";
 import { LucideIcon, Plus, Search, BarChart3 } from "lucide-react";
 
 interface QuickAction {
@@ -34,38 +35,43 @@ const colorClasses = {
   },
 };
 
-const defaultActions: QuickAction[] = [
-  {
-    title: "Add New Asset",
-    description: "Register new equipment",
-    href: "/assets/new",
-    icon: Plus,
-    color: "red",
-  },
-  {
-    title: "View Assets",
-    description: "Browse and search all assets",
-    href: "/assets",
-    icon: Search,
-    color: "blue",
-  },
-  {
-    title: "Statistics",
-    description: "View detailed reports",
-    href: "/statistics",
-    icon: BarChart3,
-    color: "purple",
-  },
-];
-
 interface QuickActionsProps {
   actions?: QuickAction[];
 }
 
-export function QuickActions({ actions = defaultActions }: QuickActionsProps) {
+export function QuickActions({ actions }: QuickActionsProps) {
+  const t = useTranslations("dashboard.dashboard.quickActions");
+
+  // Define default actions inside the component to use the translation hook
+  const defaultActions: QuickAction[] = [
+    {
+      title: t("newAsset.title"),
+      description: t("newAsset.description"),
+      href: "/assets/new",
+      icon: Plus,
+      color: "red",
+    },
+    {
+      title: t("viewAssets.title"),
+      description: t("viewAssets.description"),
+      href: "/assets",
+      icon: Search,
+      color: "blue",
+    },
+    {
+      title: t("statistics.title"),
+      description: t("statistics.description"),
+      href: "/statistics",
+      icon: BarChart3,
+      color: "purple",
+    },
+  ];
+
+  const displayActions = actions || defaultActions;
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-      {actions.map((action) => {
+      {displayActions.map((action) => {
         const colors = colorClasses[action.color];
         const Icon = action.icon;
 
@@ -78,15 +84,15 @@ export function QuickActions({ actions = defaultActions }: QuickActionsProps) {
             <div className="relative z-10 flex items-start gap-3 sm:gap-4">
               <div
                 className={`
-    shrink-0 w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16
-    rounded-xl flex items-center justify-center
-    ${
-      action.color === "red" || action.color === "purple"
-        ? "bg-white/25 group-hover:bg-white/35"
-        : "bg-white/10 group-hover:bg-white/20"
-    }
-    transition-all duration-300 backdrop-blur-sm
-  `}
+                  shrink-0 w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16
+                  rounded-xl flex items-center justify-center
+                  ${
+                    action.color === "red" || action.color === "purple"
+                      ? "bg-white/25 group-hover:bg-white/35"
+                      : "bg-white/10 group-hover:bg-white/20"
+                  }
+                  transition-all duration-300 backdrop-blur-sm
+                `}
               >
                 <Icon className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8" />
               </div>
@@ -104,7 +110,7 @@ export function QuickActions({ actions = defaultActions }: QuickActionsProps) {
             {/* Hover overlay effect */}
             <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
 
-            {/* Animated gradient effect */}
+            {/* Animated background shape */}
             <div className="absolute -right-8 -bottom-8 w-24 h-24 sm:w-32 sm:h-32 bg-white/5 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
           </Link>
         );

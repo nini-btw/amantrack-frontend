@@ -1,6 +1,7 @@
 "use client";
 
 import { Save } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 type Props = {
   initialName?: string;
@@ -13,34 +14,35 @@ export default function LocationForm({
   initialDescription = "",
   onSubmit,
 }: Props) {
+  const t = useTranslations("dashboard.locations.form");
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const name = (formData.get("name") as string).trim();
+    const description = (formData.get("description") as string).trim();
+
+    if (!name) return; // enforce required name
+    onSubmit({ name, description: description || undefined });
+  };
+
   return (
-    <form
-      className="space-y-4 sm:space-y-5"
-      onSubmit={(e) => {
-        e.preventDefault();
-        const form = e.currentTarget;
-        const name = (new FormData(form).get("name") as string).trim();
-        const description = (
-          new FormData(form).get("description") as string
-        ).trim();
-        if (!name) return; // enforce required name
-        onSubmit({ name, description: description || undefined });
-      }}
-    >
+    <form className="space-y-4 sm:space-y-5" onSubmit={handleSubmit}>
       {/* Location Name (required) */}
       <div>
         <label
           htmlFor="location-name"
           className="block text-sm font-medium text-[#111827] dark:text-[#E4E6EB] mb-2"
         >
-          Location Name <span className="text-red-500">*</span>
+          {t("name.label")} <span className="text-red-500">*</span>
         </label>
         <input
           id="location-name"
           name="name"
           type="text"
           defaultValue={initialName}
-          placeholder="e.g., Building A, Floor 2"
+          placeholder={t("name.placeholder")}
           required
           className="
             w-full rounded-lg
@@ -64,13 +66,16 @@ export default function LocationForm({
           htmlFor="location-description"
           className="block text-sm font-medium text-[#111827] dark:text-[#E4E6EB] mb-2"
         >
-          Description <span className="text-xs text-gray-500">(optional)</span>
+          {t("description.label")}{" "}
+          <span className="text-xs text-gray-500 font-normal">
+            {t("description.optional")}
+          </span>
         </label>
         <textarea
           id="location-description"
           name="description"
           defaultValue={initialDescription}
-          placeholder="Add additional details about this location..."
+          placeholder={t("description.placeholder")}
           rows={3}
           className="
             w-full rounded-lg
@@ -108,7 +113,7 @@ export default function LocationForm({
           "
         >
           <Save className="w-4 h-4 sm:w-5 sm:h-5" />
-          Save Location
+          {t("submit")}
         </button>
       </div>
     </form>

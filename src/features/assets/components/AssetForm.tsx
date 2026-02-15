@@ -2,9 +2,10 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import { useCreateAsset } from "../hooks/useAssets";
 import { useLocations } from "@/features/locations/hooks/useLocations";
-import { ASSET_TYPES, ASSET_CLASSES } from "@/config/constants";
+import { useAssetTranslations } from "@/lib/translations";
 
 // Custom Scrollbar Styles
 const scrollbarStyles = `
@@ -157,11 +158,13 @@ function CustomDatePicker({
   onChange,
   required = false,
   error = "",
+  t,
 }: {
   value: string;
   onChange: (value: string) => void;
   required?: boolean;
   error?: string;
+  t: any;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [viewDate, setViewDate] = useState(new Date(value || new Date()));
@@ -181,7 +184,7 @@ function CustomDatePicker({
   }, []);
 
   const formatDate = (dateString: string) => {
-    if (!dateString) return "Select date";
+    if (!dateString) return t("form.datePicker.selectDate");
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
       year: "numeric",
@@ -321,12 +324,12 @@ function CustomDatePicker({
 
           {/* Day Headers */}
           <div className="grid grid-cols-7 gap-0.5 sm:gap-1 mb-2">
-            {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((day) => (
+            {["su", "mo", "tu", "we", "th", "fr", "sa"].map((day) => (
               <div
                 key={day}
                 className="text-center text-xs font-semibold text-gray-500 dark:text-gray-400 py-1"
               >
-                {day}
+                {t(`form.datePicker.days.${day}`)}
               </div>
             ))}
           </div>
@@ -380,6 +383,12 @@ function CustomDatePicker({
 
 export function AssetForm() {
   const router = useRouter();
+  const locale = useLocale();
+  const t = useTranslations("dashboard.assets");
+
+  // Use centralized translation hook - SIMPLIFIED!
+  const { getTypeOptions, getClassOptions } = useAssetTranslations();
+
   const { data: locations = [], isLoading: loadingLocations } = useLocations();
   const createAsset = useCreateAsset();
 
@@ -387,8 +396,8 @@ export function AssetForm() {
     referenceNumber: "",
     type: "CO2",
     locationId: "",
-    assetClass: "", // Optional field - can be empty string
-    weightKg: "", // Optional field - stored as string for form handling
+    assetClass: "",
+    weightKg: "",
     visualInspectionDate: new Date().toISOString().split("T")[0],
     officialInspectionDate: new Date().toISOString().split("T")[0],
   });
@@ -401,39 +410,38 @@ export function AssetForm() {
     switch (name) {
       case "referenceNumber":
         if (!value || value.trim() === "") {
-          return "Reference number is required";
+          return t("form.fields.referenceNumber.validation.required");
         }
         if (value.length < 3) {
-          return "Reference number must be at least 3 characters";
+          return t("form.fields.referenceNumber.validation.minLength");
         }
         return "";
       case "type":
         if (!value || value.trim() === "") {
-          return "Type is required";
+          return t("form.fields.type.validation.required");
         }
         return "";
       case "locationId":
         if (!value || value.trim() === "") {
-          return "Location is required";
+          return t("form.fields.location.validation.required");
         }
         return "";
       case "weightKg":
-        // Optional field - only validate if provided
         if (value && value !== "") {
           const num = Number(value);
           if (isNaN(num) || num < 0) {
-            return "Weight must be a positive number";
+            return t("form.fields.weight.validation.positive");
           }
         }
         return "";
       case "visualInspectionDate":
         if (!value || value.trim() === "") {
-          return "Visual inspection date is required";
+          return t("form.fields.visualInspectionDate.validation.required");
         }
         return "";
       case "officialInspectionDate":
         if (!value || value.trim() === "") {
-          return "Official inspection date is required";
+          return t("form.fields.officialInspectionDate.validation.required");
         }
         return "";
       default:
@@ -459,7 +467,6 @@ export function AssetForm() {
     const newErrors: Record<string, string> = {};
     let isValid = true;
 
-    // Validate required fields
     const requiredFields = [
       "referenceNumber",
       "type",
@@ -479,7 +486,6 @@ export function AssetForm() {
       }
     });
 
-    // Validate optional weight if provided
     if (formData.weightKg !== "") {
       const weightError = validateField("weightKg", formData.weightKg);
       if (weightError) {
@@ -504,27 +510,23 @@ export function AssetForm() {
     }
 
     try {
-      // Prepare data according to Asset entity structure
       const submitData: any = {
         referenceNumber: formData.referenceNumber.toUpperCase().trim(),
         type: formData.type,
         locationId: formData.locationId,
-        class: formData.assetClass || "None", // Backend expects "class" field
-        weightKg: formData.weightKg ? parseFloat(formData.weightKg) : 0, // Default to 0 if empty
-        visualInspectionDate: formData.visualInspectionDate, // Send as YYYY-MM-DD string
-        officialInspectionDate: formData.officialInspectionDate, // Send as YYYY-MM-DD string
+        class: formData.assetClass || "None",
+        weightKg: formData.weightKg ? parseFloat(formData.weightKg) : 0,
+        visualInspectionDate: formData.visualInspectionDate,
+        officialInspectionDate: formData.officialInspectionDate,
       };
 
-      console.log("Submitting data:", submitData); // Debug log
+      console.log("Submitting data:", submitData);
       await createAsset.mutateAsync(submitData);
-      router.push("/assets");
+      router.push(`/${locale}/assets`);
     } catch (error) {
       console.error("Failed to create asset:", error);
-      // Show more detailed error
       const errorMessage =
-        error instanceof Error
-          ? error.message
-          : "Failed to create asset. Please try again.";
+        error instanceof Error ? error.message : t("form.alerts.createError");
       alert(errorMessage);
     }
   };
@@ -535,7 +537,7 @@ export function AssetForm() {
         <div className="flex flex-col items-center gap-3">
           <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
           <p className="text-gray-700 dark:text-[#E4E6EB] font-medium">
-            Loading locations...
+            {t("form.alerts.loadingLocations")}
           </p>
         </div>
       </div>
@@ -559,16 +561,16 @@ export function AssetForm() {
           </svg>
           <div className="flex-1">
             <h3 className="text-yellow-800 dark:text-yellow-300 font-semibold mb-2">
-              No Locations Available
+              {t("form.alerts.noLocations.title")}
             </h3>
             <p className="text-yellow-700 dark:text-yellow-400 mb-4">
-              You need to create at least one location before adding assets.
+              {t("form.alerts.noLocations.description")}
             </p>
             <button
-              onClick={() => router.push("/locations/new")}
+              onClick={() => router.push(`/${locale}/locations/new`)}
               className="cursor-pointer px-4 py-2 bg-yellow-600 dark:bg-yellow-700 text-white font-medium rounded-lg hover:bg-yellow-700 dark:hover:bg-yellow-600 transition-colors shadow-sm"
             >
-              Create Location
+              {t("form.alerts.noLocations.button")}
             </button>
           </div>
         </div>
@@ -590,13 +592,15 @@ export function AssetForm() {
   const labelClass =
     "block text-sm font-medium text-gray-700 dark:text-[#E4E6EB] mb-1.5 sm:mb-2";
 
-  const typeOptions = ASSET_TYPES.map((type) => ({ value: type, label: type }));
+  // SIMPLIFIED: Just call the hook functions to get translated options!
+  const typeOptions = getTypeOptions();
   const classOptions = [
-    { value: "", label: "None" },
-    ...ASSET_CLASSES.map((cls) => ({ value: cls, label: cls })),
+    { value: "", label: t("form.fields.class.placeholder") },
+    ...getClassOptions(false),
   ];
+
   const locationOptions = [
-    { value: "", label: "Select a location" },
+    { value: "", label: t("form.fields.location.placeholder") },
     ...locations.map((location) => ({
       value: location.id,
       label: location.name,
@@ -612,17 +616,18 @@ export function AssetForm() {
       >
         <div className="border-b border-gray-200 dark:border-[#2D3340] pb-3 sm:pb-4 mb-4 sm:mb-6">
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-[#E4E6EB]">
-            Create New Asset
+            {t("form.title")}
           </h2>
           <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">
-            Fill in the details below. Fields marked with * are required.
+            {t("form.description")}
           </p>
         </div>
 
         {/* Reference Number */}
         <div>
           <label className={labelClass}>
-            Reference Number <span className="text-red-500">*</span>
+            {t("form.fields.referenceNumber.label")}{" "}
+            <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
@@ -632,7 +637,7 @@ export function AssetForm() {
             }
             onBlur={() => handleBlur("referenceNumber")}
             className={`${getInputClassName("referenceNumber")} uppercase`}
-            placeholder="e.g., M1C001"
+            placeholder={t("form.fields.referenceNumber.placeholder")}
           />
           {touched.referenceNumber && errors.referenceNumber && (
             <p className="mt-1.5 text-xs sm:text-sm text-red-500 dark:text-red-400 flex items-center gap-1">
@@ -655,7 +660,8 @@ export function AssetForm() {
         {/* Type */}
         <div>
           <label className={labelClass}>
-            Type <span className="text-red-500">*</span>
+            {t("form.fields.type.label")}{" "}
+            <span className="text-red-500">*</span>
           </label>
           <CustomSelect
             value={formData.type}
@@ -669,13 +675,14 @@ export function AssetForm() {
         {/* Location */}
         <div>
           <label className={labelClass}>
-            Location <span className="text-red-500">*</span>
+            {t("form.fields.location.label")}{" "}
+            <span className="text-red-500">*</span>
           </label>
           <CustomSelect
             value={formData.locationId}
             onChange={(value) => handleChange("locationId", value)}
             options={locationOptions}
-            placeholder="Select a location"
+            placeholder={t("form.fields.location.placeholder")}
             required
             error={touched.locationId ? errors.locationId : ""}
           />
@@ -684,24 +691,29 @@ export function AssetForm() {
         {/* Class - Optional */}
         <div>
           <label className={labelClass}>
-            Class <span className="text-gray-400 text-xs">(Optional)</span>
+            {t("form.fields.class.label")}{" "}
+            <span className="text-gray-400 text-xs">
+              {t("form.fields.class.optional")}
+            </span>
           </label>
           <CustomSelect
             value={formData.assetClass}
             onChange={(value) => handleChange("assetClass", value)}
             options={classOptions}
-            placeholder="None"
+            placeholder={t("form.fields.class.placeholder")}
           />
           <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-            Leave as "None" if not applicable
+            {t("form.fields.class.help")}
           </p>
         </div>
 
         {/* Weight - Optional */}
         <div>
           <label className={labelClass}>
-            Weight (kg){" "}
-            <span className="text-gray-400 text-xs">(Optional)</span>
+            {t("form.fields.weight.label")}{" "}
+            <span className="text-gray-400 text-xs">
+              {t("form.fields.weight.optional")}
+            </span>
           </label>
           <input
             type="number"
@@ -711,7 +723,7 @@ export function AssetForm() {
             onChange={(e) => handleChange("weightKg", e.target.value)}
             onBlur={() => handleBlur("weightKg")}
             className={getInputClassName("weightKg")}
-            placeholder="0"
+            placeholder={t("form.fields.weight.placeholder")}
           />
           {touched.weightKg && errors.weightKg && (
             <p className="mt-1.5 text-xs sm:text-sm text-red-500 dark:text-red-400 flex items-center gap-1">
@@ -730,14 +742,15 @@ export function AssetForm() {
             </p>
           )}
           <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
-            Leave empty if weight is not applicable
+            {t("form.fields.weight.help")}
           </p>
         </div>
 
         {/* Visual Inspection Date */}
         <div>
           <label className={labelClass}>
-            Last Visual Inspection Date <span className="text-red-500">*</span>
+            {t("form.fields.visualInspectionDate.label")}{" "}
+            <span className="text-red-500">*</span>
           </label>
           <CustomDatePicker
             value={formData.visualInspectionDate}
@@ -746,13 +759,14 @@ export function AssetForm() {
             error={
               touched.visualInspectionDate ? errors.visualInspectionDate : ""
             }
+            t={t}
           />
         </div>
 
         {/* Official Inspection Date */}
         <div>
           <label className={labelClass}>
-            Last Official Inspection Date{" "}
+            {t("form.fields.officialInspectionDate.label")}{" "}
             <span className="text-red-500">*</span>
           </label>
           <CustomDatePicker
@@ -764,6 +778,7 @@ export function AssetForm() {
                 ? errors.officialInspectionDate
                 : ""
             }
+            t={t}
           />
         </div>
 
@@ -795,10 +810,10 @@ export function AssetForm() {
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                   />
                 </svg>
-                Creating...
+                {t("form.buttons.creating")}
               </span>
             ) : (
-              "Create Asset"
+              t("form.buttons.create")
             )}
           </button>
           <button
@@ -806,7 +821,7 @@ export function AssetForm() {
             onClick={() => router.back()}
             className="cursor-pointer w-full sm:w-auto px-6 py-3 bg-gray-200 dark:bg-[#2D3340] text-gray-700 dark:text-[#E4E6EB] font-semibold rounded-lg hover:bg-gray-300 dark:hover:bg-[#3B3F50] transition-colors shadow-sm"
           >
-            Cancel
+            {t("form.buttons.cancel")}
           </button>
         </div>
       </form>
